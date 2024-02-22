@@ -54,6 +54,8 @@ Examples
 
 1.1.0 - added *times(start, period, num)* method to generate an array of converted times until 00:00, start in hh:mm format, period in minutes and num is an integer value.
 
+1.1.1 - updated *filter()*, added new method *random(isTime, num)* creates an array of times or dates (in past) randomly and method *range(dates, period)* that returns range of numbers by days/months/years.
+
 ### Documentation
 
 Learn more on *https://github.com/Slavus54/datus.js*

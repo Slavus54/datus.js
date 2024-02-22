@@ -1,4 +1,4 @@
-const {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_max_border, time_start, base} = require('./data')
+const {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_max_border, time_start, base, date_filters} = require('./data')
 
 class Core {
     constructor() {
@@ -66,19 +66,10 @@ class Core {
         return result
     }
 
-    filter(date, period = 'day', value = 0) {
-        let parts = date.split('.').map(el => parseInt(el))
-        let current = 0
+    filter(date, period = 'day', check = '') {
+        let current = this.getDatePeriodValue(date, period)
 
-        if (period === 'day') {
-            current = parts[0]
-        } else if (period === 'month') {
-            current = parts[1]
-        } else if (period === 'year') {
-            current = parts[2]
-        }
-
-        return current === value
+        return eval(current+check)
     }
 
     difference(date, side = '+', flag = 'day', lock = 10) {
@@ -156,6 +147,48 @@ class Core {
 
         return result
     }
+
+    random(isTime = true, num = 5) {
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            let number = isTime ? time_format_max_border : 30
+
+            number = parseInt(Math.random() * number)
+
+            result = [...result, number]
+        }
+
+        result = result.map(el => {
+            return isTime ? this.time(el) : this.move('day', '-', el)
+        })
+
+        return result
+    }
+
+    range(dates = [], period = 'day') {
+        let indexes = []
+        let max = 0
+        let min = 10**6
+
+        dates.map(el => {
+            let value = this.getDatePeriodValue(el, period)
+
+            indexes = [...indexes, value]
+        })
+
+        for (let i = 0; i < indexes.length; i++) {
+            let value = indexes[i]
+
+            if (max < value) {
+                max = value
+            } else if (min > value) {
+                min = value
+            }
+        }
+
+        return max - min
+    }
     
     rounding(num) {
         return num < 10 ? `0${num}` : num 
@@ -176,6 +209,15 @@ class Core {
 
     toNum(num) {
         return Math.floor(num) < 10 ? `0${num}` : num 
+    }
+
+    getDatePeriodValue(date = '', period = '') {
+        let parts = date.split('.').map(el => parseInt(el))
+        let index = date_filters.indexOf(period)
+
+        index = index > 0 ? index : 0
+     
+        return parts[index]
     }
 
     getMonth(month) {

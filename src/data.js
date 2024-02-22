@@ -68,9 +68,11 @@ let sizes = [
 ]
 
 let basic_value = sizes[0].value
+const date_filters = ['day', 'month', 'year']
+
 const time_start = '00:00'
 const time_format_min_border = 0
 const time_format_middle_border = 720
 const time_format_max_border = 1440
 
-module.exports = {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_min_border, time_format_max_border, time_start, base}
+module.exports = {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_min_border, time_format_max_border, time_start, base, date_filters}
