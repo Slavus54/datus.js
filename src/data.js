@@ -67,6 +67,37 @@ let sizes = [
     }
 ]
 
+let rome_nums = [
+    {
+        title: 'I',
+        value: 1
+    },
+    {
+        title: 'V',
+        value: 5
+    },
+    {
+        title: 'X',
+        value: 10
+    },
+    {
+        title: 'L',
+        value: 50
+    },
+    {
+        title: 'C',
+        value: 100
+    },
+    {
+        title: 'D',
+        value: 500
+    },
+    {
+        title: 'M',
+        value: 1000
+    }
+]
+
 let basic_value = sizes[0].value
 const date_filters = ['day', 'month', 'year']
 
@@ -75,4 +106,4 @@ const time_format_min_border = 0
 const time_format_middle_border = 720
 const time_format_max_border = 1440
 
-module.exports = {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_min_border, time_format_max_border, time_start, base, date_filters}
+module.exports = {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_min_border, time_format_max_border, time_start, base, date_filters, rome_nums}

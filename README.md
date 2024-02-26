@@ -52,9 +52,11 @@ Examples
 
 1.0.9 - refactored, added to *difference()* method third argument "flag" (days convert into time measure week/month/year), *time()* gain third argument isTwelve to see time in US/EU formats.
 
-1.1.0 - added *times(start, period, num)* method to generate an array of converted times until 00:00, start in hh:mm format, period in minutes and num is an integer value.
+1.1.0 - added *times(start, period, num)* method to generate an array of converted times until 00:00, start in HH:MM format, period in minutes and num is an integer value.
 
 1.1.1 - updated *filter()*, added new method *random(isTime, num)* creates an array of times or dates (in past) randomly and method *range(dates, period)* that returns range of numbers by days/months/years.
+
+1.1.2 - created new methods to work with Roman numerals, century picker and current date formatting: *convert(), border(), century() and timestamp()*.
 
 ### Documentation
 

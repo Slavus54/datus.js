@@ -1,4 +1,4 @@
-const {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_max_border, time_start, base, date_filters} = require('./data')
+const {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_max_border, time_start, base, date_filters, rome_nums} = require('./data')
 
 class Core {
     constructor() {
@@ -188,6 +188,74 @@ class Core {
         }
 
         return max - min
+    }
+
+    convert(value = null, key = 'convert') {
+        let result 
+
+        if (key === 'convert') {
+            result = '' 
+
+            let volume = Math.abs(value) 
+            let isBorder = (volume + 1) % 5 === 0 
+
+            if (isBorder) {
+                volume++
+            }
+
+            let part = rome_nums.findLast(el => el.value <= volume)
+            
+            while (volume > 0 && part !== undefined) {
+
+                result += isBorder && volume - part.value === 0 ? 'I' + part.title : part.title
+                volume -= part.value
+
+                part = rome_nums.findLast(el => el.value <= volume)  
+            }
+
+        } else if (key === 'deconvert') {
+            result = 0
+
+            let arr = value.split('')
+            let isBorder = false
+
+            for (let i = 1; i < arr.length; i++) {
+                let current = arr[i]
+                let prev = arr[i - 1]
+
+                isBorder = prev === 'I' && current !== 'I'
+
+                let num = isBorder ? rome_nums.find(el => el.title === current) : rome_nums.find(el => el.title === prev)
+              
+                if (num !== undefined) {
+                    result += isBorder ? num.value - 1 : num.value
+                }
+            }    
+
+            result = isBorder ? result : result + 1
+        }
+
+        return result
+    }
+
+    border(num = null, isRome = false) {
+        let value = isRome ? this.convert(num, 'deconvert') : num  
+        let borders = [(value - 1)*10**2 + 1, value*10**2]
+
+        return borders
+    }
+
+    century(year = 1000, isRome = false) {
+        let num = Math.ceil(year / 100)
+    
+        return isRome ? this.convert(num, 'convert') : num
+    }
+    
+    timestamp() {
+        let date = this.move()
+        let time = this.date.getHours() + ':' + this.date.getMinutes()
+        
+        return `${date} | ${time}`
     }
     
     rounding(num) {
