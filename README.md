@@ -1,63 +1,73 @@
-## Datus.JS - small library on JS with date management methods 
+## Datus.JS Documentation         
 
-### Getting Started
+*https://www.npmjs.com/package/datus.js* - npmjs             
 
-import Datus from 'datus.js'** or **const Datus = require('datus.js')
+*https://github.com/Slavus54/datus.js* - github with code      
 
-Examples
+Current Version - **1.1.3**   
 
-```
-    let datus = new Datus()
-    let size = 0
-    let date = datus.move()
+### Description             
 
-    ...
+Small library to manage date and time with several formats without pain.             
 
-    btn.addEventListener('click', () => {
-        size += 1
-        date = datus.move('day', '+', size) - update date with next day
-    })
-    
-```
+### Getting Started     
 
-```
-    // today is Wednesday
+import {Datus} from 'datus.js' or const {Datus} = require('datus.js')    
 
-    let datus = new Datus()
-    let cards = [{name: 'Petr', day: 'Monday'}, {name: 'Sasha', day: 'Wednesday'}]
-    let today_size = 0
+const datus = new Datus()             
 
-    cards.map(el => {
-        if (datus.gap('Wednesday') === 0) {
-            today_size += 1
-        }
-    })
-```
+Also Datus.js API can be imported to improve your experience         
 
-### Versions and CI/CD
+~~~
+import {weekdays_titles, weekdays_tags, months_titles, time_format_min_border, time_format_max_border, date_filters} from 'datus.js'    
+~~~
 
-1.0.0 - basic library publishing
+### Examples
 
-1.0.2 - created gap() method to look number of days before weekday, updated index getter (EU format of week beginning) and created README.md
+~~~ 
+    let counter = 0 let date = datus.move() // initial date        
+    <button onClick={() => {date = datus.move('day', '+', counter)}}>Next</button> // 7 clicks and event will be week later        
+~~~
 
-1.0.3 - added weekdays API and updated README.md
+~~~
+    let currentOrder = { title: 'Pizza Mozzarella 32cm', name: 'Mark', timestamp: 623 } // Julia works until 12:00, does she pick up an order?        
+    let check: boolean = currentOrder.timestamp <= datus.time('12:00', 'deconvert') // yes, Mark won't go hungry    
+~~~
+~~~
+    let events = [{title: 'Battle of Marengo', date: '14.06.1800'}, {title: 'Battle of Austerlitz', date: '02.12.1805'}]        
+    let filteredEvents = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December        
+~~~
 
-1.0.4 - updated import 
+### Methods     
 
-1.0.5 - 1.0.6 - created filter(date, period, value) and difference(date, lock, side) methods to manage/filter items with dates and get days before/after event
+-**move** (*flag* = 'day', *direction* = '+', *num* = 0, *format* = 'default') - run through the calendar in all directions, return formatted date.    
 
-1.0.7 - updated weekdays and added months API with keey words *weekdays_titles, weekdays_tags, months_titles*
+-**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).     
 
-1.0.8 - huge update with new methods *day()* to get hours, minutes or seconds until the end / after beginning of day, *time()* to convert/deconvert time by minutes.
+-**dates** (*flag* = 'week', *num* = 2, *weekday* = null, *format* = 'default') - create an array of dates with right format since weekday (today by default) with time period iterations by *flag* ('day', 'week' or 'month'). *num* is a number of dates.     
 
-1.0.9 - refactored, added to *difference()* method third argument "flag" (days convert into time measure week/month/year), *time()* gain third argument isTwelve to see time in US/EU formats.
+-**filter** (*date*, *period* = 'day', *check* = '') - compare integer value of date's period ('day', 'month' or 'year') with condition *check* and return true/false.         
 
-1.1.0 - added *times(start, period, num)* method to generate an array of converted times until 00:00, start in HH:MM format, period in minutes and num is an integer value.
+-**difference** (*date*, *side* = '+', *flag* = 'day', *lock* = 10) - find difference in *flag* time period (by default days) between today and date in past or future (by *side* parameter). *lock* is a integer limit of inside date iterations to compare with *date*.     
 
-1.1.1 - updated *filter()*, added new method *random(isTime, num)* creates an array of times or dates (in past) randomly and method *range(dates, period)* that returns range of numbers by days/months/years.
+-**day** (*key* = 'start', *size* = 'hour') - returned number of hours/minutes/seconds after day starts (*key* = 'start') or until its end (*key* = 'end').     
 
-1.1.2 - created new methods to work with Roman numerals, century picker and current date formatting: *convert(), border(), century() and timestamp()*.
+-**time** (*value* = null, *key* = 'convert', *isTwelve* = false) - received *value* in minutes and convert it to HH:MM format, or if *key* equal 'deconvert' it returned number of minutes. Flag *isTwelve* is for US time format.    
 
-### Documentation
+-**times** (*start* = '00:00', *period* = 30, *num* = 10) - returned array of timestamps in HH:MM format beginning from *start* time with *period* in minutes, *num* - size of array.     
 
-Learn more on *https://github.com/Slavus54/datus.js*
+-**random** (*isTime* = true, *num* = 5) - returned array of random dates (last 30 days) or times in HH:MM format.         
+
+-**range** (*dates* = [], *period* = 'day') - returned difference between smallest and largest integer value of date's period ('day', 'month' or 'year') in array of unsorted dates.        
+
+-**convert** (*value* = null, *key* = 'convert') - convert Arabic number to Roman and reverse, return string by default or number.             
+
+-**border** (*num* = null, *isRome* = false) - receives century (number Arabic or string Roman) and returns array of first and last year of century.    
+
+-**century** (*year* = 1000, *isRome* = false) - return century in Roman/Arabic format by year (number).        
+
+-**timestamp** - returns text of current date, like '24.02.2022 | 4:50' (fuck Putin's War).      
+
+-**distinction** (*time* = '', *utc* = 0, *format* = 'clock') - returns object {result, isGone} with difference in minutes with UTC time in different formats: *clock*, *text* and *number*.        
+
+-**palindrom** (*value* = '', *isDate* = true) - check if date or time is palindrom and return true/false.    

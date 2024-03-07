@@ -257,7 +257,48 @@ class Core {
         
         return `${date} | ${time}`
     }
+
+    distinction(time = '', utc = 0, format = 'clock') {
+        let result = 0
+        let timestamp = this.date.getUTCHours() + utc
+        let border = this.time(time, 'deconvert')
+
+        timestamp *= 60
+        timestamp += this.date.getMinutes()
+
+        let isGone = border < timestamp
+
+        result = Math.abs(border - timestamp)
+
+        if (format === 'clock') {
+            result = this.time(result)
+        } else if (format === 'text') {
+            result = `${isGone ? 'Passed' : 'In'} ${result} minutes`
+        }
+
+        return {
+            result,
+            isGone
+        }
+    }
     
+    palindrom(value = '', isDate = true) {
+        let result = true
+        let parts = value.split(isDate ? '.' : ':')
+
+        if (isDate) {
+            result = this.reverseAndCheck(parts[0]) === parts[2] && this.reverseAndCheck(parts[1]) === parts[1]
+        } else {
+            result = this.reverseAndCheck(parts[0]) === parts[1]
+        }
+    
+        return result
+    }
+
+    reverseAndCheck(item = '') {
+        return item.split('').reverse().join('')
+    }
+
     rounding(num) {
         return num < 10 ? `0${num}` : num 
     }
