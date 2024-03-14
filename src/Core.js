@@ -116,7 +116,8 @@ class Core {
             h = value > time_format_middle_border && isTwelve ? Math.floor((value - time_format_middle_border) / 60) : h
 
             result = `${this.rounding(h)}:${this.rounding(m)}`
-        } else {
+
+        } else if ('deconvert') {
             let parts = value.split(':').map(el => parseInt(el))
             
             result = parts[0] * 60 + parts[1]
@@ -251,11 +252,25 @@ class Core {
         return isRome ? this.convert(num, 'convert') : num
     }
     
-    timestamp() {
+    timestamp(format = 'all', divider = '|') {
         let date = this.move()
         let time = this.date.getHours() + ':' + this.date.getMinutes()
         
-        return `${date} | ${time}`
+        if (format === 'time') {
+            return time
+        } else if (format === 'date') {
+            return date
+        } 
+
+        return `${date} ${divider} ${time}`
+    }
+
+    async utc() {
+        let result = await fetch('https://towns-api.onrender.com/timezones') 
+
+        result = await result.json()
+    
+        return result
     }
 
     distinction(time = '', utc = 0, format = 'clock') {
@@ -285,17 +300,71 @@ class Core {
     palindrom(value = '', isDate = true) {
         let result = true
         let parts = value.split(isDate ? '.' : ':')
+ 
+        result = isDate ?  
+                this.reverse(parts[0]) === parts[2] && this.reverse(parts[1]) === parts[1]
+            :
+                this.reverse(parts[0]) === parts[1]
+     
+        return result
+    }
 
-        if (isDate) {
-            result = this.reverseAndCheck(parts[0]) === parts[2] && this.reverseAndCheck(parts[1]) === parts[1]
-        } else {
-            result = this.reverseAndCheck(parts[0]) === parts[1]
-        }
+    exchange(num = 10, from = 'minute', to = 'hour') {
+        let result = 0
+
+        let start = this.getSize(from) * num
+        let end = this.getSize(to)
+
+        result = Math.floor(start / end)
     
         return result
     }
 
-    reverseAndCheck(item = '') {
+    clock(value = 10, arrow = 'hour', isPositive = true) {
+        const max = 12
+        
+        let result = 0
+        let isMinute = arrow === 'minute'
+        let current = isMinute ? value % 60 : Math.floor(value / 60)
+
+        if (isMinute) {
+            current = 12 + Math.floor(current / 5)
+        }
+        
+        if (current === 0) {
+            return 0
+        }
+
+        current = max - current
+   
+        let percent = Math.floor((current / max) * 100)
+      
+        percent += 25
+
+        result = percent * 3.6
+
+        if (result < 0 && isPositive) {
+            result += 360
+        }
+       
+        return result
+    }
+
+    formula(start = '12:00', duration = 0, body = 'x + y - 1', size = 'minute') {
+        let result = this.time(start, 'deconvert')
+        size = this.getSize(size) * duration * 1440 / base
+
+        body = this.splin(body, 'x', result)
+        result = eval(this.splin(body, 'y', size))
+
+        return this.time(result)
+    }
+
+    splin(value = '', first, second) {
+        return value.split(first).join(second)
+    }
+
+    reverse(item = '') {
         return item.split('').reverse().join('')
     }
 

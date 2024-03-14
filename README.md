@@ -4,7 +4,7 @@
 
 *https://github.com/Slavus54/datus.js* - github with code      
 
-Current Version - **1.1.3**   
+Current Version - **1.1.4**   
 
 ### Description             
 
@@ -66,8 +66,14 @@ import {weekdays_titles, weekdays_tags, months_titles, time_format_min_border, t
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Arabic format by year (number).        
 
--**timestamp** - returns text of current date, like '24.02.2022 | 4:50' (fuck Putin's War).      
+-**timestamp** (*format* = 'all', *divider* = '|) - returns current date or time and divides it by second parameter.      
 
--**distinction** (*time* = '', *utc* = 0, *format* = 'clock') - returns object {result, isGone} with difference in minutes with UTC time in different formats: *clock*, *text* and *number*.        
+-**utc** - returns Promise with european towns's timezones.     
+
+-**distinction** (*time* = '', *utc* = 0, *format* = 'clock') - counts difference it time between utc event and now; returns object with distinction in formats (*clock, text*) and flag {result, isGone}.          
 
 -**palindrom** (*value* = '', *isDate* = true) - check if date or time is palindrom and return true/false.    
+
+-**exchange** (*num* = 10, *from* = 'minute', *to* = 'hour') - receives value in first period and exchange it for second.    
+
+-**clock** (*value* = 10, *arrow* = 'hour', *isPositive* = true) - returns degrees between 3 a.m. and hour/minute arrows by value in minute on clock.        
