@@ -1,14 +1,17 @@
-const {basic_value, weekdays, months_titles, sizes, time_format_middle_border, time_format_max_border, time_start, base, date_filters, rome_nums} = require('./data')
+const HelperContainer = require('./Helper')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums} = require('./data')
 
-class Core {
+class Core extends HelperContainer {
     constructor() {
+        super()
+
         if (Core.flag) {
             return Core.instance
         }
 
         Core.flag = true
         Core.instance = this
-    
+     
         this.init()
     }
 
@@ -22,15 +25,20 @@ class Core {
         this.weekday = weekdays[this.index]?.title
     }
 
-    move(flag = 'day', direction = '+', num = 0, format = 'default') {
+    move(flag = 'day', direction = '+', num = 0) {
         this.init()
         
         let value = this.value 
+        let result = ''
         let size = this.getSize(flag) | basic_value
       
         value = eval(`${value}${direction}(${num}*${size})`)
 
-        return this.formatting(new Date(value), format)
+        let pieces = new Date(value).toString().split(' ')
+  
+        result = `${pieces[2]}.${this.getMonth(pieces[1]).index}.${pieces[3]}`
+
+        return result
     }
 
     gap(weekday = null, key = 'tag') {
@@ -48,19 +56,16 @@ class Core {
         return result
     }
 
-    dates(flag = 'week', num = 2, weekday = null, format = 'default') {
+    dates(flag = 'week', num = 2, weekday = null) {
         this.init()
 
         let result = []
-        let size = this.getSize(flag) 
-        let value = this.value
-        let gap = this.gap(weekday)
-        
-        value += (basic_value * gap)
+        let size = Math.floor(this.getSize(flag) / base)
+        let counter = this.gap(weekday)
 
         for (let i = 0; i < num; i++) {
-            result = [...result, this.formatting(new Date(value), format)]
-            value += size
+            result = [...result, this.move(flag, '+', counter)]
+            counter += size
         }   
 
         return result
@@ -113,7 +118,7 @@ class Core {
             let h = Math.floor(value / 60)
             let m = value % 60
 
-            h = value > time_format_middle_border && isTwelve ? Math.floor((value - time_format_middle_border) / 60) : h
+            h = value > minutesMid && isTwelve ? Math.floor((value - minutesMid) / 60) : h
 
             result = `${this.rounding(h)}:${this.rounding(m)}`
 
@@ -122,7 +127,7 @@ class Core {
             
             result = parts[0] * 60 + parts[1]
 
-            result = result > time_format_middle_border && isTwelve ? result - time_format_middle_border : result
+            result = result > minutesMid && isTwelve ? result - minutesMid : result
         }
 
         return result
@@ -132,7 +137,7 @@ class Core {
         let result = []
         let counter = this.time(start, 'deconvert')
         
-        let isPass = (counter + period * num) <= time_format_max_border
+        let isPass = (counter + period * num) <= minutesMax
 
         if (!isPass) {
             return []
@@ -153,7 +158,7 @@ class Core {
         let result = []
 
         for (let i = 0; i < num; i++) {
-            let number = isTime ? time_format_max_border : 30
+            let number = isTime ? minutesMid : 30
 
             number = parseInt(Math.random() * number)
 
@@ -253,8 +258,9 @@ class Core {
     }
     
     timestamp(format = 'all', divider = '|') {
+        let minutes = this.date.getHours() * 60 + this.date.getMinutes()
         let date = this.move()
-        let time = this.date.getHours() + ':' + this.date.getMinutes()
+        let time = this.time(minutes)
         
         if (format === 'time') {
             return time
@@ -273,7 +279,7 @@ class Core {
         return result
     }
 
-    distinction(time = '', utc = 0, format = 'clock') {
+    distinction(time = '', utc = 0, isNum = true) {
         let result = 0
         let timestamp = this.date.getUTCHours() + utc
         let border = this.time(time, 'deconvert')
@@ -285,12 +291,8 @@ class Core {
 
         result = Math.abs(border - timestamp)
 
-        if (format === 'clock') {
-            result = this.time(result)
-        } else if (format === 'text') {
-            result = `${isGone ? 'Passed' : 'In'} ${result} minutes`
-        }
-
+        result = isNum ? this.time(result) : `${isGone ? 'Passed' : 'Pass in'} ${result} minutes`
+    
         return {
             result,
             isGone
@@ -337,11 +339,11 @@ class Core {
 
         current = max - current
    
-        let percent = Math.floor((current / max) * 100)
+        let percent = this.percent(current, max, 0)
       
         percent += 25
 
-        result = percent * 3.6
+        result = Math.floor(percent * 3.6)
 
         if (result < 0 && isPositive) {
             result += 360
@@ -360,56 +362,46 @@ class Core {
         return this.time(result)
     }
 
-    splin(value = '', first, second) {
-        return value.split(first).join(second)
-    }
+    format(value = '', key = 'default', isDate = true) {
+        let result = ''
+        let parts = value.split(isDate ? '.' : ':') 
 
-    reverse(item = '') {
-        return item.split('').reverse().join('')
-    }
+        if (key === 'default') {
+            return value
+        }
 
-    rounding(num) {
-        return num < 10 ? `0${num}` : num 
-    }
-
-    formatting(date, type) {
-        let result = date.toString()
-        let pieces = result.split(' ')
-
-        if (type === 'default') {
-            result = `${pieces[2]}.${this.getMonth(pieces[1]).index}.${pieces[3]}`
-        } else if (type === 'mail') {
-            result = `${pieces[2]} of ${this.getMonth(pieces[1]).title} ${pieces[3]}`
+        if (isDate) {
+            if (key === 'letter') {
+                result = `${months[parts[1] - 1]} ${parts[0]}, ${parts[2]}`
+            } 
+        } else {
+            if (key === 'us') {
+                let count = this.time(value, 'deconvert') 
+                let prefix = this.percent(count, minutesMax, 0) > 50
+                let time = prefix ? this.time(count - 720) : value
+                
+                result = `${time} ${prefix ? 'PM' : 'AM'}`
+            }
         }
 
         return result
     }
 
-    toNum(num) {
-        return Math.floor(num) < 10 ? `0${num}` : num 
-    }
+    part(num = 0, size = 'day') {
+        let result = 0
+        let days = this.date.getFullYear() % 4 === 0 ? 366 : 365
+        
+        size = this.getSize(size) / base
 
-    getDatePeriodValue(date = '', period = '') {
-        let parts = date.split('.').map(el => parseInt(el))
-        let index = date_filters.indexOf(period)
+        result = Math.floor(num * size * 10**2 / days)
 
-        index = index > 0 ? index : 0
-     
-        return parts[index]
-    }
+        return result
+    }    
 
-    getMonth(month) {
-        let result = months_titles.find(el => el.includes(month))
-        let check = result !== undefined
+    duration(distance = 10, speed = 1, size = 'hour') {
+        let result = this.exchange((distance / speed), 'hour', size)
 
-        let title = check ? result : months_titles[0]
-        let index = check ? months_titles.indexOf(title) + 1 : 0
-
-        return {title, index: this.toNum(index)}
-    }
-
-    getSize(flag) {
-        return sizes.find(el => el.title === flag)?.value
+        return result
     }
 }
 

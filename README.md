@@ -1,14 +1,14 @@
-## Datus.JS Documentation         
+## Datus.JS 1.1.5       
 
 *https://www.npmjs.com/package/datus.js* - npmjs             
 
-*https://github.com/Slavus54/datus.js* - github with code      
-
-Current Version - **1.1.4**   
+*https://github.com/Slavus54/datus.js* - github repository
+ 
 
 ### Description             
 
-Small library to manage date and time with several formats without pain.             
+Small library to manage date and time with several formats without pain.            
+Killer of *Moment.js*                   
 
 ### Getting Started     
 
@@ -16,35 +16,45 @@ import {Datus} from 'datus.js' or const {Datus} = require('datus.js')
 
 const datus = new Datus()             
 
-Also Datus.js API can be imported to improve your experience         
+Datus.js API importing to improve your experience         
 
 ~~~
-import {weekdays_titles, weekdays_tags, months_titles, time_format_min_border, time_format_max_border, date_filters} from 'datus.js'    
+
+import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filters} from 'datus.js'    
+    
 ~~~
 
 ### Examples
 
 ~~~ 
-    let counter = 0 let date = datus.move() // initial date        
-    <button onClick={() => {date = datus.move('day', '+', counter)}}>Next</button> // 7 clicks and event will be week later        
+
+    let counter = 0  
+    let date = datus.move() // initial date         
+    <button onClick={() => {date = datus.move('day', '+', counter)}}>Next</button> // 7 clicks and event will be week later  
+
 ~~~
 
 ~~~
+
     let currentOrder = { title: 'Pizza Mozzarella 32cm', name: 'Mark', timestamp: 623 } // Julia works until 12:00, does she pick up an order?        
     let check: boolean = currentOrder.timestamp <= datus.time('12:00', 'deconvert') // yes, Mark won't go hungry    
+
 ~~~
+
 ~~~
+
     let events = [{title: 'Battle of Marengo', date: '14.06.1800'}, {title: 'Battle of Austerlitz', date: '02.12.1805'}]        
-    let filteredEvents = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December        
+    let filteredEvents = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December 
+
 ~~~
 
 ### Methods     
 
--**move** (*flag* = 'day', *direction* = '+', *num* = 0, *format* = 'default') - run through the calendar in all directions, return formatted date.    
+-**move** (*flag* = 'day', *direction* = '+', *num* = 0) - run through the calendar in all directions, return date.    
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).     
 
--**dates** (*flag* = 'week', *num* = 2, *weekday* = null, *format* = 'default') - create an array of dates with right format since weekday (today by default) with time period iterations by *flag* ('day', 'week' or 'month'). *num* is a number of dates.     
+-**dates** (*flag* = 'week', *num* = 2, *weekday* = null) - create an array of dates since weekday (today by default) with time period iterations by *flag* ('day', 'week' or 'month'). *num* is a number of dates.     
 
 -**filter** (*date*, *period* = 'day', *check* = '') - compare integer value of date's period ('day', 'month' or 'year') with condition *check* and return true/false.         
 
@@ -70,10 +80,18 @@ import {weekdays_titles, weekdays_tags, months_titles, time_format_min_border, t
 
 -**utc** - returns Promise with european towns's timezones.     
 
--**distinction** (*time* = '', *utc* = 0, *format* = 'clock') - counts difference it time between utc event and now; returns object with distinction in formats (*clock, text*) and flag {result, isGone}.          
+-**distinction** (*time* = '', *utc* = 0, *isNum* = true) - counts difference it time between utc event and now; returns object with distinction in format (*number of minutes* or *text*) and flag {result, isGone}.          
 
 -**palindrom** (*value* = '', *isDate* = true) - check if date or time is palindrom and return true/false.    
 
 -**exchange** (*num* = 10, *from* = 'minute', *to* = 'hour') - receives value in first period and exchange it for second.    
 
--**clock** (*value* = 10, *arrow* = 'hour', *isPositive* = true) - returns degrees between 3 a.m. and hour/minute arrows by value in minute on clock.        
+-**clock** (*value* = 10, *arrow* = 'hour', *isPositive* = true) - returns degrees between 3 a.m. and hour/minute arrows by value in minute on clock.           
+
+-**formula** (*start* = '12:00', *duration* = 0, *body* = 'x + y - 1', *size* = 'minute') - substitution into formulas body *start* to x and *duration* to y, return result as time string.     
+
+-**format** (*value* = '', *key* = 'default', *isDate* = true) - formatting and returns date and time  by *key*: 'letter' for date and 'us' for time. Add special class for validation very soon.   
+
+-**part** (*num* = 0, *size* = 'day') - returns % of year (check for leap year) for any period.      
+
+-**duration** (*distance* = 10, *speed* = 1, *size* = 'hour') - solves problem to count duration in any format when we have distance (in km) and speed (km/h).

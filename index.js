@@ -1,7 +1,12 @@
-const {weekdays, months_titles, time_format_min_border, time_format_max_border, date_filters} = require('./src/data')
+const {weekdays, months, minutesMin, minutesMax, date_filters} = require('./src/data')
 const Datus = require('./src/Core')
 
-const weekdays_titles = weekdays.map(el => el.title)
-const weekdays_tags = weekdays.map(el => el.tag)
+const weekdaysTitles = weekdays.map(el => el.title)
+const weekdaysTags = weekdays.map(el => el.tag)
 
-module.exports = {Datus, weekdays_titles, weekdays_tags, months_titles, time_format_min_border, time_format_max_border, date_filters} 
+let inst = new Datus()
+
+console.log(inst.part(12, 'day'))
+console.log(inst.duration(3486, 60, 'hour'))
+
+module.exports = {Datus, weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filters} 
