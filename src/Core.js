@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, sizes} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -400,6 +400,28 @@ class Core extends HelperContainer {
 
     duration(distance = 10, speed = 1, size = 'hour') {
         let result = this.exchange((distance / speed), 'hour', size)
+
+        return result
+    }
+
+    term(num = 10) {
+        let value = parseInt(Math.random() * num)
+        let period = sizes[Math.floor(Math.random() * sizes.length)]?.title
+
+        return {value, period}
+    }
+
+    walking(value = 10, size = 'minute', speed = '*') {
+        let result = 0
+        let stepsbase = 60
+
+        stepsbase = stepsbase + (speed.length > 3 ? 3 : speed.length) * 20
+       
+        let steptime = Math.floor(60 / stepsbase * 1e3)
+
+        size = this.getSize(size)
+         
+        result = Math.floor((value * size) / steptime)
 
         return result
     }

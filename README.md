@@ -1,36 +1,44 @@
-## Datus.JS 1.1.5       
+# Datus.JS       
+
+## Story
+
+When I building small web apps on React/Preact/Angular in 2020-2023 I used to using great and heavy library **Moment.js**   
+I had been met a lot of issues and limits working with it and decided to create something new on **JavaScript** in open-source.
+
+
+## Description             
+
+JavaScript library to handling, parsing, validation, formatting date or time.   
+
+* Light and powerful analogue of **Moment.js**                           
+* Current Version: 1.1.6 
+
+## Links
 
 *https://www.npmjs.com/package/datus.js* - npmjs             
 
 *https://github.com/Slavus54/datus.js* - github repository
- 
 
-### Description             
+## Getting Started     
 
-Small library to manage date and time with several formats without pain.            
-Killer of *Moment.js*                   
+*import {Datus} from 'datus.js' or const {Datus} = require('datus.js')*        
 
-### Getting Started     
+*const datus = new Datus()*                
 
-import {Datus} from 'datus.js' or const {Datus} = require('datus.js')    
+### Datus.js API       
 
-const datus = new Datus()             
+*import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filters} from 'datus.js'*      
 
-Datus.js API importing to improve your experience         
-
-~~~
-
-import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filters} from 'datus.js'    
-    
-~~~
-
-### Examples
+## Examples
 
 ~~~ 
 
     let counter = 0  
-    let date = datus.move() // initial date         
-    <button onClick={() => {date = datus.move('day', '+', counter)}}>Next</button> // 7 clicks and event will be week later  
+    let date = datus.move() // to set today's date also use .timestamp('date')         
+
+    counter = Number(typeof null === 'object') // JS is awesome
+
+    date = datus.move('week', '+', counter) // a week later 
 
 ~~~
 
@@ -44,11 +52,11 @@ import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filte
 ~~~
 
     let events = [{title: 'Battle of Marengo', date: '14.06.1800'}, {title: 'Battle of Austerlitz', date: '02.12.1805'}]        
-    let filteredEvents = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December 
+    let filtered = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December 
 
 ~~~
 
-### Methods     
+## Methods     
 
 -**move** (*flag* = 'day', *direction* = '+', *num* = 0) - run through the calendar in all directions, return date.    
 
@@ -90,8 +98,12 @@ import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filte
 
 -**formula** (*start* = '12:00', *duration* = 0, *body* = 'x + y - 1', *size* = 'minute') - substitution into formulas body *start* to x and *duration* to y, return result as time string.     
 
--**format** (*value* = '', *key* = 'default', *isDate* = true) - formatting and returns date and time  by *key*: 'letter' for date and 'us' for time. Add special class for validation very soon.   
+-**format** (*value* = '', *key* = 'default', *isDate* = true) - formatting and returns date and time  by *key*: 'letter' for date and 'us' for time.      
 
 -**part** (*num* = 0, *size* = 'day') - returns % of year (check for leap year) for any period.      
 
--**duration** (*distance* = 10, *speed* = 1, *size* = 'hour') - solves problem to count duration in any format when we have distance (in km) and speed (km/h).
+-**duration** (*distance* = 10, *speed* = 1, *size* = 'hour') - solves problem to count duration in any format when we have distance (in km) and speed (km/h).  
+
+-**term** (*num* = 10) - receives number border and returns an object with random {value, period} to get any term.     
+
+-**walking** (*value* = 10, *size* = 'minute', *speed* = '*') - received time period and returns number of steps to walking while it.         

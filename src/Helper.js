@@ -1,4 +1,4 @@
-const {sizes, date_filters} = require('./data')
+const {sizes, periods, months} = require('./data')
 
 class HelperContainer {
     percent(value = 0, total = 100, round = 1) {
@@ -25,7 +25,7 @@ class HelperContainer {
 
     getDatePeriodValue(date = '', period = '') {
         let parts = date.split('.').map(el => parseInt(el))
-        let index = date_filters.indexOf(period)
+        let index = periods.indexOf(period)
 
         index = index > 0 ? index : 0
      
@@ -33,11 +33,11 @@ class HelperContainer {
     }
 
     getMonth(month) {
-        let result = months_titles.find(el => el.includes(month))
+        let result = months.find(el => el.includes(month))
         let check = result !== undefined
 
-        let title = check ? result : months_titles[0]
-        let index = check ? months_titles.indexOf(title) + 1 : 0
+        let title = check ? result : months[0]
+        let index = check ? months.indexOf(title) + 1 : 0
 
         return {title, index: this.toNum(index)}
     }
