@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, sizes} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -311,6 +311,30 @@ class Core extends HelperContainer {
         return result
     }
 
+    binary(value = '', isDate = true) {
+        let result = true
+        let borders = binary_check_items[Number(isDate)]  
+        let parts = value.split(isDate ? '.' : ':')
+
+        borders.map((el, idx) => {
+            let counter = 1
+            let part = Number(parts[idx])
+            let flag = false
+
+            while (counter <= el && !flag) {
+                let current = 2**counter
+           
+                flag = current === part
+
+                counter++
+            }
+
+            result = flag
+        })
+
+        return result
+    }
+
     exchange(num = 10, from = 'minute', to = 'hour') {
         let result = 0
 
@@ -362,6 +386,26 @@ class Core extends HelperContainer {
         return this.time(result)
     }
 
+    sequence(start = '12:00', interval = 10, num = 5, mask = ':30') {
+        let result = []
+        let initial = this.time(start, 'deconvert')
+        let parts = mask.split(':')
+        let index = Math.abs(parts.indexOf('') - 1)
+
+        let maskValue = Math.floor(parts[index])
+
+        for (let i = 1; i <= num; i++) {
+            let value = initial + i * interval
+            let piece = index === 0 ? Math.floor(value / 60) : value % 60
+
+            if (piece === maskValue) {
+                result = [...result, this.time(value)]
+            } 
+        }
+
+        return result
+    } 
+
     format(value = '', key = 'default', isDate = true) {
         let result = ''
         let parts = value.split(isDate ? '.' : ':') 
@@ -383,6 +427,24 @@ class Core extends HelperContainer {
                 result = `${time} ${prefix ? 'PM' : 'AM'}`
             }
         }
+
+        return result
+    }
+
+    pointer(text = 'today') {
+        let result = ''
+        let arrow = '+'
+        let days = 0
+
+        if (text === 'tomorrow') {
+            arrow = '+'
+            days = 1
+        } else if (text === 'yesterday') {
+            arrow = '-'
+            days = 1
+        }
+
+        result = this.move('day', arrow, days)
 
         return result
     }

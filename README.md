@@ -2,8 +2,11 @@
 
 ## Story
 
-When I building small web apps on React/Preact/Angular in 2020-2023 I used to using great and heavy library **Moment.js**   
-I had been met a lot of issues and limits working with it and decided to create something new on **JavaScript** in open-source.
+When I building small web apps on React/Preact/Angular in 2020-2023 I used to using great and heavy 
+library **Moment.js**   
+
+I had been met a lot of issues and limits working with it and decided to create something   
+on **JavaScript** in open-source
 
 
 ## Description             
@@ -11,7 +14,7 @@ I had been met a lot of issues and limits working with it and decided to create 
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: 1.1.6 
+* Current Version: 1.1.7 
 
 ## Links
 
@@ -92,13 +95,19 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**palindrom** (*value* = '', *isDate* = true) - check if date or time is palindrom and return true/false.    
 
--**exchange** (*num* = 10, *from* = 'minute', *to* = 'hour') - receives value in first period and exchange it for second.    
+-**binary** (*value* = '', *isDate* = true) - check if each parts of date or time is equal 2**power (binary) and return true/false. 
+
+-**exchange** (*num* = 10, *from* = 'minute', *to* = 'hour') - receives value in first period and exchange it for second.       
 
 -**clock** (*value* = 10, *arrow* = 'hour', *isPositive* = true) - returns degrees between 3 a.m. and hour/minute arrows by value in minute on clock.           
 
--**formula** (*start* = '12:00', *duration* = 0, *body* = 'x + y - 1', *size* = 'minute') - substitution into formulas body *start* to x and *duration* to y, return result as time string.     
+-**formula** (*start* = '12:00', *duration* = 0, *body* = 'x + y - 1', *size* = 'minute') - substitution into formulas body *start* to x and *duration* to y, return result as time string.      
 
--**format** (*value* = '', *key* = 'default', *isDate* = true) - formatting and returns date and time  by *key*: 'letter' for date and 'us' for time.      
+-**sequence** (*start* = '12:00', *interval* = 10, *num* = 5, *mask* = ':30') - generates list of times with interval and checking each element on mask.       
+
+-**format** (*value* = '', *key* = 'default', *isDate* = true) - formatting and returns date and time  by *key*: 'letter' for date and 'us' for time.           
+
+-**pointer** (*text* = 'today') - formatting and returns date with word-pointer.             
 
 -**part** (*num* = 0, *size* = 'day') - returns % of year (check for leap year) for any period.      
 
