@@ -14,7 +14,7 @@ on **JavaScript** in open-source
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: 1.1.7 
+* Current Version: 1.1.8 
 
 ## Links
 
@@ -30,7 +30,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 ### Datus.js API       
 
-*import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, date_filters} from 'datus.js'*      
+*import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*      
 
 ## Examples
 
@@ -115,4 +115,12 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**term** (*num* = 10) - receives number border and returns an object with random {value, period} to get any term.     
 
--**walking** (*value* = 10, *size* = 'minute', *speed* = '*') - received time period and returns number of steps to walking while it.         
+-**walking** (*value* = 10, *size* = 'minute', *speed* = '*') - received time period and returns number of steps to walking while it.      
+
+-**timus** (*birthdate = '02.12.2004'*) - received date of birth and returns your personal Number of Datus.   
+
+-**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.     
+
+-**bit** (*num* = 0) - converts number into binary string.   
+
+-**yearcontext** (*date* = '24.02.2022') - receives date and returns object with time context of the year {season, percent}. 

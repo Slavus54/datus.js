@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -123,7 +123,7 @@ class Core extends HelperContainer {
             result = `${this.rounding(h)}:${this.rounding(m)}`
 
         } else if ('deconvert') {
-            let parts = value.split(':').map(el => parseInt(el))
+            let parts = this.parts(value, ':', true) 
             
             result = parts[0] * 60 + parts[1]
 
@@ -301,7 +301,7 @@ class Core extends HelperContainer {
     
     palindrom(value = '', isDate = true) {
         let result = true
-        let parts = value.split(isDate ? '.' : ':')
+        let parts = this.parts(value, isDate ? '.' : ':')
  
         result = isDate ?  
                 this.reverse(parts[0]) === parts[2] && this.reverse(parts[1]) === parts[1]
@@ -314,7 +314,7 @@ class Core extends HelperContainer {
     binary(value = '', isDate = true) {
         let result = true
         let borders = binary_check_items[Number(isDate)]  
-        let parts = value.split(isDate ? '.' : ':')
+        let parts = this.parts(value, isDate ? '.' : ':')
 
         borders.map((el, idx) => {
             let counter = 1
@@ -389,7 +389,7 @@ class Core extends HelperContainer {
     sequence(start = '12:00', interval = 10, num = 5, mask = ':30') {
         let result = []
         let initial = this.time(start, 'deconvert')
-        let parts = mask.split(':')
+        let parts = this.parts(mask, ':')
         let index = Math.abs(parts.indexOf('') - 1)
 
         let maskValue = Math.floor(parts[index])
@@ -408,7 +408,7 @@ class Core extends HelperContainer {
 
     format(value = '', key = 'default', isDate = true) {
         let result = ''
-        let parts = value.split(isDate ? '.' : ':') 
+        let parts = this.parts(value, isDate ? '.' : ':') 
 
         if (key === 'default') {
             return value
@@ -417,7 +417,9 @@ class Core extends HelperContainer {
         if (isDate) {
             if (key === 'letter') {
                 result = `${months[parts[1] - 1]} ${parts[0]}, ${parts[2]}`
-            } 
+            } else if (key === 'year') {
+                result = parts[1] > 6 ? parts[2] + 1 : parts[2]
+            }
         } else {
             if (key === 'us') {
                 let count = this.time(value, 'deconvert') 
@@ -474,10 +476,11 @@ class Core extends HelperContainer {
     }
 
     walking(value = 10, size = 'minute', speed = '*') {
+        const speedlimit = 3
         let result = 0
         let stepsbase = 60
 
-        stepsbase = stepsbase + (speed.length > 3 ? 3 : speed.length) * 20
+        stepsbase = stepsbase + (speed.length > speedlimit ? speedlimit : speed.length) * 20
        
         let steptime = Math.floor(60 / stepsbase * 1e3)
 
@@ -486,6 +489,84 @@ class Core extends HelperContainer {
         result = Math.floor((value * size) / steptime)
 
         return result
+    }
+
+    timus(birthdate = '02.12.2004') {
+        const monthmax = 6
+        let parts = this.parts(birthdate, '.', true)
+        let year = parts[2]
+        let result = 0 
+        let quotient = 1
+
+        for (let i = 2; i < 10; i++) {
+            let value = year / i
+
+            if (value % 1 === 0 && i > quotient) {
+                quotient = i
+            }
+        } 
+
+        result += parts[2] / quotient
+
+        result += monthmax - Math.abs(monthmax - parts[1])   
+        
+        result += parts[0]
+
+        return result
+    }
+
+    hash(value = '', isDate = true, multiplier = 1) {
+        const parts = this.parts(value, isDate ? '.' : ':')
+
+        let result = 0
+        let i = 0
+
+        parts.map((text, idx) => {
+            let power = idx + multiplier
+
+            for (i; i < text.length; i++) {
+                let current = Number(text[i])
+                
+                result += current % 2 === 0 ? current**power : current
+            }
+
+            i = 0
+        })
+
+        return result
+    }
+
+    bit(num = 0) {
+        let result = ''
+
+        while (num > 0) {
+            let value = num % 2
+            
+            if (value !== 0) {
+                num -= value
+            }
+
+            result += value
+            num /= 2
+        }
+
+        result = result.split('').reverse().join('')
+
+        return result
+    }
+
+    yearcontext(date = '24.02.2022') {
+        const parts = this.parts(date, '.', true)
+
+        let percent = 0
+        let season = ''
+    
+        let index = Math.floor(parts[1] / 3)
+
+        percent = Math.floor((((parts[1] - 1) * monthSize + parts[0]) / 365) * 100)
+        season = (index === 0 || parts[1] === 12) ? seasons[0] : seasons[index]
+
+        return {season, percent}
     }
 }
 

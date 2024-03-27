@@ -23,6 +23,12 @@ class HelperContainer {
         return Math.floor(num) < 10 ? `0${num}` : num 
     }
 
+    parts(text = '', marker = ':', isNum = false) {
+        let result = text.split(marker)
+
+        return isNum ? result.map(el => Number(el)) : result
+    }
+
     getDatePeriodValue(date = '', period = '') {
         let parts = date.split('.').map(el => parseInt(el))
         let index = periods.indexOf(period)
