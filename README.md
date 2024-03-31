@@ -2,11 +2,9 @@
 
 ## Story
 
-When I building small web apps on React/Preact/Angular in 2020-2023 I used to using great and heavy 
-library **Moment.js**   
+When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
 
-I had been met a lot of issues and limits working with it and decided to create something   
-on **JavaScript** in open-source
+I had met a lot of issues and limits working with it and decided to create something to use instead on my favorite language **JavaScript**
 
 
 ## Description             
@@ -14,7 +12,7 @@ on **JavaScript** in open-source
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: 1.1.8 
+* Current Version: **1.1.9**
 
 ## Links
 
@@ -30,7 +28,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 ### Datus.js API       
 
-*import {weekdaysTitles, weekdaysTags, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*      
+*import {weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*      
 
 ## Examples
 
@@ -47,15 +45,15 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 ~~~
 
-    let currentOrder = { title: 'Pizza Mozzarella 32cm', name: 'Mark', timestamp: 623 } // Julia works until 12:00, does she pick up an order?        
-    let check: boolean = currentOrder.timestamp <= datus.time('12:00', 'deconvert') // yes, Mark won't go hungry    
+    let currentOrder = { title: 'Pizza Mozzarella 32cm', name: 'Anna', timestamp: 623 } // Tomash works until 12:00, does he pick up an order?        
+    let check: boolean = currentOrder.timestamp <= datus.time('12:00', 'deconvert') // yes, Anna won't go hungry    
 
 ~~~
 
 ~~~
 
     let events = [{title: 'Battle of Marengo', date: '14.06.1800'}, {title: 'Battle of Austerlitz', date: '02.12.1805'}]        
-    let filtered = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles, which were in December 
+    let filtered = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles on December
 
 ~~~
 
@@ -67,7 +65,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**dates** (*flag* = 'week', *num* = 2, *weekday* = null) - create an array of dates since weekday (today by default) with time period iterations by *flag* ('day', 'week' or 'month'). *num* is a number of dates.     
 
--**filter** (*date*, *period* = 'day', *check* = '') - compare integer value of date's period ('day', 'month' or 'year') with condition *check* and return true/false.         
+-**filter** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
 
 -**difference** (*date*, *side* = '+', *flag* = 'day', *lock* = 10) - find difference in *flag* time period (by default days) between today and date in past or future (by *side* parameter). *lock* is a integer limit of inside date iterations to compare with *date*.     
 
@@ -81,17 +79,19 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**range** (*dates* = [], *period* = 'day') - returned difference between smallest and largest integer value of date's period ('day', 'month' or 'year') in array of unsorted dates.        
 
--**convert** (*value* = null, *key* = 'convert') - convert Arabic number to Roman and reverse, return string by default or number.             
+-**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number.             
 
--**border** (*num* = null, *isRome* = false) - receives century (number Arabic or string Roman) and returns array of first and last year of century.    
+-**border** (*num* = null, *isRome* = false) - receives century (number Indian or string Roman) and returns array of first and last year of century.    
 
--**century** (*year* = 1000, *isRome* = false) - return century in Roman/Arabic format by year (number).        
+-**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).        
 
 -**timestamp** (*format* = 'all', *divider* = '|) - returns current date or time and divides it by second parameter.      
 
 -**utc** - returns Promise with european towns's timezones.     
 
--**distinction** (*time* = '', *utc* = 0, *isNum* = true) - counts difference it time between utc event and now; returns object with distinction in format (*number of minutes* or *text*) and flag {result, isGone}.          
+-**distinction** (*time* = '', *utc* = 0, *isNum* = true) - counts difference time between utc event and now; returns object with distinction in format (*number of minutes* or *text*) and flag {result, isGone}.  
+
+-**event** (*time* = '12:00', *duration* = 90, *utc* = 1) - returns number of events that can be completed before utc time (by default CET).       
 
 -**palindrom** (*value* = '', *isDate* = true) - check if date or time is palindrom and return true/false.    
 
@@ -121,6 +121,10 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.     
 
--**bit** (*num* = 0) - converts number into binary string.   
+-**context** (*date* = '24.02.2022') - receives date and returns object with time context of the year {season, percent}.     
 
--**yearcontext** (*date* = '24.02.2022') - receives date and returns object with time context of the year {season, percent}. 
+-**year** (*difference* = 0) - returns an object {year, isLeap}, by *difference* parameter you can get more ancient year.   
+
+-**months** (*length* = 12, *isTitle* = false) - allows to get an array of months (title or number) since year beginning, slices and returns it in descending order.        
+
+-**daypart** (*time* = '12:00') - receives time and returned part of the day. 

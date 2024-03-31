@@ -98,6 +98,37 @@ let rome_nums = [
     }
 ]
 
+let day_parts = [
+    {
+        title: 'Night',
+        border: 360
+    },
+    {
+        title: 'Morning',
+        border: 600
+    },
+    {
+        title: 'Noon',
+        border: 840
+    },
+    {
+        title: 'Afternoon',
+        border: 960
+    },
+    {
+        title: 'Dusk',
+        border: 1200
+    },
+    {
+        title: 'Evening',
+        border: 1320
+    },
+    {
+        title: 'Midnight',
+        border: 1440
+    }
+]
+
 let seasons = ['Winter', 'Spring', 'Summer', 'Autumn']
 let basic_value = sizes[0].value
 let binary_check_items = [[3, 5], [4, 3, 11]] 
@@ -110,4 +141,4 @@ const minutesMin = 0
 const minutesMid = 720
 const minutesMax = 1440
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, periods, rome_nums, binary_check_items, monthSize, seasons}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, periods, rome_nums, binary_check_items, monthSize, seasons, day_parts}

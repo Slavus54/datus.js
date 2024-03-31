@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -71,10 +71,17 @@ class Core extends HelperContainer {
         return result
     }
 
-    filter(date, period = 'day', check = '') {
-        let current = this.getDatePeriodValue(date, period)
+    filter(date = '22.02.2024', period = 'day', value = 22) {
+        let result = false
+        let parts = this.parts(date, '.', true)
 
-        return eval(current+check)
+        let index = periods.indexOf(period)
+
+        index = index > 0 ? index : 0
+
+        result = parts[index] === value
+
+        return result
     }
 
     difference(date, side = '+', flag = 'day', lock = 10) {
@@ -280,13 +287,9 @@ class Core extends HelperContainer {
     }
 
     distinction(time = '', utc = 0, isNum = true) {
-        let result = 0
-        let timestamp = this.date.getUTCHours() + utc
+        let timestamp = this.getUTC(utc)
         let border = this.time(time, 'deconvert')
-
-        timestamp *= 60
-        timestamp += this.date.getMinutes()
-
+        let result = 0
         let isGone = border < timestamp
 
         result = Math.abs(border - timestamp)
@@ -297,6 +300,18 @@ class Core extends HelperContainer {
             result,
             isGone
         }
+    }
+
+    event(time = '12:00', duration = 90, utc = 1) {
+        let timestamp = this.getUTC(utc)
+        let event = this.time(time, 'deconvert') 
+        let result = 0
+
+        let difference = Math.abs(timestamp - event)
+  
+        result = Math.floor(difference / duration)
+
+        return result
     }
     
     palindrom(value = '', isDate = true) {
@@ -536,26 +551,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    bit(num = 0) {
-        let result = ''
-
-        while (num > 0) {
-            let value = num % 2
-            
-            if (value !== 0) {
-                num -= value
-            }
-
-            result += value
-            num /= 2
-        }
-
-        result = result.split('').reverse().join('')
-
-        return result
-    }
-
-    yearcontext(date = '24.02.2022') {
+    context(date = '24.02.2022') {
         const parts = this.parts(date, '.', true)
 
         let percent = 0
@@ -567,6 +563,39 @@ class Core extends HelperContainer {
         season = (index === 0 || parts[1] === 12) ? seasons[0] : seasons[index]
 
         return {season, percent}
+    }
+
+    year(difference = 0) {
+        let year = this.date.getFullYear()
+        let isLeap = false
+
+        year -= difference
+
+        isLeap = year % 4 === 0
+
+        return {year, isLeap}
+    }
+
+    months(length = 12, isTitle = false) {   
+        const date = this.parts(this.timestamp('date'), '.', true) 
+
+        let max = date[1]
+        let result = new Array(max).fill(null).map((_, idx) => max - idx)
+
+        result = result.slice(0, length)
+
+        if (isTitle) {
+            result = result.map(el => months[el - 1])
+        }
+
+        return result
+    }
+
+    daypart(time = '12:00') {
+        let minutes = this.time(time, 'deconvert')
+        let result = day_parts.find(el => minutes <= el.border)?.title
+
+        return result
     }
 }
 
