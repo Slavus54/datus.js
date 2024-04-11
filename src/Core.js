@@ -597,6 +597,115 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    nearest(time = '', arr = [], key = '') {
+        let result = null
+        let index = 0
+        let flag = true
+
+        let value = this.time(time, 'deconvert')
+        let difference = value
+
+        if (key !== '') {
+            arr = arr.map(el => el[key])
+        } 
+
+        flag = arr[0] === undefined || typeof arr[0] === 'object'
+
+        if (flag) {
+            return time
+        }
+
+        arr.map((el, idx) => {
+            let current = this.time(el, 'deconvert')
+            let diff = Math.abs(value - current)
+
+            if (current >= value && diff < difference) {
+                index = idx
+                difference = diff
+            }
+        })
+
+        result = arr[index]
+
+        return result
+    }
+
+    bit(content = '', isDate = false) {
+        let result = ''
+        let parts = this.parts(content, isDate ? '.' : ':', true)
+
+        parts = parts.map(el => {
+            let value = el
+            let current = ''
+
+            while (value > 0) {
+                let piece = value % 2
+
+                if (piece !== 0) {
+                    value -= piece
+                }
+
+                current += piece
+                value /= 2
+            }
+
+            return current
+        })
+
+        let minlength = parts.map(el => el.length).sort((a, b) => a - b)[0]
+
+        result = parts[0]
+
+        parts.map((el, idx) => {
+            let isCompare = idx < parts.length - 1
+            let current = idx === 0 ? el : result
+            let value = ''
+
+            if (isCompare) {
+                let next = parts[idx + 1]
+                let overflow = 0
+
+                for (let i = 0; i < minlength; i++) {
+                    let sum = Number(current[i]) + Number(next[i]) + overflow
+                 
+                    if (sum === 2) {
+                        value += i === minlength - 1 ? '01' : '0'
+                        overflow++
+                    } else {
+                        value += sum
+                    
+                        if (overflow > 0) {
+                            overflow = 0
+                        }
+                    }
+                }
+         
+                result = value
+            }
+        })
+
+        parts = parts.map(el => this.reverse(el))
+
+        return {result, parts}
+    }
+
+    pomodoro(time = '', num = 1, duration = 25, pause = 5, rest = 15) {
+        let result = []
+        let sum = duration + pause
+        let start = this.time(time !== '' ? time : this.timestamp('time'), 'deconvert')
+
+        for (let i = 0; i < num; i++) {
+            let index = i + 1   
+            let checked = index % 4 === 0
+
+            result = [...result, this.time(start)]
+
+            start += checked ? sum + rest : sum 
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

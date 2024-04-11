@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.1.9**
+* Current Version: **1.2.0**
 
 ## Links
 
@@ -127,4 +127,10 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**months** (*length* = 12, *isTitle* = false) - allows to get an array of months (title or number) since year beginning, slices and returns it in descending order.        
 
--**daypart** (*time* = '12:00') - receives time and returned part of the day. 
+-**daypart** (*time* = '12:00') - receives time and returned part of the day.    
+
+-**nearest** (*time* = '', *arr* = [], *key* = '') - finds among timestamps the most close to given time (after it) and returns it.    
+
+-**bit** (*content* = '', *isDate* = false) - returns object {result, parts} with converted time/date parts to binary and result of them addition.       
+
+-**pomodoro** (*time* = '', *num* = 1, *duration* = 25, *pause* = 5, *rest* = 15) - according settings gives array of timestamps of tasks beginning.      
