@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.0**
+* Current Version: **1.2.1**
 
 ## Links
 
@@ -67,7 +67,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**filter** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
 
--**difference** (*date*, *side* = '+', *flag* = 'day', *lock* = 10) - find difference in *flag* time period (by default days) between today and date in past or future (by *side* parameter). *lock* is a integer limit of inside date iterations to compare with *date*.     
+-**difference** (*date*, *flag* = 'day', *lock* = 10) - find difference in *flag* time period (by default days) between today and date in past or future. *lock* is a integer limit of inside date iterations to compare with *date*.     
 
 -**day** (*key* = 'start', *size* = 'hour') - returned number of hours/minutes/seconds after day starts (*key* = 'start') or until its end (*key* = 'end').     
 
@@ -119,18 +119,20 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**timus** (*birthdate = '02.12.2004'*) - received date of birth and returns your personal Number of Datus.   
 
--**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.     
-
--**context** (*date* = '24.02.2022') - receives date and returns object with time context of the year {season, percent}.     
+-**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.        
 
 -**year** (*difference* = 0) - returns an object {year, isLeap}, by *difference* parameter you can get more ancient year.   
 
--**months** (*length* = 12, *isTitle* = false) - allows to get an array of months (title or number) since year beginning, slices and returns it in descending order.        
-
--**daypart** (*time* = '12:00') - receives time and returned part of the day.    
+-**months** (*length* = 12, *isTitle* = false) - allows to get an array of months (title or number) since year beginning, slices and returns it in descending order.           
 
 -**nearest** (*time* = '', *arr* = [], *key* = '') - finds among timestamps the most close to given time (after it) and returns it.    
 
--**bit** (*content* = '', *isDate* = false) - returns object {result, parts} with converted time/date parts to binary and result of them addition.       
+-**bit** (*content* = '', *isDate* = false) - returns converted time/date string parts to binary.       
 
--**pomodoro** (*time* = '', *num* = 1, *duration* = 25, *pause* = 5, *rest* = 15) - according settings gives array of timestamps of tasks beginning.      
+-**pomodoro** (*time* = '', *num* = 1, *duration* = 25, *pause* = 5, *rest* = 15) - according settings gives array of timestamps of tasks beginning.               
+
+-**info** (*text* = '', *isDate* = true) - returns an object with actual information about time/date.            
+
+-**us** (*content* = '', *isDate* = true, *isRange* = false) - converts time or date into american format.    
+
+-**isWillBe** (*date* = '24.08.2024') - checking and returns true/false by proviso "Date is today or will be in the future".           

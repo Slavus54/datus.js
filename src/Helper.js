@@ -1,4 +1,4 @@
-const {sizes, months} = require('./data')
+const {sizes, months, date_sizes} = require('./data')
 
 class HelperContainer {
     percent(value = 0, total = 100, round = 1) {
@@ -50,6 +50,22 @@ class HelperContainer {
         timestamp += this.date.getMinutes()
 
         return timestamp
+    }
+
+    getDateNum(date) {
+        let check = num => num > 0
+        let parts = this.parts(date, '.', true)
+        let result = 0
+             
+        parts.map((el, index) => {
+            let value = check(index) ? el - 1 : el
+
+            value *= date_sizes[index]
+        
+            result += value
+        })
+
+        return result
     }
 }
 

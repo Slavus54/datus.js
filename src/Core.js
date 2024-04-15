@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, minutesMin} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -84,9 +84,10 @@ class Core extends HelperContainer {
         return result
     }
 
-    difference(date, side = '+', flag = 'day', lock = 10) {
+    difference(date, flag = 'day', lock = 10) {
         let result = 0
         let origin = this.move()
+        let side = this.isWillBe(date) ? '+' : '-'
         let size = this.getSize(flag) || base
       
         while (origin !== date && result < lock) {
@@ -551,20 +552,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    context(date = '24.02.2022') {
-        const parts = this.parts(date, '.', true)
-
-        let percent = 0
-        let season = ''
-    
-        let index = Math.floor(parts[1] / 3)
-
-        percent = Math.floor((((parts[1] - 1) * monthSize + parts[0]) / 365) * 100)
-        season = (index === 0 || parts[1] === 12) ? seasons[0] : seasons[index]
-
-        return {season, percent}
-    }
-
     year(difference = 0) {
         let year = this.date.getFullYear()
         let isLeap = false
@@ -587,13 +574,6 @@ class Core extends HelperContainer {
         if (isTitle) {
             result = result.map(el => months[el - 1])
         }
-
-        return result
-    }
-
-    daypart(time = '12:00') {
-        let minutes = this.time(time, 'deconvert')
-        let result = day_parts.find(el => minutes <= el.border)?.title
 
         return result
     }
@@ -632,10 +612,9 @@ class Core extends HelperContainer {
     }
 
     bit(content = '', isDate = false) {
-        let result = ''
-        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let result = this.parts(content, isDate ? '.' : ':', true)
 
-        parts = parts.map(el => {
+        result = result.map(el => {
             let value = el
             let current = ''
 
@@ -653,41 +632,9 @@ class Core extends HelperContainer {
             return current
         })
 
-        let minlength = parts.map(el => el.length).sort((a, b) => a - b)[0]
+        result = result.map(el => this.reverse(el))
 
-        result = parts[0]
-
-        parts.map((el, idx) => {
-            let isCompare = idx < parts.length - 1
-            let current = idx === 0 ? el : result
-            let value = ''
-
-            if (isCompare) {
-                let next = parts[idx + 1]
-                let overflow = 0
-
-                for (let i = 0; i < minlength; i++) {
-                    let sum = Number(current[i]) + Number(next[i]) + overflow
-                 
-                    if (sum === 2) {
-                        value += i === minlength - 1 ? '01' : '0'
-                        overflow++
-                    } else {
-                        value += sum
-                    
-                        if (overflow > 0) {
-                            overflow = 0
-                        }
-                    }
-                }
-         
-                result = value
-            }
-        })
-
-        parts = parts.map(el => this.reverse(el))
-
-        return {result, parts}
+        return result
     }
 
     pomodoro(time = '', num = 1, duration = 25, pause = 5, rest = 15) {
@@ -705,6 +652,61 @@ class Core extends HelperContainer {
         }
 
         return result
+    }
+
+    info(text = '', isDate = true) {
+        let result = {}
+        let parts = this.parts(text, isDate ? '.' : ':', true) 
+
+        if (isDate) {
+
+            let seasonFlag = parts[1] + 1 < seasons.length
+            let seasonIdx = seasonFlag ? 0 : Math.floor(parts[1] / seasons.length) + 1
+
+            let century = Math.ceil(parts[2] / 1e2) 
+            let month = months[parts[1] - 1]
+            let season = seasons[seasonIdx] === undefined ? seasons[0] : seasons[seasonIdx]
+            let decade = Math.floor(parts[0] / 10)
+            let isLeap = parts[2] % 4 === 0
+            let percent = Math.floor(((parts[1] - 1) * monthSize + parts[0]) / (isLeap ? 366 : 365) * 1e2)
+
+            result = {...result, century, month, season, decade, percent, isLeap}
+
+        } else {
+
+            let minutes = this.time(text, 'deconvert')
+            let residue = minutes % 60
+            let part = day_parts.find(el => minutes <= el.border)?.title
+            let isHalf = minutes >= minutesMid
+
+            result = {...result, minutes, residue, part, isHalf}
+        }
+
+        return result
+    }
+
+    us(content = '', isDate = true, isRange = false) {
+        let result = content
+
+        if (isDate) {
+            let parts = this.parts(content, '.', true)
+
+            result = [...parts.reverse().slice(1), parts[0]].join('.')
+        } else {
+            let value = this.time(result, 'deconvert')
+            let checked = Boolean(Math.floor(value / minutesMid))
+            let method = isRange ? 'ceil' : 'floor'
+
+            result = Math[method]((checked ? value - minutesMid : value) / 60) + ' ' + (checked ? 'pm' : 'am')
+        }
+
+        return result
+    }
+
+    isWillBe(date = '24.08.2024') {
+        let nums = [this.timestamp('date'), date].map(el => this.getDateNum(el))
+        
+        return nums[0] <= nums[1]
     }
 }
 
