@@ -1,10 +1,10 @@
 # Datus.JS       
 
-## Story
+## History
 
 When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
 
-I had met a lot of issues and limits working with it and decided to create something to use instead on my favorite language **JavaScript**
+I had met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**
 
 
 ## Description             
@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.1**
+* Current Version: **1.2.2**
 
 ## Links
 
@@ -135,4 +135,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**us** (*content* = '', *isDate* = true, *isRange* = false) - converts time or date into american format.    
 
--**isWillBe** (*date* = '24.08.2024') - checking and returns true/false by proviso "Date is today or will be in the future".           
+-**isWillBe** (*date* = '24.08.2024') - checking and returns true/false by proviso "Date is today or will be in the future".                
+
+-**num** (*digit* = 1) - randomly generates integer 0 <= x <= 8991, choosing multiplier inside method's formula by parameter *digit*.            
+
+-**reading** (*text* = '', *isNum* = true) - returns minutes of text's reading duration in different formats.       

@@ -1,6 +1,6 @@
 {
   "name": "datus.js",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Library for manage date with different methods of custom formatting",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,8 @@
     "timezone",
     "validate",
     "clock",
-    "pomodoro"
+    "pomodoro",
+    "reading"
   ],
   "author": "Slavus54",
   "license": "NSTU",

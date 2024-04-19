@@ -708,6 +708,26 @@ class Core extends HelperContainer {
         
         return nums[0] <= nums[1]
     }
+
+    num(digit = 1) {
+        let text = String(this.value)
+        let part = text.split('').reverse().slice(0, 3).join('')
+        let result = 0
+    
+        part = Number(part)
+        digit = digit < text.length ? digit : text.length - 1
+   
+        result = part * Number(text[digit])
+
+        return result
+    }
+
+    reading(text = '', isNum = true) {
+        let words = text.split(' ').length
+        let result = Math.floor(words / 140)
+
+        return isNum ? result : this.time(result)
+    }
 }
 
 module.exports = Core
