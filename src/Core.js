@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, minutesMin} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -727,6 +727,25 @@ class Core extends HelperContainer {
         let result = Math.floor(words / 140)
 
         return isNum ? result : this.time(result)
+    }
+
+    cat(date = '', max = 100) {
+        let age = this.difference(date, '-', 1e7) / 365
+        let result = 12 + (age - 2) * 4
+
+        result = Math.floor(result / 100 * max)
+
+        return result
+    }
+
+    war(size = 'day') {
+        let days = this.difference(war_date, '-', 1e7)
+        let result = 0
+
+        size = this.getSize(size) / base
+        result = Math.floor(days / size)
+        
+        return result
     }
 }
 

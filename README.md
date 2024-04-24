@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.2**
+* Current Version: **1.2.3**
 
 ## Links
 
@@ -140,3 +140,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 -**num** (*digit* = 1) - randomly generates integer 0 <= x <= 8991, choosing multiplier inside method's formula by parameter *digit*.            
 
 -**reading** (*text* = '', *isNum* = true) - returns minutes of text's reading duration in different formats.       
+
+-**cat** (*date* = '', *max* = 100) - converts duration of cat's life (starts by parameter *date*) into human age according life expectancy by parameter *max*.    
+
+-**war** (*size* = 'day') - returns number of days or any other period type by parameter *size* since russian-ukrainian war starts.  
