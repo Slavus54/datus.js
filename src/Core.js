@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date, zodiacSigns} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -509,6 +509,7 @@ class Core extends HelperContainer {
 
     timus(birthdate = '02.12.2004') {
         const monthmax = 6
+
         let parts = this.parts(birthdate, '.', true)
         let year = parts[2]
         let result = 0 
@@ -745,6 +746,32 @@ class Core extends HelperContainer {
         size = this.getSize(size) / base
         result = Math.floor(days / size)
         
+        return result
+    }
+
+    zodiac(date = '') {
+        let year = this.parts(date, '.', true)[2]
+        let difference = Math.abs(year - 1900)
+        let index = difference % months.length
+        let result = ''
+
+        result = zodiacSigns[index]
+
+        return result
+    }
+
+    func(time = '12:30', body = '', marker = 'x') {
+        let parts = this.parts(time, ':', true)
+        let value = eval(this.splin(body, marker, parts[0]))
+        let result = value === parts[1]
+
+        return result
+    }
+
+    isWeekend() {
+        let index = this.date.getDay()
+        let result = (weekdays.length - index) < Math.floor(weekdays.length / 3) 
+
         return result
     }
 }

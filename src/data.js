@@ -137,6 +137,8 @@ let day_parts = [
     }
 ]
 
+const zodiacSigns = ['Rat', 'Bull', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Hourse', 'Goat', 'Monkey', 'Cock', 'Dog']
+
 const time_start = '00:00'
 const monthSize = 29.53
 const minutesMin = 0
@@ -149,4 +151,4 @@ let binary_check_items = [[3, 5], [4, 3, 11]]
 let date_sizes = [1, monthSize, 365]
 let war_date = '24.02.2022'
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns}
