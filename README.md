@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.4**
+* Current Version: **1.2.5**
 
 ## Links
 
@@ -150,3 +150,9 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 -**func** (*time* = '12:30', *body* = '', *marker* = 'x') - validates time hours and compared it to minutes by formula.     
 
 -**isWeekend** (*time* = '12:30', *body* = '', *marker* = 'x') - checks and returns if today is Saturday/Sunday.    
+
+-**replace** (*content* = '', *isDate* = true) - swaps time/date parts and returns result.      
+
+-**late** (*time* = '12:30', *deadline* = '12:30', *duration* = 0) - counts % of time waste when you late.    
+
+-**circle** (*radius* = 1, *speed* = 1, *isMeters* = false) - returns time of moving on circle.    

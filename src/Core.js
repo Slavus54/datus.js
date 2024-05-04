@@ -774,6 +774,44 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    replace(content = '', isDate = true) {
+        let marker = isDate ? '.' : ':'
+        let parts = this.parts(content, marker)
+        let result = ''
+        
+        parts.map(el => {
+            let middle = Math.floor(el.length / 2)
+            let first = el.slice(0, middle)
+            let second = el.slice(middle)
+    
+            result += second + first + marker
+        })
+        
+        result = result.slice(0, result.length - 1)
+
+        return result
+    }
+
+    late(time = '12:30', deadline = '12:30', duration = 0) {
+        let difference = Math.abs(this.time(time, 'deconvert') - this.time(deadline, 'deconvert')) 
+        let result = Math.floor((difference / duration) * 100)
+
+        return result
+    }
+
+    circle(radius = 1, speed = 1, isMeters = false) {
+        let distance = radius * 2e-3 * Math.PI * 60
+        let result = 0
+
+        if (isMeters) {
+            speed *= 3.6
+        }
+
+        result = this.time(Math.floor(distance / speed))
+
+        return result
+    }
 }
 
 module.exports = Core
