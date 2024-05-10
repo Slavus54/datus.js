@@ -137,9 +137,48 @@ let day_parts = [
     }
 ]
 
+const solarSystemPlanets = [
+    {
+      name: 'Mercury',
+      dayDuration: 4194.8
+    },
+    {
+      name: 'Venus',
+      dayDuration: 2802
+    },
+    {
+      name: 'Earth',
+      dayDuration: 24
+    },
+    {
+      name: 'Mars',
+      dayDuration: 24.7
+    },
+    {
+      name: 'Jupiter',
+      dayDuration: 9.9
+    },
+    {
+      name: 'Saturn',
+      dayDuration: 10.7
+    },
+    {
+      name: 'Uranus',
+      dayDuration: 17.2
+    },
+    {
+      name: 'Neptune',
+      dayDuration: 16.1
+    }
+]
+
 const zodiacSigns = ['Rat', 'Bull', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Hourse', 'Goat', 'Monkey', 'Cock', 'Dog']
 
+const abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+const specs = ['$', '^', '&', '@']
+
 const time_start = '00:00'
+const generationWeight = 25
 const monthSize = 29.53
 const minutesMin = 0
 const minutesMid = 720
@@ -151,4 +190,4 @@ let binary_check_items = [[3, 5], [4, 3, 11]]
 let date_sizes = [1, monthSize, 365]
 let war_date = '24.02.2022'
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs}

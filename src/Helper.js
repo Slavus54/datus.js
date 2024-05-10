@@ -29,6 +29,10 @@ class HelperContainer {
         return isNum ? result.map(el => Number(el)) : result
     }
 
+    getYearSize(year) {
+        return year % 4 === 0 ? 366 : 365
+    }
+
     getMonth(month) {
         let result = months.find(el => el.includes(month))
         let check = result !== undefined

@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date, zodiacSigns} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -469,7 +469,7 @@ class Core extends HelperContainer {
 
     part(num = 0, size = 'day') {
         let result = 0
-        let days = this.date.getFullYear() % 4 === 0 ? 366 : 365
+        let days = this.getYearSize(this.date.getFullYear())
         
         size = this.getSize(size) / base
 
@@ -810,6 +810,56 @@ class Core extends HelperContainer {
 
         result = this.time(Math.floor(distance / speed))
 
+        return result
+    }
+
+    generation(age = 18, num = 5) {
+        let year = this.parts(this.timestamp('date'), '.', true)[2]
+        let result = Math.floor(year - (age + generationWeight * num))
+
+        return result
+    }
+
+    space(num = 1, size = 'day', title = 'Earth') {
+        const planet = solarSystemPlanets.find(el => el.name === title)
+        let result = num
+
+        if (planet !== undefined) {
+            let value = this.getSize(size)
+
+            result = Math.floor(planet.dayDuration * num * value / base)
+        }
+
+        return result
+    }
+
+    encode(content = '', isDate = true, formula = '(x + 1) / 2', marker = 'x') {
+        let parts = this.parts(content, isDate ? '.' : ':')
+        let sum = 0
+        let result = ''
+
+        parts.map((el, idx) => {
+            let nums = el.split('')
+            let counter = 0
+            
+            nums.map(elem => {
+                const num = Number(elem)
+                let index = num + idx + 1
+           
+                let letter = abc[index]
+
+                counter += num
+                result += index % 2 ? letter.toUpperCase() : letter
+            })
+
+            let number = Math.abs(eval(this.splin(formula, marker, Math.floor(counter / nums.length))))
+
+            result += number
+            sum += number
+        })
+
+        result += specs[sum % specs.length]
+    
         return result
     }
 }
