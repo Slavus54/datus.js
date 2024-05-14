@@ -19,6 +19,10 @@ class HelperContainer {
         return num < 10 ? `0${num}` : num 
     }
 
+    toRound(result, round = 0) {
+        return parseFloat(result.toFixed(round))
+    }
+ 
     toNum(num) {
         return Math.floor(num) < 10 ? `0${num}` : num 
     }

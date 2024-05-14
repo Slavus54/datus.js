@@ -862,6 +862,53 @@ class Core extends HelperContainer {
     
         return result
     }
+
+    rate(time = '12:30', cost = 1, round = 1) {
+        let start = this.time(this.timestamp('time'), 'deconvert')
+        let end = this.time(time, 'deconvert')
+        let difference = Math.abs(end - start)
+        let result = 0 
+    
+        if (start <= end) {
+            result = this.toRound(difference / 60 * cost, round)
+        }
+    
+        return result
+    }
+    
+    vacation(days = 0) {
+        let max = this.getYearSize(this.date.getFullYear())
+        let period = Math.floor(max / days)
+        let results = []
+    
+        for (let i = 0; i < days; i++) {
+            let date = this.move('day', '+', period * i)
+    
+            results = [...results, date]
+        }
+    
+        return {days: results, period}
+    }
+     
+    endOfMonth(date = '') { 
+        let parts = this.parts(date, '.', true)
+        let month = parts[1]
+        let isEven = month % 2 === 0
+        let size = 0
+        let result = 0
+    
+        if (isEven && month < 7) {
+            size = month === 2 ? this.getYearSize(parts[2]) === 365 ? 28 : 29 : 30
+        } else if (!isEven && month > 7) {
+            size = 30
+        } else {
+            size = 31
+        }
+    
+        result = size - parts[0]
+    
+        return result
+    }
 }
 
 module.exports = Core
