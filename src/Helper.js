@@ -2,7 +2,7 @@ const {sizes, months, date_sizes} = require('./data')
 
 class HelperContainer {
     percent(value = 0, total = 100, round = 1) {
-        let result = value / total * 100
+        let result = value / total * 1e2
         
         return round === 0 ? Math.floor(result) : parseFloat(result.toFixed(round))
     }

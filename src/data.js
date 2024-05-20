@@ -176,6 +176,7 @@ const zodiacSigns = ['Rat', 'Bull', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Hours
 
 const abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
 const specs = ['$', '^', '&', '@']
+const periods = ['day', 'month', 'year']
 
 const time_start = '00:00'
 const generationWeight = 25
@@ -190,4 +191,4 @@ let binary_check_items = [[3, 5], [4, 3, 11]]
 let date_sizes = [1, monthSize, 365]
 let war_date = '24.02.2022'
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods}

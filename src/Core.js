@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, periods, day_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -553,9 +553,13 @@ class Core extends HelperContainer {
         return result
     }
 
-    year(difference = 0) {
+    year(difference = 0, isRome = false) {
         let year = this.date.getFullYear()
         let isLeap = false
+
+        if (isRome) {
+            year += 753
+        } 
 
         year -= difference
 
@@ -907,6 +911,22 @@ class Core extends HelperContainer {
     
         result = size - parts[0]
     
+        return result
+    }
+
+    capital(num = 1, period = 'day', rate = 1) {
+        let size = this.getSize(period)
+        let result = Math.floor(num * rate * size * 24 / base)
+
+        return result
+    }
+
+    deviation(step = 600, round = 0) {
+        let border = this.time(this.timestamp('time'), 'deconvert')
+        let piece = border % step
+        let difference = this.percent(piece, step, round)
+        let result = border < step ? 1e2 - difference : difference
+       
         return result
     }
 }

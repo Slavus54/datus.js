@@ -12,7 +12,7 @@ I had met a lot of issues and limits working with it and decided to create somet
 JavaScript library to handling, parsing, validation, formatting date or time.   
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.7**
+* Current Version: **1.2.8**
 
 ## Links
 
@@ -121,7 +121,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.        
 
--**year** (*difference* = 0) - returns an object {year, isLeap}, by *difference* parameter you can get more ancient year.   
+-**year** (*difference* = 0, *isRome* = false) - returns an object {year, isLeap}, by *difference* parameter you can get more ancient year from Jesus's birthday or Rome's foundation.   
 
 -**months** (*length* = 12, *isTitle* = false) - allows to get an array of months (title or number) since year beginning, slices and returns it in descending order.           
 
@@ -168,3 +168,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 -**vacation** (*days* = 0) - returns evenly distributed list of vacation's days per year and period.        
 
 -**endOfMonth** (*date* = '') - counts number of days to end date's month.    
+
+-**capital** (*num* = 1, *period* = 'day', *rate* = 1) - returns earned money for any period by hour rate.        
+
+-**deviation** (*step* = 600, *round* = 0) - counts absolute difference in % between now and *step*.            
