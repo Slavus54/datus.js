@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -71,7 +71,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    filter(date = '22.02.2024', period = 'day', value = 22) {
+    filterByValue(date = '22.02.2024', period = 'day', value = 22) {
         let result = false
         let parts = this.parts(date, '.', true)
 
@@ -927,6 +927,46 @@ class Core extends HelperContainer {
         let difference = this.percent(piece, step, round)
         let result = border < step ? 1e2 - difference : difference
        
+        return result
+    }
+
+    filterBySchema(content = '', isDate = true, schema = '', index = 0) {
+        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let result = true
+
+        if (schema.length === 0 | parts.length === 1) {
+            return result
+        }
+
+        let code = this.splin(schema, 'x', parts[index])
+
+        result = eval(code)
+
+        return result
+    }
+
+    similarity(content = '', isDate = true, mask = '') {
+        let symbol = isDate ? '.' : ':'
+        let result = 0
+
+        if (content.length === 0 | mask === '') {
+            return result
+        }
+        
+        let initialParts = this.parts(content, symbol).map(el => el.split('')).flat(1)
+        let amount = Math.floor(1e2 / initialParts.length)
+        let index = 0
+
+        mask.split(symbol).map((el) => {
+            el.split('').map((part) => {
+                if (initialParts[index] === part) {
+                    result += amount
+                }
+
+                index++
+            })
+        })
+
         return result
     }
 }

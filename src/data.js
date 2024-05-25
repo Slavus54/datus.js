@@ -184,6 +184,7 @@ const monthSize = 29.53
 const minutesMin = 0
 const minutesMid = 720
 const minutesMax = 1440
+const timePartsBorders = [23, 59]
 
 let seasons = ['Winter', 'Spring', 'Summer', 'Autumn']
 let basic_value = sizes[0].value
@@ -191,4 +192,4 @@ let binary_check_items = [[3, 5], [4, 3, 11]]
 let date_sizes = [1, monthSize, 365]
 let war_date = '24.02.2022'
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders}

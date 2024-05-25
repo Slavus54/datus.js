@@ -4,15 +4,16 @@
 
 When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
 
-I had met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**
+I had met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**   
 
+Finally, it almost done, I hope you can try it or improve...    
 
 ## Description             
 
-JavaScript library to handling, parsing, validation, formatting date or time.   
+JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.8**
+* Current Version: **1.2.9**
 
 ## Links
 
@@ -65,7 +66,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**dates** (*flag* = 'week', *num* = 2, *weekday* = null) - create an array of dates since weekday (today by default) with time period iterations by *flag* ('day', 'week' or 'month'). *num* is a number of dates.     
 
--**filter** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
+-**filterByValue** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
 
 -**difference** (*date*, *flag* = 'day', *lock* = 10) - find difference in *flag* time period (by default days) between today and date in past or future. *lock* is a integer limit of inside date iterations to compare with *date*.     
 
@@ -171,4 +172,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**capital** (*num* = 1, *period* = 'day', *rate* = 1) - returns earned money for any period by hour rate.        
 
--**deviation** (*step* = 600, *round* = 0) - counts absolute difference in % between now and *step*.            
+-**deviation** (*step* = 600, *round* = 0) - counts absolute difference in % between now and *step*.    
+
+-**filterBySchema** (*content* = '', *isDate* = true, *schema* = '', *index* = 0) - check date or time period by running code in *schema*.        
+
+-**similarity** (*content* = '', *isDate* = true, *mask* = '') - compare date/time with *mast* and returns % analogy by cheking each period.           
