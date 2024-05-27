@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -265,7 +265,7 @@ class Core extends HelperContainer {
         return isRome ? this.convert(num, 'convert') : num
     }
     
-    timestamp(format = 'all', divider = '|') {
+    now(format = 'all', divider = '|') {
         let minutes = this.date.getHours() * 60 + this.date.getMinutes()
         let date = this.move()
         let time = this.time(minutes)
@@ -968,6 +968,34 @@ class Core extends HelperContainer {
         })
 
         return result
+    }
+
+    interval(time = 1, code = '', callStack = 1e3) {
+        let counter = 1
+
+        if (code === '') {
+            return 0
+        }
+        
+        const ref = setInterval(() => {
+            eval(code)
+            
+            if (counter === callStack) {
+                clearInterval(ref)
+            }  
+
+            counter++
+        }, time * 1e3)           
+    }
+
+    timeout(delay = 0, code = '') {
+        if (code.length === 0) {
+            return 0
+        }
+
+        setTimeout(() => {  
+            eval(code)
+        }, delay * 1e3)
     }
 }
 

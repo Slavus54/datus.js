@@ -13,7 +13,7 @@ Finally, it almost done, I hope you can try it or improve...
 JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.2.9**
+* Current Version: **1.3.0**
 
 ## Links
 
@@ -36,7 +36,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 ~~~ 
 
     let counter = 0  
-    let date = datus.move() // to set today's date also use .timestamp('date')         
+    let date = datus.move() // to set today's date also use .now('date')         
 
     counter = Number(typeof null === 'object') // JS is awesome
 
@@ -86,7 +86,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).        
 
--**timestamp** (*format* = 'all', *divider* = '|) - returns current date or time and divides it by second parameter.      
+-**now** (*format* = 'all', *divider* = '|) - returns current date or time and divides it by second parameter.      
 
 -**utc** - returns Promise with european towns's timezones.     
 
@@ -176,4 +176,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**filterBySchema** (*content* = '', *isDate* = true, *schema* = '', *index* = 0) - check date or time period by running code in *schema*.        
 
--**similarity** (*content* = '', *isDate* = true, *mask* = '') - compare date/time with *mast* and returns % analogy by cheking each period.           
+-**similarity** (*content* = '', *isDate* = true, *mask* = '') - compare date/time with *mast* and returns % analogy by cheking each period.    
+
+-**interval** (*time* = 1, *code* = '', *callStack* = 1e3) - runs your code in interval by time limit.     
+
+-**timeout** (*delay* = 0, *code* = '') - runs your code after delay (in seconds).  

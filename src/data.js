@@ -190,6 +190,8 @@ let seasons = ['Winter', 'Spring', 'Summer', 'Autumn']
 let basic_value = sizes[0].value
 let binary_check_items = [[3, 5], [4, 3, 11]] 
 let date_sizes = [1, monthSize, 365]
+let time_sizes = [60, 1]
 let war_date = '24.02.2022'
+let initial_date_parts = [1, 1, 1970]
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders}
