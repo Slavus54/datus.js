@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders, datePartsBorders} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -36,7 +36,7 @@ class Core extends HelperContainer {
 
         let pieces = new Date(value).toString().split(' ')
   
-        result = `${pieces[2]}.${this.getMonth(pieces[1]).index}.${pieces[3]}`
+        result = `${pieces[2]}.${this.rounding(months.findIndex(el => el.includes(pieces[1])) + 1)}.${pieces[3]}`
 
         return result
     }
@@ -484,11 +484,13 @@ class Core extends HelperContainer {
         return result
     }
 
-    term(num = 10) {
-        let value = parseInt(Math.random() * num)
-        let period = sizes[Math.floor(Math.random() * sizes.length)]?.title
+    period(num = 1e2) {
+        let size = sizes[Math.floor(sizes.length * Math.random())]
+        let value = Math.floor(num * Math.random())
 
-        return {value, period}
+        let result = `${value} ${size.title}s`
+
+        return result
     }
 
     walking(value = 10, size = 'minute', speed = '*') {
@@ -896,21 +898,8 @@ class Core extends HelperContainer {
      
     endOfMonth(date = '') { 
         let parts = this.parts(date, '.', true)
-        let month = parts[1]
-        let isEven = month % 2 === 0
-        let size = 0
-        let result = 0
-    
-        if (isEven && month < 7) {
-            size = month === 2 ? this.getYearSize(parts[2]) === 365 ? 28 : 29 : 30
-        } else if (!isEven && month > 7) {
-            size = 30
-        } else {
-            size = 31
-        }
-    
-        result = size - parts[0]
-    
+        let result = this.getMonthSize(parts[1], parts[2]) - parts[0]
+
         return result
     }
 
@@ -996,6 +985,50 @@ class Core extends HelperContainer {
         setTimeout(() => {  
             eval(code)
         }, delay * 1e3)
+    }
+
+    matrix(time = '', size = 1, step = 0, delay = 30) {
+        let result = []
+
+        if (time.length === 0) {
+            return result
+        }
+
+        let start = this.time(time, 'deconvert')
+        let value
+
+        new Array(size).fill(null).map((_, idx) => {
+            let times = []
+
+            for (let i = 0; i < size; i++) {
+                value = start + idx * delay + i * step
+
+                let time = this.time(value)
+
+                times = [...times, time]               
+            }
+
+            result = [...result, times]
+        })
+
+        return result
+    }
+
+    percentage(time = '', round = 0) {
+        let result = []
+        
+        if (time.length === 0) {
+            return result
+        }
+        
+        let value = this.time(time, 'deconvert')
+        let hours = this.percent(Math.floor(value / 60), 24, round)
+        let minutes = this.percent(Math.floor(value % 60), 60, round)
+        let all = this.percent(value, minutesMid * 2, round)
+    
+        result = [all, hours, minutes]
+
+        return result
     }
 }
 

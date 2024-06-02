@@ -6,14 +6,14 @@ When I had been building web apps on React since 2020 I used to manipulate dates
 
 I had met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**   
 
-Finally, it almost done, I hope you can try it or improve...    
+Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
 
 ## Description             
 
 JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.0**
+* Current Version: **1.3.1**
 
 ## Links
 
@@ -114,7 +114,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**duration** (*distance* = 10, *speed* = 1, *size* = 'hour') - solves problem to count duration in any format when we have distance (in km) and speed (km/h).  
 
--**term** (*num* = 10) - receives number border and returns an object with random {value, period} to get any term.     
+-**period** (*num* = 1e2) - receives number border and returns text of time period with random generated number.         
 
 -**walking** (*value* = 10, *size* = 'minute', *speed* = '*') - received time period and returns number of steps to walking while it.      
 
@@ -180,4 +180,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**interval** (*time* = 1, *code* = '', *callStack* = 1e3) - runs your code in interval by time limit.     
 
--**timeout** (*delay* = 0, *code* = '') - runs your code after delay (in seconds).  
+-**timeout** (*delay* = 0, *code* = '') - runs your code after delay (in seconds).    
+
+-**matrix** (*time* = '', *size* = 1, *step* = 0, *delay* = 30) - builds matrix of times with *step* and *delay* of each matrix row in minutes.  
+ 
+-**percentage** (*time* = '', *round* = 0) - returns an array of rounded numbers, which are % of each time part from its maximum.   

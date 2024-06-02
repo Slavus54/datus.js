@@ -1,12 +1,18 @@
 const {sizes, months, date_sizes} = require('./data')
 
 class HelperContainer {
-    percent(value = 0, total = 100, round = 1) {
+    percent(value = 0, total = 1e2, round = 1) {
         let result = value / total * 1e2
         
-        return round === 0 ? Math.floor(result) : parseFloat(result.toFixed(round))
+        return this.toRound(result, round)
     }
 
+    cleanValue(value = 0, total = 1e2, round = 0) {
+        let result = value / 1e2 * total
+
+        return this.toRound(result, round)
+    }
+    
     splin(value = '', first, second) {
         return value.split(first).join(second)
     }
@@ -16,7 +22,7 @@ class HelperContainer {
     }
 
     rounding(num) {
-        return num < 10 ? `0${num}` : num 
+        return num < 1e1 ? `0${num}` : num 
     }
 
     toRound(result, round = 0) {
@@ -24,7 +30,7 @@ class HelperContainer {
     }
  
     toNum(num) {
-        return Math.floor(num) < 10 ? `0${num}` : num 
+        return Math.floor(num) < 1e1 ? `0${num}` : num 
     }
 
     parts(text = '', marker = ':', isNum = false) {
@@ -37,16 +43,6 @@ class HelperContainer {
         return year % 4 === 0 ? 366 : 365
     }
 
-    getMonth(month) {
-        let result = months.find(el => el.includes(month))
-        let check = result !== undefined
-
-        let title = check ? result : months[0]
-        let index = check ? months.indexOf(title) + 1 : 0
-
-        return {title, index: this.toNum(index)}
-    }
-
     getSize(flag) {
         return sizes.find(el => el.title === flag)?.value
     }
@@ -54,7 +50,7 @@ class HelperContainer {
     getUTC(utc =  0) {
         let timestamp = this.date.getUTCHours() + utc
 
-        timestamp *= 60
+        timestamp *= 6e1
         timestamp += this.date.getMinutes()
 
         return timestamp
@@ -74,6 +70,21 @@ class HelperContainer {
         })
 
         return result
+    }
+
+    getMonthSize(index = 0, year = 0) {
+        let isEven = index % 2 === 0
+        let size = 0    
+    
+        if (isEven && index < 7) {
+            size = index === 2 ? this.getYearSize(year) === 365 ? 28 : 29 : 3e1
+        } else if (!isEven && index > 7) {
+            size = 30
+        } else {
+            size = 31
+        }
+       
+        return size
     }
 }
 
