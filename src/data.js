@@ -176,7 +176,8 @@ const zodiacSigns = ['Rat', 'Bull', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Hours
 
 const abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
 const specs = ['$', '^', '&', '@']
-const periods = ['day', 'month', 'year']
+const datePeriods = ['day', 'month', 'year']
+const timePeriods = ['hour', 'minute']
 
 const time_start = '00:00'
 const generationWeight = 25
@@ -185,7 +186,7 @@ const minutesMin = 0
 const minutesMid = 720
 const minutesMax = 1440
 const timePartsBorders = [23, 59]
-const datePartsBorders = [31, 12, 2050]
+const datePartsBorders = [31, 12, 21e2]
 
 let seasons = ['Winter', 'Spring', 'Summer', 'Autumn']
 let basic_value = sizes[0].value
@@ -195,4 +196,4 @@ let time_sizes = [60, 1]
 let war_date = '24.02.2022'
 let initial_date_parts = [1, 1, 1970]
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders, datePartsBorders}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, datePeriods, timePeriods, timePartsBorders, datePartsBorders}

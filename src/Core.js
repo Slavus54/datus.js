@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, periods, timePartsBorders, datePartsBorders} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, datePeriods, timePeriods, timePartsBorders, datePartsBorders} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -75,7 +75,7 @@ class Core extends HelperContainer {
         let result = false
         let parts = this.parts(date, '.', true)
 
-        let index = periods.indexOf(period)
+        let index = datePeriods.indexOf(period)
 
         index = index > 0 ? index : 0
 
@@ -1029,6 +1029,76 @@ class Core extends HelperContainer {
         result = [all, hours, minutes]
 
         return result
+    }
+
+    distance(start = '', end = '', size = 'day') {
+        if (start.length === 0 | end === '') {
+            return ''
+        }
+
+        let result = 0 
+
+        let firstParts = this.parts(start, '.', true)
+        let secondParts = this.parts(end, '.', true)
+
+        let firstValue = 0
+        let secondValue = 0
+
+        let isForward = true
+
+        date_sizes.map((el, idx) => {
+            firstValue += el * firstParts[idx]
+            secondValue += el * secondParts[idx]
+        })
+
+        isForward = firstValue <= secondValue
+
+        let differences = date_sizes.map((el, idx) => Math.abs(firstParts[idx] - secondParts[idx]) * el)
+        
+        result = differences[2] 
+
+        let isMonthLess = firstParts[1] < secondParts[1]
+        let isDaysLess = firstParts[0] < secondParts[0]
+
+        let monthOperationResult = (flag) => flag && isForward ? result + differences[1] : result - differences[1]
+        let daysOperationResult = (flag) => flag && isForward ? differences[0] : date_sizes[0] - differences[0]
+
+        result = monthOperationResult(isMonthLess)
+        result += daysOperationResult(isDaysLess) 
+      
+        result = Math.ceil(Math.abs(result * base / this.getSize(size)))
+
+        return result
+    }
+
+    isEven(content = '', isDate = true) {
+        let items = []
+        let GCD = 0
+        
+        if (content.length === 0) {
+            return {items, GCD}
+        }
+
+        let parts = this.parts(content, isDate ? '.' : ':', true)
+
+        parts.map((el, idx) => {
+            let current = el
+            let next = parts[idx + 1]
+            
+            // euclidean algorithm
+
+            while (current && next && current !== next) {
+                [current, next] = current > next ? [current - next, next] : [current, next - current]
+            }
+
+            if (next) {
+                GCD = current
+            }
+          
+            items = [...items, el % 2 === 0]
+        })
+
+        return {items, GCD}
     }
 }
 

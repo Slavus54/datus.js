@@ -13,7 +13,7 @@ Now I'm looking for new features and hope you can help me and other developers t
 JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.1**
+* Current Version: **1.3.2**
 
 ## Links
 
@@ -184,4 +184,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**matrix** (*time* = '', *size* = 1, *step* = 0, *delay* = 30) - builds matrix of times with *step* and *delay* of each matrix row in minutes.  
  
--**percentage** (*time* = '', *round* = 0) - returns an array of rounded numbers, which are % of each time part from its maximum.   
+-**percentage** (*time* = '', *round* = 0) - returns an array of rounded numbers, which are % of each time part from its maximum.      
+
+-**distance** (*start* = '', *end* = '', *size* = 'day') - counts difference between 2 dates in *size* and returns it.      
+
+-**isEven** (*content* = '', *isDate* = true) - checking parts of date/time and returns boolean flag items "Is it even ?" + GCD (greatest common divisor).      
