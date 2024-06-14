@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, datePeriods, timePeriods, timePartsBorders, datePartsBorders} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -1099,6 +1099,53 @@ class Core extends HelperContainer {
         })
 
         return {items, GCD}
+    }
+
+    isTime(content) {
+        let result = typeof content === 'string'
+
+        if (result === true) {
+            let parts = this.parts(content, ':', true) 
+
+            result = parts.length === 2
+
+            parts.map((el, idx) => {
+                let border = timePartsBorders[idx]
+
+                if (result === true) {
+                    result = el <= border && el >= 0
+                }
+            })
+        }
+
+        return result
+    }
+
+    timestamp(date = '', time = '') {
+        if (date === '') {
+            return 0 
+        }
+
+        let parts = this.parts(date, '.', true)
+        let result = 0
+
+        date_sizes.map((el, idx) => {
+            result += Math.floor(Math.abs(parts[idx] - initial_date_parts[idx]) * el)
+        })
+
+        result *= base
+
+        let flag = this.isTime(time)
+        
+        if (flag === true) {
+            parts = this.parts(time, ':', true)
+        
+            time_sizes.map((el, idx) => {
+                result += el * parts[idx] * 1e3
+            })
+        }
+
+        return result
     }
 }
 

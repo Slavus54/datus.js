@@ -13,7 +13,7 @@ Now I'm looking for new features and hope you can help me and other developers t
 JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.2**
+* Current Version: **1.3.3**
 
 ## Links
 
@@ -188,4 +188,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**distance** (*start* = '', *end* = '', *size* = 'day') - counts difference between 2 dates in *size* and returns it.      
 
--**isEven** (*content* = '', *isDate* = true) - checking parts of date/time and returns boolean flag items "Is it even ?" + GCD (greatest common divisor).      
+-**isEven** (*content* = '', *isDate* = true) - checking parts of date/time and returns boolean flag items "Is it even ?" + GCD (greatest common divisor).   
+
+-**isTime** (*content*) - validate *content* value on time format HH:MM.    
+
+-**timestamp** (*date* = '', *time* = '') - returns approximate number of ms from 01.01.1970 to *date* and *time*.  
