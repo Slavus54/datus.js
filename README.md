@@ -4,7 +4,7 @@
 
 When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
 
-I had met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**   
+I've met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**   
 
 Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
 
@@ -13,7 +13,7 @@ Now I'm looking for new features and hope you can help me and other developers t
 JavaScript library to handling, parsing, validation, formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.3**
+* Current Version: **1.3.4**
 
 ## Links
 
@@ -21,15 +21,11 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 *https://github.com/Slavus54/datus.js* - github repository
 
-## Getting Started     
+## Getting Started         
 
-*import {Datus} from 'datus.js' or const {Datus} = require('datus.js')*        
+*import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*     
 
-*const datus = new Datus()*                
-
-### Datus.js API       
-
-*import {weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*      
+*const datus = new Datus()*                         
 
 ## Examples
 
@@ -193,3 +189,7 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 -**isTime** (*content*) - validate *content* value on time format HH:MM.    
 
 -**timestamp** (*date* = '', *time* = '') - returns approximate number of ms from 01.01.1970 to *date* and *time*.  
+
+-**activity** (*timestamps* = [], *percent* = '') - returns minutes to complete all timestamps by *percent*.        
+
+-**age** (*birthdate* = '') - counts y.o. of person by date and returns it.   

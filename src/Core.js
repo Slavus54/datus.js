@@ -571,7 +571,7 @@ class Core extends HelperContainer {
     }
 
     months(length = 12, isTitle = false) {   
-        const date = this.parts(this.timestamp('date'), '.', true) 
+        const date = this.parts(this.now('date'), '.', true) 
 
         let max = date[1]
         let result = new Array(max).fill(null).map((_, idx) => max - idx)
@@ -647,7 +647,7 @@ class Core extends HelperContainer {
     pomodoro(time = '', num = 1, duration = 25, pause = 5, rest = 15) {
         let result = []
         let sum = duration + pause
-        let start = this.time(time !== '' ? time : this.timestamp('time'), 'deconvert')
+        let start = this.time(time !== '' ? time : this.now('time'), 'deconvert')
 
         for (let i = 0; i < num; i++) {
             let index = i + 1   
@@ -711,7 +711,7 @@ class Core extends HelperContainer {
     }
 
     isWillBe(date = '24.08.2024') {
-        let nums = [this.timestamp('date'), date].map(el => this.getDateNum(el))
+        let nums = [this.now('date'), date].map(el => this.getDateNum(el))
         
         return nums[0] <= nums[1]
     }
@@ -820,7 +820,7 @@ class Core extends HelperContainer {
     }
 
     generation(age = 18, num = 5) {
-        let year = this.parts(this.timestamp('date'), '.', true)[2]
+        let year = this.parts(this.now('date'), '.', true)[2]
         let result = Math.floor(year - (age + generationWeight * num))
 
         return result
@@ -870,7 +870,7 @@ class Core extends HelperContainer {
     }
 
     rate(time = '12:30', cost = 1, round = 1) {
-        let start = this.time(this.timestamp('time'), 'deconvert')
+        let start = this.time(this.now('time'), 'deconvert')
         let end = this.time(time, 'deconvert')
         let difference = Math.abs(end - start)
         let result = 0 
@@ -911,7 +911,7 @@ class Core extends HelperContainer {
     }
 
     deviation(step = 600, round = 0) {
-        let border = this.time(this.timestamp('time'), 'deconvert')
+        let border = this.time(this.now('time'), 'deconvert')
         let piece = border % step
         let difference = this.percent(piece, step, round)
         let result = border < step ? 1e2 - difference : difference
@@ -1143,6 +1143,44 @@ class Core extends HelperContainer {
             time_sizes.map((el, idx) => {
                 result += el * parts[idx] * 1e3
             })
+        }
+
+        return result
+    }
+
+    activity(timestamps = [], percent = 0) {
+        let result = 0
+
+        for (let i = 0; i < timestamps.length - 1; i++) {
+            let current = this.time(timestamps[i], 'deconvert')
+            let next = this.time(timestamps[i + 1], 'deconvert')
+        
+            let difference = Math.abs(current - next)
+        
+            result += Math.floor(percent * difference / 1e2)
+        }
+
+        return result
+    }
+
+    age(birthdate = '') {
+        let result = 0
+
+        if (birthdate === '') {
+            return result
+        }    
+
+        let from = this.parts(this.now('date'), '.', true)
+        let to = this.parts(birthdate, '.', true)
+
+        result = Math.abs(from[2] - to[2])
+
+        if (from[1] < to[1]) {
+            result--
+        }
+
+        if (from[1] === to[1]) {
+            result = from[0] >= to[0] ? result : result - 1
         }
 
         return result
