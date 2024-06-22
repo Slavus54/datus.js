@@ -4,16 +4,16 @@
 
 When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
 
-I've met a lot of issues and limits working with it and decided to create something to use instead on **JavaScript**   
+I've met a lot of issues and limits working with it and decided to create something to use instead it on **JavaScript**   
 
 Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
 
 ## Description             
 
-JavaScript library to handling, parsing, validation, formatting date or time.      
+JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.4**
+* Current Version: **1.3.5**
 
 ## Links
 
@@ -72,8 +72,6 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**times** (*start* = '00:00', *period* = 30, *num* = 10) - returned array of timestamps in HH:MM format beginning from *start* time with *period* in minutes, *num* - size of array.     
 
--**random** (*isTime* = true, *num* = 5) - returned array of random dates (last 30 days) or times in HH:MM format.         
-
 -**range** (*dates* = [], *period* = 'day') - returned difference between smallest and largest integer value of date's period ('day', 'month' or 'year') in array of unsorted dates.        
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number.             
@@ -113,8 +111,6 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 -**period** (*num* = 1e2) - receives number border and returns text of time period with random generated number.         
 
 -**walking** (*value* = 10, *size* = 'minute', *speed* = '*') - received time period and returns number of steps to walking while it.      
-
--**timus** (*birthdate = '02.12.2004'*) - received date of birth and returns your personal Number of Datus.   
 
 -**hash** (*value* = '', *isDate* = true, *multiplier* = 1) - simple hash-function with good avalance effect based on date/time string.        
 
@@ -192,4 +188,8 @@ JavaScript library to handling, parsing, validation, formatting date or time.
 
 -**activity** (*timestamps* = [], *percent* = '') - returns minutes to complete all timestamps by *percent*.        
 
--**age** (*birthdate* = '') - counts y.o. of person by date and returns it.   
+-**age** (*birthdate* = '') - counts y.o. of person by date and returns it. 
+
+-**slumber** (*asleep* = '', *awake* = '7:00') - counts minutes of sleeping.    
+
+-**deadlineOfMonth** (*date* = '02.12.1805', *percent* = 5e2, *round* = 0) - returns deadline which counted by *percent* of date's month size.  

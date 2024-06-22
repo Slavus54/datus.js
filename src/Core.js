@@ -123,6 +123,8 @@ class Core extends HelperContainer {
         let result = null
 
         if (key === 'convert') {
+            value = value >= 0 && value <= minutesMax ? value : value % minutesMax
+
             let h = Math.floor(value / 60)
             let m = value % 60
 
@@ -158,24 +160,6 @@ class Core extends HelperContainer {
 
             counter += period
         }
-
-        return result
-    }
-
-    random(isTime = true, num = 5) {
-        let result = []
-
-        for (let i = 0; i < num; i++) {
-            let number = isTime ? minutesMid : 30
-
-            number = parseInt(Math.random() * number)
-
-            result = [...result, number]
-        }
-
-        result = result.map(el => {
-            return isTime ? this.time(el) : this.move('day', '-', el)
-        })
 
         return result
     }
@@ -505,31 +489,6 @@ class Core extends HelperContainer {
         size = this.getSize(size)
          
         result = Math.floor((value * size) / steptime)
-
-        return result
-    }
-
-    timus(birthdate = '02.12.2004') {
-        const monthmax = 6
-
-        let parts = this.parts(birthdate, '.', true)
-        let year = parts[2]
-        let result = 0 
-        let quotient = 1
-
-        for (let i = 2; i < 10; i++) {
-            let value = year / i
-
-            if (value % 1 === 0 && i > quotient) {
-                quotient = i
-            }
-        } 
-
-        result += parts[2] / quotient
-
-        result += monthmax - Math.abs(monthmax - parts[1])   
-        
-        result += parts[0]
 
         return result
     }
@@ -1185,6 +1144,24 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    slumber(asleep = '', awake = '7:00') {
+        let result = 0
+      
+        if (this.isTime(asleep) && typeof awake === 'string') {
+            result = minutesMax + this.time(awake, 'deconvert') - this.time(asleep, 'deconvert') 
+        }
+
+        return result
+    }
+
+    deadlineOfMonth(date = '02.12.1805', percent = 5e2, round = 0) {
+        let parts = this.parts(date, '.', true)
+        let size = this.getMonthSize(parts[1], parts[2])
+        let result = parts[0] + this.cleanValue(percent, size, round)
+
+        return result
+    }    
 }
 
 module.exports = Core
