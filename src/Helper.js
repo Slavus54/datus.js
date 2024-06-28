@@ -34,7 +34,6 @@ class HelperContainer {
     }
 
     parts(text = '', marker = ':', isNum = false) {
-        console.log(text)
         let result = text.split(marker)
 
         return isNum ? result.map(el => Number(el)) : result

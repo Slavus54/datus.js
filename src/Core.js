@@ -249,7 +249,7 @@ class Core extends HelperContainer {
         return isRome ? this.convert(num, 'convert') : num
     }
     
-    now(format = 'all', divider = '|') {
+    now(format = 'all', divider = '') {
         let minutes = this.date.getHours() * 60 + this.date.getMinutes()
         let date = this.move()
         let time = this.time(minutes)
@@ -759,7 +759,7 @@ class Core extends HelperContainer {
     }
 
     late(time = '12:30', deadline = '12:30', duration = 0) {
-        let difference = Math.abs(this.time(time, 'deconvert') - this.time(deadline, 'deconvert')) 
+        let difference = this.time(this.timeDistance(time, deadline), 'deconvert') 
         let result = Math.floor((difference / duration) * 100)
 
         return result
@@ -829,9 +829,7 @@ class Core extends HelperContainer {
     }
 
     rate(time = '12:30', cost = 1, round = 1) {
-        let start = this.time(this.now('time'), 'deconvert')
-        let end = this.time(time, 'deconvert')
-        let difference = Math.abs(end - start)
+        let difference = this.time(this.timeDistance(this.now('time'), time), 'deconvert')
         let result = 0 
     
         if (start <= end) {
@@ -990,7 +988,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    distance(start = '', end = '', size = 'day') {
+    dateDistance(start = '', end = '', size = 'day') {
         if (start.length === 0 | end === '') {
             return ''
         }
@@ -1110,11 +1108,8 @@ class Core extends HelperContainer {
     activity(timestamps = [], percent = 0) {
         let result = 0
 
-        for (let i = 0; i < timestamps.length - 1; i++) {
-            let current = this.time(timestamps[i], 'deconvert')
-            let next = this.time(timestamps[i + 1], 'deconvert')
-        
-            let difference = Math.abs(current - next)
+        for (let i = 0; i < timestamps.length - 1; i++) {        
+            let difference = this.time(this.timeDistance(timestamps[i], timestamps[i + 1]), 'deconvert')
         
             result += Math.floor(percent * difference / 1e2)
         }
@@ -1145,16 +1140,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    slumber(asleep = '', awake = '7:00') {
-        let result = 0
-      
-        if (this.isTime(asleep) && typeof awake === 'string') {
-            result = minutesMax + this.time(awake, 'deconvert') - this.time(asleep, 'deconvert') 
-        }
-
-        return result
-    }
-
     deadlineOfMonth(date = '02.12.1805', percent = 5e2, round = 0) {
         let parts = this.parts(date, '.', true)
         let size = this.getMonthSize(parts[1], parts[2])
@@ -1162,6 +1147,36 @@ class Core extends HelperContainer {
 
         return result
     }    
+
+    generator(numbers = [], isDate = true) {
+        let sum = numbers.reduce((acc, cur) => acc + cur)
+        let borders = isDate ? datePartsBorders : timePartsBorders
+        let result = []
+
+        numbers.map((el, idx) => {
+            let percent = this.percent(el, sum, 0)
+            let value = this.cleanValue(percent, borders[idx], 0)
+            
+            result = [...result, value] 
+        })
+
+        result = result.join(isDate ? '.' : ':')
+
+        return result
+    }
+
+    percentOfMonth(date = '', num = 1, period = 'day', round = 0) {
+        let parts = this.parts(date, '.', true)
+        let size = this.getMonthSize(parts[1], parts[2])
+        let weight = Math.floor(this.getSize(period) * num / base)
+        let result = 0
+
+        size -= parts[0]
+    
+        result = this.percent(weight, size, round)
+
+        return result
+    }
 }
 
 module.exports = Core

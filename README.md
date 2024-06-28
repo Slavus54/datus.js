@@ -1,13 +1,5 @@
 # Datus.JS       
 
-## History
-
-When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
-
-I've met a lot of issues and limits working with it and decided to create something to use instead it on **JavaScript**   
-
-Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
-
 ## Description             
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
@@ -17,41 +9,59 @@ JavaScript library to handling, parsing, validation and formatting date or time.
 
 ## Links
 
-*https://www.npmjs.com/package/datus.js* - npmjs             
+To download - *https://www.npmjs.com/package/datus.js* 
 
-*https://github.com/Slavus54/datus.js* - github repository
+To look code - *https://github.com/Slavus54/datus.js* 
+
+## History
+
+When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
+
+I've met a lot of issues and limits working with it and decided to create something to use instead it on **JavaScript**   
+
+Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
 
 ## Getting Started         
 
-*import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*     
+*import {**Datus**, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*     
 
-*const datus = new Datus()*                         
+*const datus = new **Datus**()*                         
 
 ## Examples
 
 ~~~ 
-
-    let counter = 0  
-    let date = datus.move() // to set today's date also use .now('date')         
-
-    counter = Number(typeof null === 'object') // JS is awesome
-
-    date = datus.move('week', '+', counter) // a week later 
-
+    const [date, setDate] = useState<string>(datus.now('date'))  
+    const [days, setDays] = useState<number>(0)  
+    
+    useEffect(() => {      
+        let result = datus.move('day', '+', days)      
+        
+        setDate(result)  
+    }, [days])    
+    
+    <span>When I will have learned English: {date}</span>      
+    
+    <button onClick={() => setDays(days + 1)}>Another day<button>        
 ~~~
 
 ~~~
-
-    let currentOrder = { title: 'Pizza Mozzarella 32cm', name: 'Anna', timestamp: 623 } // Tomash works until 12:00, does he pick up an order?        
-    let check: boolean = currentOrder.timestamp <= datus.time('12:00', 'deconvert') // yes, Anna won't go hungry    
-
+    const border = 1140 // 19:00            
+    const deadline = '01.01.1970' // IPhone's nightmare     
+    const distanceSize = 7 // one week    
+    
+    let orders = [{title: '', time: 'HH:MM', date: 'DD.MM.YYYY'} and 1e3 of items]      
+    
+    orders = orders.filter(el => datus.time(el.time, 'deconvert') <= border)        
+    
+    let nearestOrders = orders.filter(el => datus.distance(el.date, deadline) <= distanceSize)    
 ~~~
 
 ~~~
-
-    let events = [{title: 'Battle of Marengo', date: '14.06.1800'}, {title: 'Battle of Austerlitz', date: '02.12.1805'}]        
-    let filtered = events.filter(el => datus.filter(el.date, 'month', 12)) // filtered battles on December
-
+    let time_start = '12:30'        
+    let time_end = '18 hours 15 minutes'        
+    
+    console.log(datus.isTime(time_start)) // true      
+    console.log(datus.isTime(time_end)) // false    
 ~~~
 
 ## Methods     
@@ -80,7 +90,7 @@ JavaScript library to handling, parsing, validation and formatting date or time.
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).        
 
--**now** (*format* = 'all', *divider* = '|) - returns current date or time and divides it by second parameter.      
+-**now** (*format* = 'all', *divider* = '') - returns current date or time and divides it by second parameter.      
 
 -**utc** - returns Promise with european towns's timezones.     
 
@@ -178,7 +188,7 @@ JavaScript library to handling, parsing, validation and formatting date or time.
  
 -**percentage** (*time* = '', *round* = 0) - returns an array of rounded numbers, which are % of each time part from its maximum.      
 
--**distance** (*start* = '', *end* = '', *size* = 'day') - counts difference between 2 dates in *size* and returns it.      
+-**dateDistance** (*start* = '', *end* = '', *size* = 'day') - counts difference between 2 dates in *size* and returns it.      
 
 -**isEven** (*content* = '', *isDate* = true) - checking parts of date/time and returns boolean flag items "Is it even ?" + GCD (greatest common divisor).   
 
@@ -188,8 +198,10 @@ JavaScript library to handling, parsing, validation and formatting date or time.
 
 -**activity** (*timestamps* = [], *percent* = '') - returns minutes to complete all timestamps by *percent*.        
 
--**age** (*birthdate* = '') - counts y.o. of person by date and returns it. 
+-**age** (*birthdate* = '') - counts y.o. of person by date and returns it.      
 
--**slumber** (*asleep* = '', *awake* = '7:00') - counts minutes of sleeping.    
+-**deadlineOfMonth** (*date* = '02.12.1805', *percent* = 5e2, *round* = 0) - returns deadline which counted by *percent* of date's month size.      
 
--**deadlineOfMonth** (*date* = '02.12.1805', *percent* = 5e2, *round* = 0) - returns deadline which counted by *percent* of date's month size.  
+-**generator** (*numbers* = [], *isDate* = true) - builds date or time by periods by ratio between each element of *numbers* and sum of them.      
+
+-**percentOfMonth** (*date* = '', *num* = 1, *period* = 'day', *round* = 0) - returns % of remaining days of date's month by *period* and *num*.    
