@@ -1177,6 +1177,43 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    capacity(date = '') {
+        let parts = this.parts(date, '.', true)
+        let leep = Math.floor(parts[2] / 4)
+        let all = leep * 366 + (parts[2] - leep) * 365 
+        let value = parts[1] * monthSize + parts[0]
+        let result = Math.floor(all / value)
+
+        return result
+    }
+
+    change(content = '', period = 'month', num = 12, isDate = true) {
+        let symbol = isDate ? '.' : ':'
+        let parts = this.parts(content, symbol, true)
+        let result = ''
+
+        if (parts.length === 1) {
+            return result
+        }
+
+        let borders = isDate ? datePartsBorders : timePartsBorders
+        let periods = isDate ? datePeriods : timePeriods
+        let index = periods.indexOf(period)
+
+        index = index !== -1 ? index : 0
+
+        let border = borders[index]
+        let flag = Math.abs(num) <= border
+
+        if (flag === true) {
+            result = [...parts.slice(0, index), num, parts.slice(index + 1)].flat(1)
+
+            result = result.map(el => this.rounding(el)).join(symbol)
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
