@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.6**
+* Current Version: **1.3.7**
 
 ## Links
 
@@ -208,4 +208,8 @@ Now I'm looking for new features and hope you can help me and other developers t
 
 -**capacity** (*date* = '') - returns number as a result of division years of date by period since beginning of year.      
 
--**change** (*content* = '', *period* = 'month', *num* = 12, *isDate* = true) - rewrites any period of date or time.       
+-**change** (*content* = '', *period* = 'month', *num* = 12, *isDate* = true) - rewrites any period of date or time.    
+
+-**id** (*content* = '', *isDate* = true) - generates id from time or date and returns it.    
+
+-**fromArray** (*arr* = []) - returns list of dates built from array's elements.    

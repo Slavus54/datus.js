@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -1211,6 +1211,45 @@ class Core extends HelperContainer {
 
             result = result.map(el => this.rounding(el)).join(symbol)
         }
+
+        return result
+    }
+
+    id(content = '', isDate = true) {
+        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let result = ''
+
+        parts.map((el, idx) => {
+            let operation = operations[Math.floor(operations.length * Math.random())]
+            let value = Math.floor(eval(`${el}${operation}${idx + 1}`))
+            let index = value >= specs.length ? value % specs.length : value
+        
+            result += specs[index]
+        })
+
+        return result
+    }   
+
+    fromArray(arr = []) {
+        let result = []
+
+        arr.map((_, idx) => {
+            if (idx < arr.length - 2) {
+                let items = []
+               
+                datePartsBorders.map((border, i) => {
+                    let value = Math.abs(arr[idx + i])
+
+                    if (value <= border) {
+                        items = [...items, value]
+                    }
+                })
+
+                if (items.length === datePartsBorders.length) {
+                    result = [...result, items.map(el => this.rounding(el)).join('.')]
+                }
+            }
+        })
 
         return result
     }
