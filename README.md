@@ -23,7 +23,7 @@ Now I'm looking for new features and hope you can help me and other developers t
 
 ## Getting Started         
 
-*import {**Datus**, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons} from 'datus.js'*     
+*import {**Datus**, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'*     
 
 *const datus = new **Datus**()*                         
 
