@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -1250,6 +1250,37 @@ class Core extends HelperContainer {
                 }
             }
         })
+
+        return result
+    }
+
+    yearResidue(percent = 0) {
+        const parts = this.parts(this.now('date'), '.', true)
+        const yearSize = this.getYearSize(parts[2])
+
+        let allDays = (parts[1] - 1) * monthSize + parts[0]
+        let days = this.cleanValue(percent, (yearSize - allDays), 0)
+        let result = this.move('day', '+', days)
+
+        return result
+    }
+
+    summer(date = '', round = 0) {
+        const due = 92
+        let result = 0
+
+        if (this.isDate(date)) {
+            let parts = this.parts(date, '.', true)
+
+            result = this.percent(this.distance(`01.06.${parts[2]}`, date), due, round)
+        }
+
+        return result
+    }
+
+    cigarette(time = '', num = 10, round = 0) {
+        let difference = this.time(this.timeDistance(this.now('time'), time), 'deconvert')
+        let result = this.toRound(difference / num, round)
 
         return result
     }
