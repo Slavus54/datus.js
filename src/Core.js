@@ -1283,6 +1283,24 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeRound(time = '', num = 5) {
+        let value = this.time(time, 'deconvert')
+        let piece = value % 6e1
+        let difference = Math.abs(piece - num)
+
+        let result = piece < num ? this.time(value + difference) : this.time(value - difference)
+
+        return result
+    }
+
+    monthDayBorder(date = '', num = 1e1) {
+        let parts = this.parts(date, '.', true)
+        let size = this.getMonthSize(parts[1], parts[2])
+        let result = parts[0] >= num && parts[0] <= size - num
+
+        return result
+    }
 }
 
 module.exports = Core

@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.3.8**
+* Current Version: **1.3.9**
 * Size ~ **60 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -223,3 +223,7 @@ const datus = new Datus() // declare an instance of class
 -**summer** (*date* = '', *round* = 0) - returns % of summer period by date.           
 
 -**cigarette** (*time* = '', *num* = 10, *round* = 0) - returns how much time you waste of smoking a cigarette. 
+
+-**timeRound** (*time* = '', *num* = 5) - rounds time's minutes by parameter *num* and returns result.      
+
+-**monthDayBorder** (*date* = '', *num* = 1e1) - checks days by parameter *number*  "if it less or equal to days before month end" and returns true/false.   
