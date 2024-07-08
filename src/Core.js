@@ -301,7 +301,7 @@ class Core extends HelperContainer {
     
     palindrom(value = '', isDate = true) {
         let result = true
-        let parts = this.parts(value, isDate ? '.' : ':')
+        let parts = this.parts(value, this.getSymbol(isDate))
  
         result = isDate ?  
                 this.reverse(parts[0]) === parts[2] && this.reverse(parts[1]) === parts[1]
@@ -314,7 +314,7 @@ class Core extends HelperContainer {
     binary(value = '', isDate = true) {
         let result = true
         let borders = binary_check_items[Number(isDate)]  
-        let parts = this.parts(value, isDate ? '.' : ':')
+        let parts = this.parts(value, this.getSymbol(isDate))
 
         borders.map((el, idx) => {
             let counter = 1
@@ -408,7 +408,7 @@ class Core extends HelperContainer {
 
     format(value = '', key = 'default', isDate = true) {
         let result = ''
-        let parts = this.parts(value, isDate ? '.' : ':') 
+        let parts = this.parts(value, this.getSymbol(isDate)) 
 
         if (key === 'default') {
             return value
@@ -427,6 +427,8 @@ class Core extends HelperContainer {
                 let time = prefix ? this.time(count - 720) : value
                 
                 result = `${time} ${prefix ? 'PM' : 'AM'}`
+            } else if (key === 'standard') {
+                return `${parts[0]} hours ${parts[1]} minutes`
             }
         }
 
@@ -494,7 +496,7 @@ class Core extends HelperContainer {
     }
 
     hash(value = '', isDate = true, multiplier = 1) {
-        const parts = this.parts(value, isDate ? '.' : ':')
+        const parts = this.parts(value, this.getSymbol(isDate))
 
         let result = 0
         let i = 0
@@ -578,7 +580,7 @@ class Core extends HelperContainer {
     }
 
     bit(content = '', isDate = false) {
-        let result = this.parts(content, isDate ? '.' : ':', true)
+        let result = this.parts(content, this.getSymbol(isDate), true)
 
         result = result.map(el => {
             let value = el
@@ -622,7 +624,7 @@ class Core extends HelperContainer {
 
     info(text = '', isDate = true) {
         let result = {}
-        let parts = this.parts(text, isDate ? '.' : ':', true) 
+        let parts = this.parts(text, this.getSymbol(isDate), true) 
 
         if (isDate) {
 
@@ -741,8 +743,7 @@ class Core extends HelperContainer {
     }
 
     replace(content = '', isDate = true) {
-        let marker = isDate ? '.' : ':'
-        let parts = this.parts(content, marker)
+        let parts = this.parts(content, this.getSymbol(isDate))
         let result = ''
         
         parts.map(el => {
@@ -750,7 +751,7 @@ class Core extends HelperContainer {
             let first = el.slice(0, middle)
             let second = el.slice(middle)
     
-            result += second + first + marker
+            result += second + first + this.getSymbol(isDate)
         })
         
         result = result.slice(0, result.length - 1)
@@ -799,7 +800,7 @@ class Core extends HelperContainer {
     }
 
     encode(content = '', isDate = true, formula = '(x + 1) / 2', marker = 'x') {
-        let parts = this.parts(content, isDate ? '.' : ':')
+        let parts = this.parts(content, this.getSymbol(isDate))
         let sum = 0
         let result = ''
 
@@ -877,7 +878,7 @@ class Core extends HelperContainer {
     }
 
     filterBySchema(content = '', isDate = true, schema = '', index = 0) {
-        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let parts = this.parts(content, this.getSymbol(isDate), true)
         let result = true
 
         if (schema.length === 0 | parts.length === 1) {
@@ -892,18 +893,17 @@ class Core extends HelperContainer {
     }
 
     similarity(content = '', isDate = true, mask = '') {
-        let symbol = isDate ? '.' : ':'
         let result = 0
 
         if (content.length === 0 | mask === '') {
             return result
         }
         
-        let initialParts = this.parts(content, symbol).map(el => el.split('')).flat(1)
+        let initialParts = this.parts(content, this.getSymbol(isDate)).map(el => el.split('')).flat(1)
         let amount = Math.floor(1e2 / initialParts.length)
         let index = 0
 
-        mask.split(symbol).map((el) => {
+        mask.split(this.getSymbol(isDate)).map((el) => {
             el.split('').map((part) => {
                 if (initialParts[index] === part) {
                     result += amount
@@ -1036,7 +1036,7 @@ class Core extends HelperContainer {
             return {items, GCD}
         }
 
-        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let parts = this.parts(content, this.getSymbol(isDate), true)
 
         parts.map((el, idx) => {
             let current = el
@@ -1160,7 +1160,7 @@ class Core extends HelperContainer {
             result = [...result, value] 
         })
 
-        result = result.join(isDate ? '.' : ':')
+        result = result.join(this.getSymbol(isDate))
 
         return result
     }
@@ -1189,8 +1189,7 @@ class Core extends HelperContainer {
     }
 
     change(content = '', period = 'month', num = 12, isDate = true) {
-        let symbol = isDate ? '.' : ':'
-        let parts = this.parts(content, symbol, true)
+        let parts = this.parts(content, this.getSymbol(isDate), true)
         let result = ''
 
         if (parts.length === 1) {
@@ -1209,14 +1208,14 @@ class Core extends HelperContainer {
         if (flag === true) {
             result = [...parts.slice(0, index), num, parts.slice(index + 1)].flat(1)
 
-            result = result.map(el => this.rounding(el)).join(symbol)
+            result = result.map(el => this.rounding(el)).join(this.getSymbol(isDate))
         }
 
         return result
     }
 
     id(content = '', isDate = true) {
-        let parts = this.parts(content, isDate ? '.' : ':', true)
+        let parts = this.parts(content, this.getSymbol(isDate), true)
         let result = ''
 
         parts.map((el, idx) => {
@@ -1271,7 +1270,7 @@ class Core extends HelperContainer {
 
         if (this.isDate(date)) {
             let parts = this.parts(date, '.', true)
-
+            
             result = this.percent(this.distance(`01.06.${parts[2]}`, date), due, round)
         }
 

@@ -86,6 +86,10 @@ class HelperContainer {
        
         return size
     }
+
+    getSymbol(isDate = true) {
+        return isDate ? '.' : ':'
+    }
 }
 
 module.exports = HelperContainer

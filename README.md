@@ -6,6 +6,8 @@ JavaScript library to handling, parsing, validation and formatting date or time.
 
 * Light and powerful analogue of **Moment.js**                           
 * Current Version: **1.3.8**
+* Size ~ **60 kB**
+* Most of algorithms have **O(n)** time complexity
 
 ## Links
 
@@ -22,11 +24,11 @@ I've met a lot of issues and limits working with it and decided to create someth
 Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
 
 ## Getting Started         
+~~~
+import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'     
 
-*import {**Datus**, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'*     
-
-*const datus = new **Datus**()*                         
-
+const datus = new Datus() // declare an instance of class              
+~~~
 ## Examples
 
 ~~~ 
@@ -34,14 +36,14 @@ Now I'm looking for new features and hope you can help me and other developers t
     const [days, setDays] = useState<number>(0)  
     
     useEffect(() => {      
-        let result = datus.move('day', '+', days)      
+        let result = datus.move('day', '+', days)  // method to generate new date 
         
         setDate(result)  
     }, [days])    
     
     <span>When I will have learned English: {date}</span>      
     
-    <button onClick={() => setDays(days + 1)}>Another day<button>        
+    <button onClick={() => setDays(days + 1)}>Another Day<button>        
 ~~~
 
 ~~~
@@ -59,6 +61,8 @@ Now I'm looking for new features and hope you can help me and other developers t
 ~~~
     let time_start = '12:30'        
     let time_end = '18 hours 15 minutes'        
+    
+    // let's check these times
     
     console.log(datus.isTime(time_start)) // true      
     console.log(datus.isTime(time_end)) // false    
@@ -218,4 +222,4 @@ Now I'm looking for new features and hope you can help me and other developers t
 
 -**summer** (*date* = '', *round* = 0) - returns % of summer period by date.           
 
--**cigarette** (*time* = '', *num* = 10, *round* = 0) - returns how much time you waste of smoking a cigarette.     
+-**cigarette** (*time* = '', *num* = 10, *round* = 0) - returns how much time you waste of smoking a cigarette. 
