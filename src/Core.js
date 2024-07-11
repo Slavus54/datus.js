@@ -84,7 +84,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    difference(date, flag = 'day', lock = 10) {
+    difference(date, flag = 'day', lock = 1e1) {
         let result = 0
         let origin = this.move()
         let side = this.isWillBe(date) ? '+' : '-'
@@ -125,17 +125,17 @@ class Core extends HelperContainer {
         if (key === 'convert') {
             value = value >= 0 && value <= minutesMax ? value : value % minutesMax
 
-            let h = Math.floor(value / 60)
-            let m = value % 60
+            let h = Math.floor(value / 6e1)
+            let m = value % 6e1
 
-            h = value > minutesMid && isTwelve ? Math.floor((value - minutesMid) / 60) : h
+            h = value > minutesMid && isTwelve ? Math.floor((value - minutesMid) / 6e1) : h
 
             result = `${this.rounding(h)}:${this.rounding(m)}`
 
         } else if ('deconvert') {
             let parts = this.parts(value, ':', true) 
             
-            result = parts[0] * 60 + parts[1]
+            result = parts[0] * 6e1 + parts[1]
 
             result = result > minutesMid && isTwelve ? result - minutesMid : result
         }
@@ -143,7 +143,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    times(start = time_start, period = 30, num = 10) {   
+    times(start = time_start, period = 3e1, num = 1e1) {   
         let result = []
         let counter = this.time(start, 'deconvert')
         
@@ -167,7 +167,7 @@ class Core extends HelperContainer {
     range(dates = [], period = 'day') {
         let indexes = []
         let max = 0
-        let min = 10**6
+        let min = 1e6
 
         dates.map(el => {
             let value = this.getDatePeriodValue(el, period)
@@ -238,19 +238,19 @@ class Core extends HelperContainer {
 
     border(num = null, isRome = false) {
         let value = isRome ? this.convert(num, 'deconvert') : num  
-        let borders = [(value - 1)*10**2 + 1, value*10**2]
+        let borders = [(value - 1)*1e1**2 + 1, value*1e1**2]
 
         return borders
     }
 
-    century(year = 1000, isRome = false) {
-        let num = Math.ceil(year / 100)
+    century(year = 1e3, isRome = false) {
+        let num = Math.ceil(year / 1e2)
     
         return isRome ? this.convert(num, 'convert') : num
     }
     
     now(format = 'all', divider = '') {
-        let minutes = this.date.getHours() * 60 + this.date.getMinutes()
+        let minutes = this.date.getHours() * 6e1 + this.date.getMinutes()
         let date = this.move()
         let time = this.time(minutes)
         
@@ -287,7 +287,7 @@ class Core extends HelperContainer {
         }
     }
 
-    event(time = '12:00', duration = 90, utc = 1) {
+    event(time = '12:00', duration = 9e1, utc = 1) {
         let timestamp = this.getUTC(utc)
         let event = this.time(time, 'deconvert') 
         let result = 0
@@ -335,7 +335,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    exchange(num = 10, from = 'minute', to = 'hour') {
+    exchange(num = 1e1, from = 'minute', to = 'hour') {
         let result = 0
 
         let start = this.getSize(from) * num
@@ -346,12 +346,12 @@ class Core extends HelperContainer {
         return result
     }
 
-    clock(value = 10, arrow = 'hour', isPositive = true) {
+    clock(value = 1e1, arrow = 'hour', isPositive = true) {
         const max = 12
         
         let result = 0
         let isMinute = arrow === 'minute'
-        let current = isMinute ? value % 60 : Math.floor(value / 60)
+        let current = isMinute ? value % 6e1 : Math.floor(value / 6e1)
 
         if (isMinute) {
             current = 12 + Math.floor(current / 5)
@@ -370,7 +370,7 @@ class Core extends HelperContainer {
         result = Math.floor(percent * 3.6)
 
         if (result < 0 && isPositive) {
-            result += 360
+            result += 36e1
         }
        
         return result
@@ -378,7 +378,7 @@ class Core extends HelperContainer {
 
     formula(start = '12:00', duration = 0, body = 'x + y - 1', size = 'minute') {
         let result = this.time(start, 'deconvert')
-        size = this.getSize(size) * duration * 1440 / base
+        size = this.getSize(size) * duration * minutesMax / base
 
         body = this.splin(body, 'x', result)
         result = eval(this.splin(body, 'y', size))
@@ -386,7 +386,7 @@ class Core extends HelperContainer {
         return this.time(result)
     }
 
-    sequence(start = '12:00', interval = 10, num = 5, mask = ':30') {
+    sequence(start = '12:00', interval = 1e1, num = 5, mask = ':30') {
         let result = []
         let initial = this.time(start, 'deconvert')
         let parts = this.parts(mask, ':')
@@ -396,7 +396,7 @@ class Core extends HelperContainer {
 
         for (let i = 1; i <= num; i++) {
             let value = initial + i * interval
-            let piece = index === 0 ? Math.floor(value / 60) : value % 60
+            let piece = index === 0 ? Math.floor(value / 6e1) : value % 6e1
 
             if (piece === maskValue) {
                 result = [...result, this.time(value)]
@@ -423,8 +423,8 @@ class Core extends HelperContainer {
         } else {
             if (key === 'us') {
                 let count = this.time(value, 'deconvert') 
-                let prefix = this.percent(count, minutesMax, 0) > 50
-                let time = prefix ? this.time(count - 720) : value
+                let prefix = this.percent(count, minutesMax, 0) > 5e1
+                let time = prefix ? this.time(count - (minutesMax / 2)) : value
                 
                 result = `${time} ${prefix ? 'PM' : 'AM'}`
             } else if (key === 'standard') {
@@ -459,12 +459,12 @@ class Core extends HelperContainer {
         
         size = this.getSize(size) / base
 
-        result = Math.floor(num * size * 10**2 / days)
+        result = Math.floor(num * size * 1e1**2 / days)
 
         return result
     }    
 
-    duration(distance = 10, speed = 1, size = 'hour') {
+    duration(distance = 1e1, speed = 1, size = 'hour') {
         let result = this.exchange((distance / speed), 'hour', size)
 
         return result
@@ -479,14 +479,14 @@ class Core extends HelperContainer {
         return result
     }
 
-    walking(value = 10, size = 'minute', speed = '*') {
+    walking(value = 1e1, size = 'minute', speed = '*') {
         const speedlimit = 3
         let result = 0
-        let stepsbase = 60
+        let stepsbase = 6e1
 
-        stepsbase = stepsbase + (speed.length > speedlimit ? speedlimit : speed.length) * 20
+        stepsbase = stepsbase + (speed.length > speedlimit ? speedlimit : speed.length) * 2e1
        
-        let steptime = Math.floor(60 / stepsbase * 1e3)
+        let steptime = Math.floor(6e1 / stepsbase * 1e3)
 
         size = this.getSize(size)
          
@@ -634,7 +634,7 @@ class Core extends HelperContainer {
             let century = Math.ceil(parts[2] / 1e2) 
             let month = months[parts[1] - 1]
             let season = seasons[seasonIdx] === undefined ? seasons[0] : seasons[seasonIdx]
-            let decade = Math.floor(parts[0] / 10)
+            let decade = Math.floor(parts[0] / 1e1)
             let isLeap = parts[2] % 4 === 0
             let percent = Math.floor(((parts[1] - 1) * monthSize + parts[0]) / (isLeap ? 366 : 365) * 1e2)
 
@@ -643,7 +643,7 @@ class Core extends HelperContainer {
         } else {
 
             let minutes = this.time(text, 'deconvert')
-            let residue = minutes % 60
+            let residue = minutes % 6e1
             let part = day_parts.find(el => minutes <= el.border)?.title
             let isHalf = minutes >= minutesMid
 
@@ -665,7 +665,7 @@ class Core extends HelperContainer {
             let checked = Boolean(Math.floor(value / minutesMid))
             let method = isRange ? 'ceil' : 'floor'
 
-            result = Math[method]((checked ? value - minutesMid : value) / 60) + ' ' + (checked ? 'pm' : 'am')
+            result = Math[method]((checked ? value - minutesMid : value) / 6e1) + ' ' + (checked ? 'pm' : 'am')
         }
 
         return result
@@ -692,16 +692,16 @@ class Core extends HelperContainer {
 
     reading(text = '', isNum = true) {
         let words = text.split(' ').length
-        let result = Math.floor(words / 140)
+        let result = Math.floor(words / 14e1)
 
         return isNum ? result : this.time(result)
     }
 
-    cat(date = '', max = 100) {
+    cat(date = '', max = 1e2) {
         let age = this.difference(date, '-', 1e7) / 365
         let result = 12 + (age - 2) * 4
 
-        result = Math.floor(result / 100 * max)
+        result = Math.floor(result / 1e2 * max)
 
         return result
     }
@@ -718,7 +718,7 @@ class Core extends HelperContainer {
 
     zodiac(date = '') {
         let year = this.parts(date, '.', true)[2]
-        let difference = Math.abs(year - 1900)
+        let difference = Math.abs(year - 19e2)
         let index = difference % months.length
         let result = ''
 
@@ -761,13 +761,13 @@ class Core extends HelperContainer {
 
     late(time = '12:30', deadline = '12:30', duration = 0) {
         let difference = this.time(this.timeDistance(time, deadline), 'deconvert') 
-        let result = Math.floor((difference / duration) * 100)
+        let result = Math.floor((difference / duration) * 1e2)
 
         return result
     }
 
     circle(radius = 1, speed = 1, isMeters = false) {
-        let distance = radius * 2e-3 * Math.PI * 60
+        let distance = radius * 2e-3 * Math.PI * 6e1
         let result = 0
 
         if (isMeters) {
@@ -834,7 +834,7 @@ class Core extends HelperContainer {
         let result = 0 
     
         if (start <= end) {
-            result = this.toRound(difference / 60 * cost, round)
+            result = this.toRound(difference / 6e1 * cost, round)
         }
     
         return result
@@ -868,7 +868,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    deviation(step = 600, round = 0) {
+    deviation(step = 6e2, round = 0) {
         let border = this.time(this.now('time'), 'deconvert')
         let piece = border % step
         let difference = this.percent(piece, step, round)
@@ -944,7 +944,7 @@ class Core extends HelperContainer {
         }, delay * 1e3)
     }
 
-    matrix(time = '', size = 1, step = 0, delay = 30) {
+    matrix(time = '', size = 1, step = 0, delay = 3e1) {
         let result = []
 
         if (time.length === 0) {
@@ -979,8 +979,8 @@ class Core extends HelperContainer {
         }
         
         let value = this.time(time, 'deconvert')
-        let hours = this.percent(Math.floor(value / 60), 24, round)
-        let minutes = this.percent(Math.floor(value % 60), 60, round)
+        let hours = this.percent(Math.floor(value / 6e1), 24, round)
+        let minutes = this.percent(Math.floor(value % 6e1), 6e1, round)
         let all = this.percent(value, minutesMid * 2, round)
     
         result = [all, hours, minutes]
@@ -1277,7 +1277,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    cigarette(time = '', num = 10, round = 0) {
+    cigarette(time = '', num = 1e1, round = 0) {
         let difference = this.time(this.timeDistance(this.now('time'), time), 'deconvert')
         let result = this.toRound(difference / num, round)
 
@@ -1298,6 +1298,54 @@ class Core extends HelperContainer {
         let parts = this.parts(date, '.', true)
         let size = this.getMonthSize(parts[1], parts[2])
         let result = parts[0] >= num && parts[0] <= size - num
+
+        return result
+    }
+
+    timeByPercent(num = 1e1, round = 0) {
+        let value = this.cleanValue(num, minutesMax, round)
+        let result = this.time(Math.floor(value))
+
+        return result
+    }
+
+    timeByFibonacci(num = 7) {
+        let current = 0
+        let next = 1
+        let result = ''       
+
+        for (let i = 0; i < num; i++) {
+            let temp = next
+
+            next = current + next
+            current = temp
+        }   
+
+        result = this.time(current)
+
+        return result
+    }
+
+    dateByPercent(percent = 1e1, num = 1e3, round = 0) {
+        let size = this.getYearSize(num)
+        let value = this.cleanValue(percent, size, round)
+        let index = 1
+        let flag = true
+        let result = ''
+
+        while (flag === true) {
+            let monthTerm = this.getMonthSize(index, num)
+
+            if (value >= monthTerm) {
+                value -= monthTerm
+                index++
+            } else {
+                flag = false
+            }
+        }
+
+        result = `${Math.floor(value)}.${index}.${num}`
+        result = result.split('.').map(el => this.rounding(el)).join('.')
 
         return result
     }

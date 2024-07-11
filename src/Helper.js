@@ -90,6 +90,10 @@ class HelperContainer {
     getSymbol(isDate = true) {
         return isDate ? '.' : ':'
     }
+
+    getIntervalValue(borders = []) {
+        return Math.floor(borders[0] + Math.random() * Math.abs(borders[0] - borders[1]))
+    }
 }
 
 module.exports = HelperContainer
