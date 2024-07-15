@@ -1349,6 +1349,44 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeByNumeralSystem(num = 1e1, system = 2) {
+        let arr = this.parts(String(num), '', true)
+        let value = arr.reduce((acc, el, idx) => acc + (el * system**idx))
+        let result = this.time(value)
+    
+        return result
+    }
+
+    quarter(time = '') {
+        let size = this.time(time, 'deconvert') % 6e1
+        let quarterNumber = Math.ceil(size / 15)
+        let nearestQuarterSize = size % 15
+        let percent = this.percent(size, 6e1, 0)
+
+        return {
+            quarterNumber, 
+            nearestQuarterSize,
+            percent
+        }
+    }
+
+    schedule(days = [], times = [], num = 1) {
+        let gap = days.length !== 0 ? this.gap(days[0], 'tag') : 0
+        let length = Math.min(days.length, times.length)
+        let indexes = days.slice(0, length).map(el => weekdays.findIndex(weekday => weekday.tag === el))
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            indexes.map((el, idx) => {
+                let date = this.move('day', '+', i * 7 + el + gap - 1)
+
+                result = [...result, `${times[idx]} ${date}`]
+            })
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
