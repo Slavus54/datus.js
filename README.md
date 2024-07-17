@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.1**
+* Current Version: **1.4.2**
 * Size ~ **60 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -239,3 +239,11 @@ const datus = new Datus() // declare an instance of class
 -**quarter** (*time* = '') - receives time and returns an object with quarter information {quarterNumber, nearestQuarterSize, percent}.  
 
 -**schedule** (*days* = [], *times* = [], *num* = 1) - builds an array of strings "time date" by parameters.    
+
+-**yearsByFormula** (*formula* = '', *length* = 1e1, *marker* = 'x') - creates year by formula with variables with random value from 0 to 9.    
+
+-**yearsByInterval** (*num* = 1, *step* = 1, *border* = this.date.getFullYear(), *isIncrease* = true) - returns list of years with custom *length* built by cycle from *border* increasing/decreasing order by *step*.    
+
+-**weekdayByDate** (*date* = '') - finds weekday by *date* and returns it.          
+
+-**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.         

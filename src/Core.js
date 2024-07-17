@@ -1387,6 +1387,77 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearsByFormula(formula = '', length = 1e1, marker = 'x') {
+        let text = formula.split('')
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            let value = ''
+
+            text.map(el => {
+                if (el === marker) {
+                    value += this.getIntervalValue([0, 9])
+                } else {
+                    value += el
+                }
+            })
+
+            result = [...result, Number(value)]
+        }
+
+        result = Array.from(new Set(result))
+
+        return result
+    }
+
+    yearsByInterval(num = 1, step = 1, border = this.date.getFullYear(), isIncrease = true) {
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            result = [...result, border]
+
+            border = isIncrease ? border + step : border - step           
+        }
+
+        return result
+    }
+        
+    weekdayByDate(date = '') {
+        let parts = this.isDate(date) ? this.parts(date, '.', true) : null
+        let result = ''
+
+        if (parts) {
+            let leep = Math.floor(parts[2] / 4)
+            let days = leep * 366 + (parts[2] - leep) * 365 
+       
+            days -= Math.abs(this.getMonthSize(parts[1]) - parts[0]) 
+           
+            months.slice(parts[1], months.length).map((_, idx) => {
+                let size = this.getMonthSize(parts[1] + idx + 1)
+                
+                days -= size
+            })
+
+            days -= 2
+
+            result = weekdays[Math.floor(days % weekdays.length)].title
+        }
+
+        return result
+    }
+
+    yearsByCentury(century = 21, decade = 1) {
+        let result = []
+        let value = (century - 1)*1e2 + (decade - 1)*1e1
+
+        for (let i = 0; i < 1e1; i++) {
+            result = [...result, value]
+            value++
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
