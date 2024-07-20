@@ -5,8 +5,8 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.2**
-* Size ~ **60 kB**
+* Current Version: **1.4.3**
+* Size ~ **70 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -246,4 +246,10 @@ const datus = new Datus() // declare an instance of class
 
 -**weekdayByDate** (*date* = '') - finds weekday by *date* and returns it.          
 
--**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.         
+-**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.
+
+-**isNight** (*time* = '') - checks time and returns if it during night.    
+
+-**randomDates** (*num* = 1, *border* = 1e1, *isPassed* = true) - generates list of passed/future dates by parameters.      
+
+-**randomTimes** (*num* = 1, *min* = 0, *max* = minutesMax) - returns list of times by parameters.      

@@ -481,6 +481,7 @@ class Core extends HelperContainer {
 
     walking(value = 1e1, size = 'minute', speed = '*') {
         const speedlimit = 3
+
         let result = 0
         let stepsbase = 6e1
 
@@ -788,6 +789,7 @@ class Core extends HelperContainer {
 
     space(num = 1, size = 'day', title = 'Earth') {
         const planet = solarSystemPlanets.find(el => el.name === title)
+
         let result = num
 
         if (planet !== undefined) {
@@ -810,8 +812,8 @@ class Core extends HelperContainer {
             
             nums.map(elem => {
                 const num = Number(elem)
+
                 let index = num + idx + 1
-           
                 let letter = abc[index]
 
                 counter += num
@@ -1266,12 +1268,13 @@ class Core extends HelperContainer {
 
     summer(date = '', round = 0) {
         const due = 92
+
         let result = 0
 
         if (this.isDate(date)) {
             let parts = this.parts(date, '.', true)
             
-            result = this.percent(this.distance(`01.06.${parts[2]}`, date), due, round)
+            result = this.percent(this.dateDistance(`01.06.${parts[2]}`, date), due, round)
         }
 
         return result
@@ -1422,7 +1425,7 @@ class Core extends HelperContainer {
 
         return result
     }
-        
+
     weekdayByDate(date = '') {
         let parts = this.isDate(date) ? this.parts(date, '.', true) : null
         let result = ''
@@ -1454,6 +1457,43 @@ class Core extends HelperContainer {
         for (let i = 0; i < 1e1; i++) {
             result = [...result, value]
             value++
+        }
+
+        return result
+    }
+
+    isNight(time = '') {
+        let size = this.time(time, 'deconvert') || 0
+        let result = 0 <= size && size <= 36e1
+
+        return result
+    }
+
+    randomDates(num = 1, border = 1e1, isPassed = true) {
+        let result = []
+    
+        for (let i = 0; i < num; i++) {
+            let date = this.move('day', isPassed ? '+' : '-', Math.floor(Math.random() * border))
+
+            result = [...result, date]
+        }
+
+        return result
+    }
+
+    randomTimes(num = 1, min = 0, max = minutesMax) {
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            let value = Math.floor(Math.random() * max)
+            
+            while (value < min || value > max) {
+                value = Math.floor(Math.random() * max)
+            }
+
+            let time = this.time(value)
+            
+            result = [...result, time]
         }
 
         return result
