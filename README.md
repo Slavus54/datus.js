@@ -5,8 +5,8 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.3**
-* Size ~ **70 kB**
+* Current Version: **1.4.4**
+* Size ~ **75 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -252,4 +252,8 @@ const datus = new Datus() // declare an instance of class
 
 -**randomDates** (*num* = 1, *border* = 1e1, *isPassed* = true) - generates list of passed/future dates by parameters.      
 
--**randomTimes** (*num* = 1, *min* = 0, *max* = minutesMax) - returns list of times by parameters.      
+-**randomTimes** (*num* = 1, *min* = 0, *max* = minutesMax) - returns list of times by parameters.  
+
+-**track** (*timestamps* = [], *speed* = 7e1, *round* = 0) - counts total duratiopn & distance of track's trip and returns {time, distance}.        
+
+-**timeDistance** (*start* = '', *end* = '') - returns time between 2 borders.  

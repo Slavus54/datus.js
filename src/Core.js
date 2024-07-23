@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -1494,6 +1494,33 @@ class Core extends HelperContainer {
             let time = this.time(value)
             
             result = [...result, time]
+        }
+
+        return result
+    }
+
+    track(timestamps = [], speed = 7e1, round = 0) {
+        let time = 0
+        let distance = 0
+
+        timestamps.map((el, idx) => {
+            if ((idx + 1) % 2 === 0) {            
+                time += this.time(this.timeDistance(el, timestamps[idx - 1]), 'deconvert')
+            }
+        })
+
+        distance = this.toRound(time * speed / 6e1, round)
+        time = this.time(time)
+
+        return {time, distance}
+    }
+
+    timeDistance(start = '', end = '') {
+        let key = 'deconvert'
+        let result = ''
+
+        if (this.isTime(start) && this.isTime(end)) {
+            result = this.time(Math.abs(this.time(start, key) - this.time(end, key)))
         }
 
         return result
