@@ -5,8 +5,8 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.4**
-* Size ~ **75 kB**
+* Current Version: **1.4.5**
+* Size ~ **70 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -18,7 +18,7 @@ To look code - *https://github.com/Slavus54/datus.js*
 ## History
 
 When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
-
+g
 I've met a lot of issues and limits working with it and decided to create something to use instead it on **JavaScript**   
 
 Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
@@ -164,7 +164,7 @@ const datus = new Datus() // declare an instance of class
 
 -**circle** (*radius* = 1, *speed* = 1, *isMeters* = false) - returns time of moving on circle.     
 
--**generation** (*age* = 18, *num* = 5) - counts when was born man *num* generations from the past.  
+-**generation** (*min* = 2e1, *max* = 3e1, *num* = 5) - counts year when was born the man of *num* generations from the past.  
 
 -**space** (*num* = 1, *size* = 'day', *title* = 'Earth') - converts planet's period (by *num* and *size*) into Earth's days.   
 
@@ -222,7 +222,7 @@ const datus = new Datus() // declare an instance of class
 
 -**summer** (*date* = '', *round* = 0) - returns % of summer period by date.           
 
--**cigarette** (*time* = '', *num* = 10, *round* = 0) - returns how much time you waste of smoking a cigarette. 
+-**cigarette** (*time* = '', *num* = 1e1, *round* = 0) - returns how much time you waste of smoking a cigarette. 
 
 -**timeRound** (*time* = '', *num* = 5) - rounds time's minutes by parameter *num* and returns result.      
 
@@ -257,3 +257,9 @@ const datus = new Datus() // declare an instance of class
 -**track** (*timestamps* = [], *speed* = 7e1, *round* = 0) - counts total duratiopn & distance of track's trip and returns {time, distance}.        
 
 -**timeDistance** (*start* = '', *end* = '') - returns time between 2 borders.  
+
+-**monthAllocation** (*title* = '', *num* = 0, *year* = 2024) - builds list of dates by month's title, year and step of allocation. 
+
+-**timeAllocation** (*start* = '07:00', *end* = '23:59', *num* = 1, *isIncludeEndBorder* = false) - generates list of time by borders with step of allocation.  
+
+-**isUniq** (*content* = '', *isDate* = true) - checks if date/time has uniq digits.        

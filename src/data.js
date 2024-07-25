@@ -200,7 +200,6 @@ const datePeriods = ['day', 'month', 'year']
 const timePeriods = ['hour', 'minute']
 
 const time_start = '00:00'
-const generationWeight = 25
 const monthSize = 29.53
 const minutesMin = 0
 const minutesMid = 720
@@ -219,4 +218,4 @@ let timePosition = 2
 let war_date = '24.02.2022'
 
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, war_date, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers}

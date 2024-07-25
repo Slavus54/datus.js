@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, generationWeight, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -780,9 +780,14 @@ class Core extends HelperContainer {
         return result
     }
 
-    generation(age = 18, num = 5) {
-        let year = this.parts(this.now('date'), '.', true)[2]
-        let result = Math.floor(year - (age + generationWeight * num))
+    generation(min = 2e1, max = 3e1, num = 5) {
+        let result = this.date.getFullYear()
+
+        for (let i = 0; i < num; i++) {
+            let value = this.getIntervalValue([min, max])
+
+            result -= value
+        }
 
         return result
     }
@@ -1522,6 +1527,48 @@ class Core extends HelperContainer {
         if (this.isTime(start) && this.isTime(end)) {
             result = this.time(Math.abs(this.time(start, key) - this.time(end, key)))
         }
+
+        return result
+    }
+
+    monthAllocation(title = '', num = 0, year = 2024) {
+        let index = months.indexOf(title) + 1 || 0
+        let size = this.getMonthSize(index, year)
+        let step = Math.floor(size / num)
+        let result = []
+        let day = Math.floor(Math.random() * step)
+
+        while (day < size) {
+            result = [...result, `${this.rounding(day)}.${this.rounding(index)}.${year}`]
+            
+            day += step
+        }
+
+        return result
+    }
+
+    timeAllocation(start = '07:00', end = '23:59', num = 1, isIncludeEndBorder = false) {
+        let distance = this.time(this.timeDistance(start, end), 'deconvert')
+        let step = Math.floor(distance / num)
+        let counter = this.time(start, 'deconvert')
+        let result = []
+
+        if (isIncludeEndBorder) {
+            counter += step
+        }
+
+        for (let i = 0; i < num; i++) {
+            result = [...result, this.time(counter)]
+            
+            counter += step
+        }
+
+        return result
+    }
+
+    isUniq(content = '', isDate = true) {
+        let parts = this.parts(content, this.getSymbol(isDate), true)
+        let result = Array.from(new Set(parts)).length === parts.length
 
         return result
     }
