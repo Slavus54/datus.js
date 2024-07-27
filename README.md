@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.5**
+* Current Version: **1.4.6**
 * Size ~ **70 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -263,3 +263,9 @@ const datus = new Datus() // declare an instance of class
 -**timeAllocation** (*start* = '07:00', *end* = '23:59', *num* = 1, *isIncludeEndBorder* = false) - generates list of time by borders with step of allocation.  
 
 -**isUniq** (*content* = '', *isDate* = true) - checks if date/time has uniq digits.        
+
+-**wheel** (*size* = 29, *time* = '00:15', *speed* = 2e1) - finds distance what you passed on bike with wheel's diameter *size* in inch for *time* with speed (km/h).      
+
+-**decadesMonthAllocation** (*days* = [], *title* = '', *year* = 2024) - builds an array of dates with month's decades by number of days in each one.      
+
+-**isDate** (*content* = '') - validates if content is real date - DD.MM.YYYY.    

@@ -1572,6 +1572,47 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    wheel(size = 29, time = '00:15', speed = 2e1) {
+        let result = Math.floor(this.time(time, 'deconvert') * speed * 1e3 / (6e1 * Math.PI * size / 4e1))
+
+        return result
+    }
+
+    decadesMonthAllocation(days = [], title = '', year = 2024) {
+        let index = months.indexOf(title) + 1 || 0
+        let border = this.getMonthSize(index, year)
+        let counter = 0
+        let result = []
+
+        days.map((el, idx) => {
+            let size = (idx + 1) * 1e1
+            let isFullDecade = size <= border
+            let step = Math.floor((isFullDecade ? 1e1 : border - size) / el)
+         
+            for (let i = 0; i < el; i++) {
+                counter += step
+
+                result = [...result, `${this.rounding(counter)}.${this.rounding(index)}.${year}`]
+            }
+        })
+
+        return result
+    }
+
+    isDate(content = '') {
+        let result = content.split('.').length === 3
+
+        if (result) {
+            let parts = this.parts(content, '.', true)
+            let monthSize = this.getMonthSize(parts[1])
+
+            result = parts[0] <= monthSize && parts[1] <= 12 
+            result = parts.filter(el => el > 0).length === parts.length
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
