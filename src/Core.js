@@ -673,7 +673,7 @@ class Core extends HelperContainer {
     }
 
     isWillBe(date = '24.08.2024') {
-        let nums = [this.now('date'), date].map(el => this.getDateNum(el))
+        let nums = [this.now('date'), date].map(el => this.dateValue(el))
         
         return nums[0] <= nums[1]
     }
@@ -1610,6 +1610,48 @@ class Core extends HelperContainer {
             result = parts[0] <= monthSize && parts[1] <= 12 
             result = parts.filter(el => el > 0).length === parts.length
         }
+
+        return result
+    }
+
+    dateValue(date = '') {
+        let result = 0
+
+        if (this.isDate(date)) {
+            let parts = this.parts(date, '.', true)
+
+            months.slice(0, parts[1] - 1).map((_, idx) => {
+                let size = this.getMonthSize(idx + 1, parts[2])
+                
+                result += size
+            })
+
+            result += parts[0]
+        }
+
+        return result
+    }
+
+    timeByNumbersOperations(base = 1e3, numbers = []) {
+        let actions = operations.slice(0, 2)
+        let value = base
+        let result = ''
+
+        numbers.map(el => {
+            let action = actions[Math.floor(Math.random() * actions.length)]
+
+            value = eval(`${value}${action}${el}`)
+        })
+
+        result = this.time(value)
+
+        return result
+    }
+
+    timeByDeviation(base = 6e2, percent = 1e1, isTopBorder = true) {
+        let size = this.cleanValue(percent, base, 0)
+        let value = Math.floor(Math.random() * size)
+        let result = this.time(isTopBorder ? base + value : base - value)
 
         return result
     }

@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.6**
+* Current Version: **1.4.7**
 * Size ~ **70 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -17,11 +17,11 @@ To look code - *https://github.com/Slavus54/datus.js*
 
 ## History
 
-When I had been building web apps on React since 2020 I used to manipulate dates with heavy and powerful library **Moment.js**   
-g
-I've met a lot of issues and limits working with it and decided to create something to use instead it on **JavaScript**   
+When I had been building web apps on React since 2020 I used to manipulate dates with powerful library **Moment.js**   
 
-Now I'm looking for new features and hope you can help me and other developers to have great experience of building library and using these methods in your projects for free.
+I've met a lot of limits working with it and decided to create something to use instead it on **JavaScript**  
+
+Now I'm looking for new features and hope you can help me to have great experience of building library and using these methods in your projects for free.
 
 ## Getting Started         
 ~~~
@@ -268,4 +268,10 @@ const datus = new Datus() // declare an instance of class
 
 -**decadesMonthAllocation** (*days* = [], *title* = '', *year* = 2024) - builds an array of dates with month's decades by number of days in each one.      
 
--**isDate** (*content* = '') - validates if content is real date - DD.MM.YYYY.    
+-**isDate** (*content* = '') - validates if content is real date - DD.MM.YYYY.  
+
+-**dateValue** (*date* = '') - returns days of date since beginning of year.    
+
+-**timeByNumbersOperations** (*base* = 1e3, *numbers* = []) - builds time by random math operations with base and numbers.        
+
+-**timeByDeviation** (*base* = 6e2, *percent* = 1e1, *isTopBorder* = true) - creates time by random +- deviation inside *percent* of basic minutes value.             
