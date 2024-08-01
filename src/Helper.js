@@ -56,22 +56,6 @@ class HelperContainer {
         return timestamp
     }
 
-    getDateNum(date) {
-        let check = num => num > 0
-        let parts = this.parts(date, '.', true)
-        let result = 0
-             
-        parts.map((el, index) => {
-            let value = check(index) ? el - 1 : el
-
-            value *= date_sizes[index]
-        
-            result += value
-        })
-
-        return result
-    }
-
     getMonthSize(index = 0, year = 0) {
         let isEven = index % 2 === 0
         let size = 0    
@@ -92,7 +76,7 @@ class HelperContainer {
     }
 
     getIntervalValue(borders = []) {
-        return Math.floor(borders[0] + Math.random() * Math.abs(borders[0] - borders[1]))
+        return Math.floor(borders[0] + Math.round(Math.random() * Math.abs(borders[0] - borders[1])))
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "datus.js",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Library for manage date with different methods of custom formatting",
   "main": "index.js",
   "scripts": {
@@ -10,14 +10,16 @@
     "JS",
     "date",
     "time",
+    "year",
+    "number",
+    "weekday",
+    "digit",
     "parse",
     "format",
     "calendar",
-    "i18n",
     "timezone",
     "validate",
     "clock",
-    "weekday",
     "reading"
   ],
   "author": "Slavus54",

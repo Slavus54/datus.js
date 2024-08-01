@@ -1655,6 +1655,41 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timestampsByPercent(border = 6e2, list = [], isUniq = false) {
+        let now = this.time(this.now('time'), 'deconvert')
+        let size = Math.abs(now - border) 
+        let result = []
+
+        list.map(el => {
+            let value = now + this.cleanValue(el, size, 0)
+
+            result = [...result, this.time(value)]
+        })
+
+        if (isUniq) {
+            result = Array.from(new Set(result))
+        }
+
+        return result
+    }
+
+    monthWeekdays(weekday = '') {
+        let parts = this.parts(this.now('date'), '.', true)
+        let gap = this.gap(weekday) 
+        let size = this.getMonthSize(parts[1])
+        let result = Math.floor((size - parts[0] - gap) / weekdays.length) + 1   
+
+        return result
+    }
+
+    timeMove(num = 0, isForward = true) {
+        let symbol = isForward ? '+' : '-'
+        let value = eval(`${this.time(this.now('time'), 'deconvert')}${symbol}${num}`)
+        let result = this.time(value)
+
+        return result
+    }
 }
 
 module.exports = Core

@@ -5,8 +5,8 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.7**
-* Size ~ **70 kB**
+* Current Version: **1.4.8**
+* Size ~ **75 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -274,4 +274,10 @@ const datus = new Datus() // declare an instance of class
 
 -**timeByNumbersOperations** (*base* = 1e3, *numbers* = []) - builds time by random math operations with base and numbers.        
 
--**timeByDeviation** (*base* = 6e2, *percent* = 1e1, *isTopBorder* = true) - creates time by random +- deviation inside *percent* of basic minutes value.             
+-**timeByDeviation** (*base* = 6e2, *percent* = 1e1, *isTopBorder* = true) - creates time by random +- deviation inside *percent* of basic minutes value.   
+
+-**timestampsByPercent** (*border* = 6e2, *list* = [], *isUniq* = false) - generates list of timestamps from now to *border* by *list* of %.        
+
+-**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month.    
+
+-**timeMove** (*num* = 0, *isForward* = true) - moves time from current to custom by *num* of minutes and direction by *isForward*.  
