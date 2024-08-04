@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.8**
+* Current Version: **1.4.9**
 * Size ~ **75 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -24,6 +24,9 @@ I've met a lot of limits working with it and decided to create something to use 
 Now I'm looking for new features and hope you can help me to have great experience of building library and using these methods in your projects for free.
 
 ## Getting Started         
+
+There are 5 main chapters of library: date, time, weekday, year and num.
+
 ~~~
 import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'     
 
@@ -280,4 +283,8 @@ const datus = new Datus() // declare an instance of class
 
 -**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month.    
 
--**timeMove** (*num* = 0, *isForward* = true) - moves time from current to custom by *num* of minutes and direction by *isForward*.  
+-**timeMove** (*num* = 0, *isForward* = true) - moves time from current to custom by *num* of minutes and direction by *isForward*.    
+
+-**bySchema** (*schema* = '', *isDate* = true, *marker* = 'x') - generates date or time by text *schema* with random value instead of *marker*.    
+
+-**timeByText** (*content* = '') - returns formatted time built with text like '15 hours 37 minutes'.           

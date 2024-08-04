@@ -1690,6 +1690,47 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    bySchema(schema = '', isDate = true, marker = 'x') {
+        let result
+
+        while (isDate ? !this.isDate(result) : !this.isTime(result)) {
+            result = schema.split('').map(el => el === marker ? this.getIntervalValue([0, 9]) : el).join('')
+        }
+
+        return result
+    }
+
+    timeByText(content = '') {
+        let value = 0
+        let result = ''
+
+        if (typeof content === 'string') {
+            content.split(' ').forEach((period) => {
+                let num = ''
+                let measure = ''
+
+                period.split('').map(el => {
+                    if (isNaN(el)) {
+                        measure += el
+                    } else {
+                        num += el
+                    }
+                })
+
+                num = Number(num)
+   
+                let size = timeMeasures.find(el => el.content === measure)?.value
+
+                value += size * num
+            })
+        }
+
+        value = Math.floor(value / 6e4) 
+        result = this.time(value)
+
+        return result
+    }
 }
 
 module.exports = Core
