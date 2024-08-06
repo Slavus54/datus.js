@@ -1731,6 +1731,79 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timesSortedBy(arr = [], criterion = 'all', isIncreased = true) {
+        for (let i = 1; i < arr.length; i++) {
+            let current = arr[i]
+            let j = i - 1
+            
+            let currentValue = this.time(current, 'deconvert')
+            let previousValue = this.time(arr[j], 'deconvert')
+           
+            if (criterion === 'hour') {
+                currentValue /= 6e1
+                previousValue /= 6e1
+            } else if (criterion === 'minute') {
+                currentValue %= 6e1
+                previousValue %= 6e1
+            }
+            
+            while (j >= 0 && isIncreased ? previousValue > currentValue : previousValue < currentValue) {
+                arr[j + 1] = arr[j]
+                j--
+            }
+     
+            arr[j + 1] = current
+        }
+
+        return arr
+    }
+
+    dateByParameters(dayBorders = [], monthBorders = [], century = 21, decade = 1) {
+        let result = ''
+
+        while (!this.isDate(result)) {
+            let day = Math.floor(dayBorders[0] + Math.random() * (dayBorders[1] + 1 - dayBorders[0]))
+            let month = Math.floor(monthBorders[0] + Math.random() * (monthBorders[1] + 1 - monthBorders[0]))
+            let year = (century - 1)*1e2 + (decade - 1)*1e1 + Math.floor(Math.random() * 1e1)
+
+            result = `${this.rounding(day)}.${this.rounding(month)}.${year}`
+        }
+
+        return result
+    }
+
+    timesByDigits(numbers = []) {
+        let parts = Math.ceil(numbers.length / timePosition)
+        let result = []      
+        let periods = []
+        let idx = 0
+
+        for (let k = 0; k < parts; k++) {
+            for (let i = idx; i <= idx + 1; i++) {
+                for (let j = idx; j <= idx + 1; j++) {
+                    
+                    periods = [...periods, `${numbers[i]}${numbers[j]}`] 
+                }
+            }
+          
+            idx++
+        }            
+        
+        periods.map((first) => {
+            periods.map((second) => {
+                let time = `${this.rounding(first)}:${this.rounding(second)}`
+
+                if (this.isTime(time)) {
+                    result = [...result, time]
+                }
+            })
+        })
+
+        result = Array.from(new Set(result))
+
+        return result
+    }
 }
 
 module.exports = Core

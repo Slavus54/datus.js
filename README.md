@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.4.9**
+* Current Version: **1.5.0**
 * Size ~ **75 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -21,7 +21,7 @@ When I had been building web apps on React since 2020 I used to manipulate dates
 
 I've met a lot of limits working with it and decided to create something to use instead it on **JavaScript**  
 
-Now I'm looking for new features and hope you can help me to have great experience of building library and using these methods in your projects for free.
+Now I'm looking for new features and hope you can help me to have great experience of building this library **for free**.
 
 ## Getting Started         
 
@@ -287,4 +287,10 @@ const datus = new Datus() // declare an instance of class
 
 -**bySchema** (*schema* = '', *isDate* = true, *marker* = 'x') - generates date or time by text *schema* with random value instead of *marker*.    
 
--**timeByText** (*content* = '') - returns formatted time built with text like '15 hours 37 minutes'.           
+-**timeByText** (*content* = '') - returns formatted time built with text like '15 hours 37 minutes'.      
+
+-**timesSortedBy** (*arr* = [], *criterion* = 'all', *isIncreased* = true) - sorting list of times by *criterion*: hour, minute or all; returns sorted array.      
+
+-**dateByParameters** (*dayBorders* = [], *monthBorders* = [], *century* = 21, *decade* = 1) - returns accurately randomly generated date by a lot of parameters.      
+
+-**timesByDigits** (*numbers* = []) - builts array of valid times using all digits from *numbers*.  
