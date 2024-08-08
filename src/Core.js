@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, minutesMin} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -1804,6 +1804,53 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    match(first = '', second = '', controllers = [], isDate = true) {
+        let firstParts = this.parts(first, this.getSymbol(isDate), true)
+        let secondParts = this.parts(second, this.getSymbol(isDate), true)
+        let result = []
+
+        controllers.map((el, idx) => {
+            let value = el === '>' ? Math.max(firstParts[idx], secondParts[idx]) : Math.min(firstParts[idx], secondParts[idx])
+        
+            result = [...result, this.rounding(value)]
+        })
+
+        result = result.join(this.getSymbol(isDate))
+    
+        return result
+    }
+
+    curryTime(hours = 1) {
+        return (minutes = 0) => {
+            let result = `${this.rounding(hours)}:${this.rounding(minutes)}`
+
+            return this.isTime(result) ? result : ''
+        }
+    }
+
+    update(content = '', schema = '', indexes = [], operation = '', isDate = true) {
+        let parts = this.parts(content, this.getSymbol(isDate), true)
+        let result = []
+
+        parts.map((el, idx) => {
+            let isUpdated = indexes.indexOf(idx) !== -1
+
+            if (isUpdated) {
+                let check = eval(`${el}${schema}`)
+
+                if (check) {
+                    el = eval(`${el} ${operation}`)
+                } 
+            }
+
+            result = [...result, this.rounding(el)]
+        })
+
+        result = result.join(this.getSymbol(isDate))
+
+        return result
+    }    
 }
 
 module.exports = Core

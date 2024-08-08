@@ -5,8 +5,8 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.0**
-* Size ~ **75 kB**
+* Current Version: **1.5.1**
+* Size ~ **80 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -294,3 +294,9 @@ const datus = new Datus() // declare an instance of class
 -**dateByParameters** (*dayBorders* = [], *monthBorders* = [], *century* = 21, *decade* = 1) - returns accurately randomly generated date by a lot of parameters.      
 
 -**timesByDigits** (*numbers* = []) - builts array of valid times using all digits from *numbers*.  
+
+-**match** (*first* = '', *second* = '', *controllers* = [], *isDate* = true) - match every part of date / time with *controllers* (symbols of comparing) and returns result.           
+
+-**curryTime** (*hours* = 1) - generates time by current and returned functions (currying).     
+
+-**update** (*content* = '', *schema* = '', *indexes* = [], *operation* = '', *isDate* = true) - updates every parts of time / date by checking it with *schema* and change by *operation*.   

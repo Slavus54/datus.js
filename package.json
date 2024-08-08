@@ -1,6 +1,6 @@
 {
   "name": "datus.js",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Library for manage date with different methods of custom formatting",
   "main": "index.js",
   "scripts": {
