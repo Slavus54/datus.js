@@ -1851,6 +1851,48 @@ class Core extends HelperContainer {
 
         return result
     }    
+
+    timeByFormula(formula = '', value = 1, base = 0, marker = 'x') {
+        let result = this.time(base + eval(this.splin(formula, marker, value)))
+
+        return result
+    }
+
+    timestampsByProgression(operations = [], length = 1, base = 6e2) {
+        let value = base
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            let index = i % operations.length
+            
+            value = eval(`${value}${operations[index]}`)
+            result = [...result, this.time(value)]            
+        }
+
+        return result
+    }
+
+    exchangePeriod(items = [], indexes = [], isDate = true) {
+        let symbol = this.getSymbol(isDate)
+        let parts = []
+        let result = []
+
+        items = items.map(el => this.parts(el, symbol, true))
+        
+        items.forEach((item, idx) => {
+            item.map((part, i) => {
+                let position = Number(idx !== 1)
+                let value = indexes[idx] === i ? items[position][indexes[position]] : part
+
+                parts = [...parts, this.rounding(value)]
+            })
+
+            result = [...result, parts.join(symbol)]
+            parts = []
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
