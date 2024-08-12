@@ -1893,6 +1893,32 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeByMultiplication(base = 6e2, percent = 1, iterations = 1) {
+        let step = 1 + (percent / 1e2)
+        let result = ''
+
+        for (let i = 0; i < iterations; i++) {
+            base *= step
+        }
+
+        result = this.time(Math.floor(base))
+
+        return result
+    }
+
+    timeByParameters(hours = [], minutes = []) {
+        let result = ''
+        let value = hours.length === 1 ? hours[0] : this.getIntervalValue(hours)
+
+        value *= 6e1
+
+        value += minutes.length === 1 ? minutes[0] : this.getIntervalValue(minutes)
+    
+        result = this.time(value)
+
+        return result
+    }   
 }
 
 module.exports = Core

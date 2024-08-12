@@ -1,4 +1,4 @@
-const {sizes, months, date_sizes} = require('./data')
+const {sizes} = require('./data')
 
 class HelperContainer {
     percent(value = 0, total = 1e2, round = 1) {
