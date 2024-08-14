@@ -1919,6 +1919,59 @@ class Core extends HelperContainer {
 
         return result
     }   
+
+    weekdaysDifferenceByWeek(start = '', end = '', weeks = 0) {
+        let first = 0
+        let second = 0
+        let result = 0
+
+        weekdays.map((el, idx) => {
+            if (el.tag === start) {
+                first = idx
+            } else if (el.tag === end) {
+                second = idx
+            }
+        })
+
+        result = Math.abs(second - first)
+      
+        if (second < first) {
+            if (weeks > 0) {
+                result = Math.abs(weekdays.length - result)
+                weeks--
+            } else {
+                result = 0
+            }
+        } 
+
+        if (weeks > 0) {
+            result += weeks * weekdays.length
+        }
+
+        return result
+    }
+
+    everydaySpending(base = 1e1, age = 8e1, round = 0) {
+        let percent = this.percent(base, minutesMax, round)
+        let result = this.cleanValue(percent, age, round)
+
+        return result
+    }   
+
+    timestampsByRandomlyStep(base = 6e2, step = 1e2, num = 5) {
+        let middle = Math.floor(step / num)
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            let value = step >= middle ? Math.floor(Math.random() * step) : step
+
+            result = [...result, this.time(base + value)]
+
+            step -= value
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

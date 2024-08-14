@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.3**
+* Current Version: **1.5.4**
 * Size ~ **80 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -309,4 +309,10 @@ const datus = new Datus() // declare an instance of class
 
 -**timeByMultiplication** (*base* = 6e2, *percent* = 1, *iterations* = 1) - generates time by multiplication *percent* (10% => 1.1) and *base* while *iterations*.   
 
--**timeByParameters** (*hours* = [], *minutes* = []) - returns time built by parameters's maximum borders with randomly generated value inside borders.       
+-**timeByParameters** (*hours* = [], *minutes* = []) - returns time built by parameters's maximum borders with randomly generated value inside borders. 
+
+-**weekdaysDifferenceByWeek** (*start* = '', *end* = '', weeks = 0) - returns days of difference between 2 weekdays.            
+
+-**everydaySpending** (*base* = 1e1, *age* = 8e1, *round* = 0) - counts years of time spending by *base* in minutes everyday waste.   
+
+-**timestampsByRandomlyStep** (*base* = 6e2, *step* = 1e2, *num* = 5) - returns list of times with randomly minutes step inside borders: 0 to *step* / *num*.    
