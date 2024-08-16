@@ -1,12 +1,12 @@
 # Datus.JS       
 
-## Description             
+## About       
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.4**
-* Size ~ **80 kB**
+* Current Version: **1.5.5**
+* Size ~ **90 kB**
 * Most of algorithms have **O(n)** time complexity
 
 ## Links
@@ -73,7 +73,7 @@ const datus = new Datus() // declare an instance of class
 
 ## Methods     
 
-There are 121 methods to work with 5 main chapters of library: date, time, weekday, year and num.   
+There are 124 methods to work with V main chapters of library: date, time, weekday, year and num.   
 
 ### Date and Day
 
@@ -169,7 +169,9 @@ There are 121 methods to work with 5 main chapters of library: date, time, weekd
 
 -**timeByParameters** (*hours* = [], *minutes* = []) - returns time built by parameters's maximum borders with randomly generated value inside borders.
 
--**timestampsByRandomlyStep** (*base* = 6e2, *step* = 1e2, *num* = 5) - returns list of times with randomly minutes step inside borders: 0 to *step* / *num*.    
+-**timestampsByRandomlyStep** (*base* = 6e2, *step* = 1e2, *num* = 5) - returns list of times with randomly minutes step inside borders: 0 to *step* / *num*.
+
+-**timeByDayPart** (*part* = '', *base* = 0, *isSubtraction* = false) - returns time of day's part with minutes *base*. 
 
 ### Weekday
 
@@ -326,6 +328,10 @@ There are 121 methods to work with 5 main chapters of library: date, time, weekd
 -**weekdaysDifferenceByWeek** (*start* = '', *end* = '', weeks = 0) - returns days of difference between 2 weekdays.            
 
 -**everydaySpending** (*base* = 1e1, *age* = 8e1, *round* = 0) - counts years of time spending by *base* in minutes everyday waste. 
+
+-**fee** (*cost* = 2e2, *percent* = 15, *duration* = 1e1, *delay* = 0, *round* = 0) - counts $ to pay for service with *delay* in minutes.    
+
+-**partition** (*timestamps* = [], *efficiency* = 1e2, *round* = 1) - returns list of times by partition elements in pairs with % of *efficiency*.    
 
 ### Find
 
