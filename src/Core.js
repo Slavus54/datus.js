@@ -1972,6 +1972,1131 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    fee(cost = 2e2, percent = 15, duration = 1e1, delay = 0, round = 0) {
+        let award = this.cleanValue(percent, cost, round)
+        let overtime = this.percent(delay, duration, round)
+        let result = delay !== 0 ? this.cleanValue(1e2 - overtime, award, round) : award 
+
+        return result
+    }
+
+    timeByDayPart(part = '', base = 0, isSubtraction = false) {
+        let value = eval(`${day_parts.find(el => el.title === part)?.border} ${operations.slice(0, 2)[Number(isSubtraction)]} ${base}`) 
+        let result = this.time(value)
+
+        return result
+    }
+
+    partition(timestamps = [], efficiency = 1e2, round = 1) {
+        let result = []
+        let size = Math.max(...timestamps) 
+        let part = Math.floor(minutesMax / size)
+
+        timestamps.map((el, idx) => {
+            let next = timestamps[idx + 1]
+        
+            if (next) {
+                let difference = Math.abs(next - el) * part 
+                let border = this.cleanValue(efficiency, difference, round)
+                let delay = Math.floor((difference - border) / 2)
+        
+                result = [...result, [this.time(el * part + delay), this.time(el * part + delay + border)]]
+            }
+        })
+
+        return result
+    }
+
+    week(days = [], hours = 4e1, overtime = 0) {
+        let middle = Math.floor(hours / days.length)
+        let max = this.cleanValue(1e2 + overtime, middle, 0)
+        let result = []
+
+        days.map(el => {
+            let day = weekdays[el].tag
+            let flag = hours > middle 
+            
+            let time = this.getIntervalValue([flag ? middle : hours, flag ? max : hours])
+
+            result = [...result, {day, time}]
+
+            hours -= size
+        })
+
+        return result
+    }
+
+    dateByMultiplicity(indexes = [], year = this.date.getFullYear()) {
+        let result = []
+       
+        indexes.map((el, idx) => {
+            let border = Math.floor(datePartsBorders[idx] / el)
+            let value = this.getIntervalValue([1, border])
+            
+            result = [...result, this.rounding(value * el)]
+        })
+
+        result = [...result, year]
+
+        result = result.join('.')
+
+        return result
+    }
+
+    timeByNum(num = 1) {
+        let result = []
+
+        timePartsBorders.map(el => {
+            let items = String(el).split('')
+            let text = ''
+          
+            items.map(el => Number(el)).map(el => {
+                let border = num > el ? el : num  
+                let value = this.getIntervalValue([1, border])
+             
+                text += value
+            })
+
+            result = [...result, text]
+        })
+
+        result = result.join(':')
+
+        return result
+    } 
+
+    frames(start = 2e3, end = 21e2, step = 1, size = 1, isYear = true) {
+        let result = []
+
+        while (start < end) {
+            let frame = [isYear ? start : this.time(start)]
+
+            start += size
+
+            if (start < end) {
+                result = [...result, [...frame, isYear ? start : this.time(start)]]
+            }
+        
+            start += step
+        }
+        
+        return result
+    }
+
+    life(century = 2e1, percent = 1e1, size = 8e1) {
+        let start = century*1e2 - this.cleanValue(percent, size, 0)
+        let end = century*1e2 + this.cleanValue(1e2 - percent, size, 0)
+        let result = []
+        
+        result = [start, end]
+
+        return result
+    }
+
+    lifePart(periods = [], century = 21, round = 0) {
+        const base = (century - 1)*1e2
+
+        let index = Number(periods[1] - base < 1e2 && periods[1] > base)
+        let period = periods[index]
+        let difference = Math.abs(period - base)
+        let result = this.percent(Math.floor(Boolean(index) ? difference : 1e2 - difference), periods[1] - periods[0], round)
+        
+        return result
+    }
+
+    monthDatesByWeekday(date = '', weekday = '') {
+        let parts = this.parts(date, '.', true)
+        let day = this.weekdayByDate(date)
+        let size = this.getMonthSize(parts[1])
+        let result = []
+        let start, end
+        
+        weekdays.map((el, idx) => {
+            if (el.title === weekday) {
+                start = idx
+            } else if (el.title === day) {
+                end = idx
+            }
+        })
+
+        let difference = Math.abs(start - end)
+        let pointer = start > end ? parts[0] + difference : parts[0] - difference
+        let i = pointer % weekdays.length === 0 ? weekdays.length : pointer % weekdays.length
+
+        for (i; i < size; i += weekdays.length) {
+            result = [...result, `${this.rounding(i)}.${this.rounding(parts[1])}.${parts[2]}`]
+        }
+
+        return result
+    }
+
+    timesVertexDeviationByPointer(start = '', end = '', pointer = 6e2, vertex = 5e1) {
+        let difference = this.time(this.timeDistance(start, end), 'deconvert')
+        let inside = this.time(start, 'deconvert') + this.cleanValue(vertex, difference, 0)
+        let result = Math.abs(pointer - inside)
+
+        return result
+    }
+
+    weekdayNumByYear(year = 2e3, weekday = 'Monday') {
+        let size = this.getYearSize(year)
+        let initialWeekday = this.weekdayByDate(`01.01.${year}`)
+        let difference = this.weekdaysDifferenceByWeek(initialWeekday, weekday, 0)
+        let result = 0
+
+        size = difference <= 0 ? size - difference : size - weekdays.length
+
+        result = Math.floor(size / weekdays.length)
+    
+        return result
+    }
+
+    ms(value = null, key = 'convert') {   
+        let flag = key === 'convert'
+        let result = flag ? [] : 0
+
+        if (flag) {
+            msDividers.map((el, idx) => {
+                let prev = msDividers[idx - 1]
+                let item = prev ? Math.floor((value - result[idx - 1] * msDividers[idx - 1]) / el) : Math.floor(value / el)
+          
+                result = [...result, this.rounding(item)]
+            })
+
+            result = result.join(':')
+        
+        } else if (key === 'deconvert') {
+            let parts = this.parts(value, ':', true)
+
+            if (parts.length === msDividers.length) {
+
+                parts.map((el, idx) => {
+                    result += el * msDividers[idx]
+                })
+            }
+        }
+
+        return result
+    }
+
+    yearRound(value = 2e3, num = 1e1, percent = 5e1) {
+        let border = this.cleanValue(percent, num, 0)
+        let residue = value % num
+        let result = residue < border ? value - residue : value + (num - residue)
+
+        return result
+    }
+
+    weekdaysDifferenceByTime(days = [], times = []) {    
+        let result = 0
+
+        times = times.map(el => this.time(el, 'deconvert'))
+
+        days = days.map(day => weekdays.map(el => el.title).indexOf(day))
+
+        result = Math.floor(days[1] - days[0]) * minutesMax
+       
+        let difference = Math.abs(times[0] - times[1])
+
+        result = times[0] > times[1] ? result - difference : result + difference
+
+        return result
+    }
+
+    centuryByYears(periods = []) {
+        let result = []
+
+        periods.map(el => {
+            let value = Math.ceil(el / 1e2)
+
+            result = [...result, value]
+        })
+
+        result = Array.from(new Set(result))
+
+        return result
+    }
+
+    yearPower(year = 2e3) {
+        let result = eval(String(year).split('').join('+'))
+
+        return result
+    }
+
+    yearsIntersection(periods = []) {
+        let differences = periods.map(el => el[1] - el[0])
+        let result = true
+
+        let smallest = Math.min(...differences)
+        let index = differences.indexOf(smallest)
+        let border = periods[index][1]
+
+        smallest = periods[index][0] 
+
+        index = Number(!Boolean(index))
+
+        let flag = smallest >= periods[index][0] && smallest <= periods[index][1]
+
+        if (flag) {
+            result = true
+        } else {
+            while (smallest < border && smallest < periods[index][0]) {
+                smallest++
+            }
+
+            result = flag
+        }
+
+        return result
+    }
+
+    timeframeValue(periods = [], percent = 1e1, round = 0) {
+        let result = ''
+
+        periods = periods.map(el => this.time(el, 'deconvert'))
+
+        let difference = Math.abs(periods[1] - periods[0])
+        let value = this.cleanValue(percent, difference, round)
+
+        result = this.time(periods[0] + value)
+
+        return result
+    }
+
+    dateByYearWeek(year = 2e3, weekNum = 1e1) {
+        let residue = Math.floor(year % weekdays.length)
+        let days = weekdays.length * weekNum + residue
+        let month = 1
+        let result = ''
+
+        days -= weekdays.length - 2
+   
+        months.map(el => {
+            let size = this.getMonthSize(el)
+
+            if (size <= days) {
+                days -= size
+                month++
+            }
+        })
+
+        result = `${this.rounding(days)}.${this.rounding(month)}.${year}`
+
+        return result
+    }
+
+    yearDigitReset(year = 2e3, num = 1) {
+        let items = String(year).split('').reverse()
+        let result = year - Number(items[num - 1]) * 10**(num - 1)
+
+        return result
+    }
+
+    exchangeYearDigit(items = [], indexes = []) {
+        let result = []
+
+        if (indexes[0] !== indexes[1]) {
+
+            items = items.map(el => String(el).split(''))
+            
+            items.map((el, idx) => {
+                let from = el.length - indexes[idx]
+                let index = Number(!Boolean(idx))
+                let into = items[index].length - indexes[index]
+                let value = ''
+
+                for (let i = 0; i < el.length; i++) {
+                    if (i === from) {
+                        value += items[index][into]
+                    } else {
+                        value += el[i]
+                    }
+                }
+
+                result = [...result, value]
+            })
+        }
+
+        return result
+    }
+
+    timeMinuteReflection(time = '') {
+        let result = this.isTime(time) ? this.time(minutesMax - this.time(time, 'deconvert')) : ''
+
+        return result
+    }
+
+    monthDatesByStep(date = '', step = 1) {
+        let result = []
+
+        if (this.isDate(date)) {
+            let parts = this.parts(date, '.', true)
+            let size = this.getMonthSize(parts[1])
+            let day = parts[0]
+            
+            for (day; day < size; day += step) {
+                let value = `${this.rounding(day)}.${this.rounding(parts[1])}.${parts[2]}`
+            
+                result = [...result, value]
+            }
+        }
+
+        return result
+    }
+
+    getYearDigit(year = 2e3, index = 1) {
+        let result = Math.floor(year % 1e1**index / 1e1**(index - 1))
+
+        return result
+    }
+
+    changeYearDigit(year = 2e3, index = 1, value = 1) {
+        let text = String(year).split('')
+        let position = text.length - index
+        let result = ''
+
+        text.map((el, idx) => {
+            if (idx === position) {
+                result += value
+            } else {
+                result += el
+            }
+        })
+
+        result = Number(result)
+
+        return result
+    }
+
+    timeResidue(time = '') {
+        let result = this.isTime(time) ? 6e1 - this.time(time, 'deconvert') % 6e1 : ''
+
+        return result
+    }
+
+    yearMove(year = 2e3, num = 1e1, isForward = true, border = 2e3) {
+        let result = isForward ? year + num : year - num
+
+        result = result <= border && isForward || result >= border && !isForward ? result : border 
+
+        return result
+    }
+
+    timePartMultiplicity(time = '', index = 1, num = 5) {
+        let result = this.isTime(time) ? this.parts(time, ':', true).reverse()[index - 1] % num === 0 : false
+
+        return result
+    }
+
+    yearBorderCheck(year = 2e3, min = 1e3, max = 2e3, isIncludeBorder = true) {
+        let result = isIncludeBorder ?  year >= min && year <= max : year > min && year < max
+
+        return result
+    }
+
+    validateYearDigitWithOperation(year = 2e3, period = 1e1, digitIndex = 1, value = 1, operation = '+') {
+        year = eval(`${year}${operation}${period}`) 
+        
+        let digit = this.getYearDigit(year, digitIndex)
+        let result = digit === value
+
+        return result
+    }
+
+    numToDottedString(year = 2e3) {
+        let text = String(year).split('')
+        let length = text.length - 1
+        let result = []
+
+        for (let i = length; i >= 0; i--) {
+            result = [...result, (length - i) % 3 === 0 && i !== length ? text[i] + '.' : text[i]]
+        }
+
+        result = result.reverse().join('')
+
+        return result
+    }
+
+    yearsByProgression(start = 2e3, size = 1e2, steps = [], round = 0) {
+        let result = []
+
+        steps.map(el => {
+            let value = start + this.cleanValue(el, size, round)
+
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    timestampsByRounding(time = '', step = 1, isForward = true, isIncludeBorder = true) {
+        let value = this.time(time, 'deconvert')
+        let border = isForward ? 6e1 - value % 6e1 : value % 6e1
+        let result = []
+
+        while (border > 0) {
+            result = [...result, isForward ? this.time(value + border) : this.time(value - border)]
+            
+            border -= step
+        }
+
+        if (isIncludeBorder) {
+            result = [...result, time]
+        }
+
+        result = result.reverse()        
+
+        return result
+    }
+
+    dateByDays(value = 1e2, year = 2024) {    
+        let result = ''
+        let months = 1
+        let days = 0
+        let size = this.getMonthSize(months, year)
+
+        while (value > 0) {
+            if (value >= size) {
+                value -= size
+                months++
+
+                size = this.getMonthSize(months, year)
+            } else {
+                days = value
+                value = 0
+            }
+        }
+
+        result = `${this.rounding(days)}.${this.rounding(months)}.${year}`
+
+        return result
+    }
+
+    yearsByCenturies(centuries = [], values = []) {
+        let result = []
+        
+        values = values.filter(el => el < 1e2)
+
+        centuries.map(century => {
+            values.map(value => {
+                let item = Math.floor((century - 1) * 1e2 + value)
+
+                result = [...result, item]
+            })
+        })
+
+        return result
+    }
+
+    timestampsByBorders(min = 6e2, max = 1e3, steps = [], round = 0) {
+        const difference = Math.abs(max - min)
+        let result = []
+
+        steps.map(el => {
+            let value = min + this.cleanValue(el, difference, round)
+        
+            result = [...result, this.time(value)]
+        })
+
+        return result
+    }
+
+    yearDigitChanges(value = 2e3) {
+        let text = String(value).split('').reverse().map(el => Number(el))
+        let result = []
+
+        text.map((el, idx) => {
+            let next = text[idx + 1]
+            let symbol
+
+            if (next !== undefined) {
+                if (el === next) {
+                    symbol = '='
+                } else {
+                    symbol = el > next ? '-' : '+'
+                }
+                
+                result = [...result, symbol]
+            }       
+        })
+
+        return result
+    }
+
+    timestampsByTimeParts(hours = [], minutes = []) {
+        let result = []
+    
+        hours.map(hour => {
+            minutes.map(minute => {
+                let value = hour * 6e1 + minute
+
+                result = [...result, this.time(value)]
+            })
+        })
+
+        return result
+    }
+
+    yearByParameters(century = 2e1, quarter = 1, isEven = true, border = 0) {
+        let check = (even, num) => even ? num % 2 === 0 : num % 2 !== 0
+        let result = isEven ? 1 : 0
+        let min, max
+
+        min = Math.floor(century - 1) * 1e2 + (quarter - 1) * 25
+
+        max = min + 25
+
+        min += border
+        max -= border
+   
+        while (!check(isEven, result)) {
+            result = this.getIntervalValue([min, max])
+        }
+
+        return result
+    }
+    
+    yearBySchema(schema = '', marker = 'x') {
+        let num = schema.length === 4 ? 2 : 9
+        let result = ''
+
+        schema.split('').map((el, idx) => {
+            if (el === marker) {
+                result += idx === 0 ? this.getIntervalValue([1, num]) : this.getIntervalValue([0, 9])
+            } else {
+                result += el
+            }
+        })
+      
+        result = Number(result)
+
+        return result
+    }
+
+    yearByParity(num = 1e1, min = 1e3, max = 2e3) {
+        let border = Math.floor(max / num)
+        let result = 0
+
+        while (result < min) {
+            result = this.getIntervalValue([1, border]) * num
+        }
+
+        return result
+    }
+
+    timeHourReflection(time = '') {
+        let result = this.isTime(time) ? 24 - Math.ceil(this.time(time, 'deconvert') / 6e1) : 0
+
+        return result
+    }
+
+    findMiddleYear(values = [], isCeil = true) {
+        let min = Math.min(...values)
+        let max = Math.max(...values)
+        let difference = (max - min)
+        let residue = Math[isCeil ? 'ceil' : 'floor'](difference / 2)
+        let pick = min + residue
+        let result = 0
+
+        values.map(el => {
+            let value = Math.abs(el - pick)
+ 
+            if (residue > value) {
+                residue = value
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    findLastingYearEnd(year = 2e3, duration = 5e1, percent = 1e1, round = 0) {
+        let value = this.cleanValue(percent, duration, round)
+        let result = year + (duration - value)
+
+        return result
+    }
+
+    findLastingYearPercent(year = 2e3, min = 2e3, max = 21e2, round = 0) {
+        let difference = Math.abs(max - min)
+        let result = this.percent(Math.abs(year - min), difference, round)
+
+        return result
+    }
+
+    sortYearsByDigit(arr = [], index = 1) {
+        for (let i = 1; i < arr.length; i++) {
+            let current = arr[i]
+            let j = i - 1
+            
+            while (j >= 0 && this.getYearDigit(arr[j], index) > this.getYearDigit(current, index)) {
+                arr[j + 1] = arr[j]
+                j--
+            } 
+
+            arr[j + 1] = current
+        }
+
+        return arr
+    }
+
+    getTimeParity(time = '') {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let border = this.time(time, 'deconvert')
+            let value = Math.floor(border / 2)
+            let i = 1
+
+            while (i < value) {
+                if (border % i === 0) {
+                    result = i
+                }
+                
+                i++
+            }
+        }
+
+        return result
+    }
+
+    validateYearPart(year = 2e3, start = 1, end = 1, validationText = '') {
+        let text = ''
+        let result = true
+        
+        for (let i = end; i >= start; i--) {
+            text += this.getYearDigit(year, i)
+        }
+       
+        result = eval(`${text}${validationText}`)
+
+        return result
+    }
+
+    checkTimeByBorders(time = '', min = 6e2, max = 1e3, isLowerBorderInclude = true, isHighBorderInclude = true) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            
+            result = isLowerBorderInclude ? value >= min : value > min  
+            
+            if (result === true) {
+                result = isHighBorderInclude ? value <= max : value < max
+            }            
+        }
+        
+        return result
+    }
+
+    dateByNum(num = 1e3, round = 0) { 
+        let year = parseInt(num)
+        let residue = this.cleanValue((num % year) * 1e2, this.getYearSize(year), round) 
+        let result = this.dateByDays(residue, year)
+
+        return result
+    }
+
+    findYearSymmetryDeviation(year = 2e3) {
+        let items = String(year).split('').reverse()
+        let middle = Math.floor(items.length / 2)
+        let result = 0
+
+        let reversed = items.slice(0, middle).join('')
+        let toCompare = items.slice(middle, items.length).reverse().join('')
+
+        reversed = Number(reversed)
+        toCompare = Number(toCompare)
+        
+        result = Math.abs(reversed - toCompare)
+
+        return result
+    }
+
+    findMinutesOfTimesMaximum(times = [], percent = 1e1, round = 0) {
+        let max = Math.max(...times.map(el => this.time(el, 'deconvert')))
+        let result = this.cleanValue(percent, max, round)
+
+        return result
+    }
+
+    findYearAverageGap(items = []) {    
+        const length = items.length - 1
+        let result = 0
+    
+        for (let i = 0; i < length; i++) {
+            let current = items[i]
+            let next = items[i + 1]
+   
+            result += Math.abs(next - current)
+        }
+
+        result = Math.round(result / length)
+
+        return result
+    }
+
+    yearsByRadius(year = 1e3, radius = 1e1, num = 1) {
+        let result = []
+
+        while (result.length < num) {
+            let symbol = Boolean(Math.round(Math.random())) ? '+' : '-'
+            let value = eval(`${year}${symbol}${Math.round(Math.random() * radius)}`)
+
+            result = [...result, value]
+            result = Array.from(new Set(result))
+        }
+
+        return result
+    }
+
+    findTimeWithSmallestMinutePart(times = []) {
+        let max = 6e1
+        let result = ''
+
+        times.map(el => this.time(el, 'deconvert')).map(el => {
+            let value = el % 6e1
+
+            if (max > value) {
+                max = value
+                result = this.time(el)
+            }
+        })
+
+        return result
+    }
+
+    timeByParity(num = 1e1, min = 6e1) {
+        let result = 0
+
+        num = num > 0 && num <= 6e1 ? num : Math.abs(6e1 - num)
+
+        let border = Math.floor(minutesMax / num)
+
+        while (result < min) {
+            result = this.getIntervalValue([0, border]) * num
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+
+    mostVariousYear(years = []) {   
+        let changes = 0
+        let result = 0
+
+        years.map(el => {
+            let value = String(el).split('').map(el => Number(el))
+            let difference = 0
+
+            value.map((item, i) => {
+                let next = value[i + 1]
+
+                if (next !== undefined) {
+                    difference += Math.abs(item - next)
+                }
+            })
+           
+            if (difference > changes) {
+                changes = difference
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    findNearestTimeRoundMinutes(time = '', minutes = [], isIncrease = true) {
+        let border = 6e1
+        let result = 0
+
+        if (this.isTime(time)) {
+            let residue = this.time(time, 'deconvert')
+
+            residue = residue % 6e1
+            residue = isIncrease ? 6e1 - residue : residue
+            
+            minutes.map(el => {
+                let difference = Math.abs(el - residue)
+
+                if (difference < border) {
+                    border = difference
+                    result = el
+                }
+            })
+        }
+
+        return result
+    }
+
+    filterTasksByTimeParity(time = '', tasks = [], num = 1e1) {
+        let result = []
+
+        if (this.isTime(time)) {
+            let minutes = this.time(time, 'deconvert')
+
+            tasks.map(el => {
+                let value = minutes + el
+
+                if (value % num === 0 && value <= minutesMax) {
+                    result = [...result, el]
+                    minutes = value
+                }
+            })
+        }        
+
+        return result
+    }
+
+    filterYearsByCenturies(list = [], borders = [], exception = null) {
+        let result = []
+  
+        borders = borders.map(el => (el - 1)*1e2)
+        
+        const check = num => borders[0] <= num && borders[1] >= num
+
+        list.map(el => {
+            if (check(el) && Math.ceil(el / 1e2) !== exception) {
+                result = [...result, el]
+            }      
+        })
+
+        return result
+    }
+
+    filterTimesByInterval(timestamps = [], start = 1e1, num = 1, isMinutes = false) {
+        let index = Number(isMinutes)
+        let result = []
+
+        const check = time => time >= start && time <= start + num
+
+        timestamps.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+
+                if (check(parts[index])) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterDatesByMonthGap(dates = [], min = 1e1, max = 1e2, round = 0) {
+        let result = []
+
+        const check = num => num >= min && num <= max
+
+        dates.map(el => {
+            if (this.isDate(el)) {
+                let parts = this.parts(el, '.', true)
+                let size = this.getMonthSize(parts[1], parts[2])
+
+                let value = this.percent(parts[0], size, round)
+
+                if (check(value)) {
+                    result = [...result, el]
+                }
+            }
+           
+        })
+
+        return result
+    }
+
+    filterTimePartsByInterval(time = '', min = 1, max = 1e1) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let parts = this.parts(time, ':', true)
+
+            parts.map(el => {
+                if (el >= min && el <= max && result) {
+                    result = true
+                } else {
+                    result = false
+                }
+            })
+        }
+
+        return result
+    }
+
+    yearsDifferenceOrder(min = 1e3, max = 2e3) {
+        let difference = Math.abs(max - min)
+        let result = 0
+
+        while (difference > 1e1) {
+            difference *= .1
+            result++
+        }
+
+        result = 1e1**result
+
+        return result
+    }
+
+    timeByRatio(hours = 1e1, num = 1) {
+        let result = this.time(hours * 6e1 + hours * num)
+
+        return result
+    }
+
+    yearsInsideBorders(min = 1e3, max = 2e3, num = 1) {
+        let result = []
+
+        while (min < max) {
+            result = [...result, min]
+
+            min += num
+        }
+
+        return result
+    }
+
+    nearestYear(value = 1e3, list = [], isEven = true) {
+        let border = 1e3
+        let result = 0
+
+        for (let i = 0; i < list.length; i++) {
+            let item = list[i]
+            let flag = isEven ? item % 2 === 0 : item % 2 !== 0
+            
+            if (flag) {
+                let difference = Math.abs(value - item)
+
+                if (difference < border) {
+                    result = item
+                    border = difference
+                }
+            }
+        }
+
+        return result
+    }
+
+    filterTimesByParity(times = [], num = 1e1, borders = [0, minutesMax]) {
+        const check = int => borders[0] <= int && borders[1] >= int
+        let result = []        
+
+        times.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+                let flag = value % num === 0 && check(value)
+
+                if (flag) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    numDigitInResidueExist(num = 1e1, position = 1) {
+        let digit = this.getYearDigit(num, position)
+        let items = String(num).split('.')[1].split('')
+        let result = false
+
+        items.map(el => {
+            if (Number(el) === digit) {
+                result = true
+            }
+        })
+
+        return result
+    }
+
+    digitsOfNum(num = 1e1) {
+        const int = num
+
+        let result = []
+        let position = 1
+
+        while (num > 0) {
+            let value = this.getYearDigit(int, position) * 10**(position - 1)
+
+            result = [...result, value]
+            
+            num -= value
+            position++
+        }
+
+        result = result.reverse()
+
+        return result
+    }
+
+    filterYearsByDeviation(list = [], year = 1e3, dispersion = 5, isEven = null) {
+        let result = []
+
+        list.map(el => {
+            let difference = Math.abs(year - el)
+            let check = false
+
+            if (difference <= dispersion) {
+                if (isEven !== null) {
+                    check = isEven === true && el % 2 === 0 || isEven === false && el % 2 !== 0
+                } else {
+                    check = true
+                }
+            }
+
+            if (check) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    numResidueSum(num = 1e1) {
+        let result = 0
+
+        if (String(num).includes('.')) {
+            result = String(num).split('.')[1].split('').map(el => Number(el)).reduce((acc, cur) => acc + cur)
+        }
+
+        return result
+    }
+
+    filterTimesByDifference(times = [], difference = 1e1) {
+        let result = []
+
+        times.map((el, idx) => {
+            if (this.isTime(el)) {
+                let next = times[idx + 1]
+
+                if (next) {
+                    let value = this.time(el, 'deconvert')
+                    let toCompare = this.time(next, 'deconvert')
+                
+                    if (Math.abs(value - toCompare) <= difference) {
+                        result = [...result, el]
+                    }
+                }
+            
+            }            
+        })
+
+        return result
+    }   
+
+    numSimpleProgression(start = 1e3, step = 1, length = 1e1, isIncrease = true) {
+        let result = []
+        let value = start
+
+        for (let i = 0; i < length; i++) {
+            value = isIncrease ? value + step : value - step
+
+            result = [...result, value]
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
