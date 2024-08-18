@@ -2007,6 +2007,53 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    week(days = [], hours = 4e1, overtime = 0) {
+        let middle = Math.floor(hours / days.length)
+        let max = this.cleanValue(1e2 + overtime, middle, 0)
+        let result = []
+
+        days.map(el => {
+            let day = weekdays[el].tag
+            let flag = hours > middle 
+            
+            let time = this.getIntervalValue([flag ? middle : hours, flag ? max : hours])
+
+            result = [...result, {day, time}]
+
+            hours -= size
+        })
+
+        return result
+    }
+
+    frames(start = 2e3, end = 21e2, step = 1, size = 1, isYear = true) {
+        let result = []
+
+        while (start < end) {
+            let frame = [isYear ? start : this.time(start)]
+
+            start += size
+
+            if (start < end) {
+                result = [...result, [...frame, isYear ? start : this.time(start)]]
+            }
+        
+            start += step
+        }
+        
+        return result
+    }
+
+    life(century = 2e1, percent = 1e1, size = 8e1) {
+        let start = century*1e2 - this.cleanValue(percent, size, 0)
+        let end = century*1e2 + this.cleanValue(1e2 - percent, size, 0)
+        let result = []
+        
+        result = [start, end]
+
+        return result
+    }
 }
 
 module.exports = Core
