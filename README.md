@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.6**
+* Current Version: **1.5.7**
 * Size ~ **90 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -75,7 +75,7 @@ const datus = new Datus() // declare an instance of class
 
 There are **124** methods to work with V main chapters of library: date, time, weekday, year and num.   
 
-### -Date and Day-
+### * Date and Day *
 
 -**move** (*flag* = 'day', *direction* = '+', *num* = 0) - run through the calendar in all directions, return date.   
 
@@ -109,9 +109,11 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**dateValue** (*date* = '') - returns days of date since beginning of year.
 
--**dateByParameters** (*dayBorders* = [], *monthBorders* = [], *century* = 21, *decade* = 1) - returns accurately randomly generated date by a lot of parameters.     
+-**dateByParameters** (*dayBorders* = [], *monthBorders* = [], *century* = 21, *decade* = 1) - returns accurately randomly generated date by a lot of parameters.   
 
-### -Time-
+-**monthDatesByWeekday** (*date* = '', *weekday* = '') - returns list of dates by *weekday* and month of *date*.     
+
+### * Time *
 
 -**time** (*value* = null, *key* = 'convert', *isTwelve* = false) - received *value* in minutes and convert it to HH:MM format, or if *key* equal 'deconvert' it returned number of minutes. Flag *isTwelve* is for US time format.   
 
@@ -173,7 +175,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**timeByDayPart** (*part* = '', *base* = 0, *isSubtraction* = false) - returns time of day's part with minutes *base*. 
 
-### -Weekday-
+### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
 
@@ -181,7 +183,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month.  
 
-### -Year-
+### * Year *
 
 -**part** (*num* = 0, *size* = 'day') - returns % of year (check for leap year) for any period.
 
@@ -201,7 +203,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.
 
-### -Num-
+### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
 
@@ -209,7 +211,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).
 
-### -Filters and Validation-
+### * Filters and Validation *
 
 -**filterByValue** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
 
@@ -235,7 +237,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**isDate** (*content* = '') - validates if content is real date - DD.MM.YYYY. 
 
-### -Transformation and Generation-
+### * Transformation and Generation *
 
 -**binary** (*value* = '', *isDate* = true) - check if each parts of date or time is equal 2**power (binary) and return true/false.
 
@@ -339,11 +341,13 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**life** (*century* = 2e1, *percent* = 1e1, *size* = 8e1) - returns years of life with % of *size* in *century*.   
 
-### -Find-
+-**lifePart** (*periods* = [], *century* = 21, *round* = 0) - returns % of lifetime in *century*.        
+
+### * Find *
 
 -**nearest** (*time* = '', *arr* = [], *key* = '') - finds among timestamps the most close to given time (after it) and returns it. 
 
-### -API and Information-
+### * API and Information *
 
 -**utc** - returns Promise with european towns's timezones.     
 

@@ -2054,6 +2054,43 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    lifePart(periods = [], century = 21, round = 0) {
+        const base = (century - 1)*1e2
+
+        let index = Number(periods[1] - base < 1e2 && periods[1] > base)
+        let period = periods[index]
+        let difference = Math.abs(period - base)
+        let result = this.percent(Math.floor(Boolean(index) ? difference : 1e2 - difference), periods[1] - periods[0], round)
+        
+        return result
+    }
+
+    monthDatesByWeekday(date = '', weekday = '') {
+        let parts = this.parts(date, '.', true)
+        let day = this.weekdayByDate(date)
+        let size = this.getMonthSize(parts[1])
+        let result = []
+        let start, end
+        
+        weekdays.map((el, idx) => {
+            if (el.title === weekday) {
+                start = idx
+            } else if (el.title === day) {
+                end = idx
+            }
+        })
+
+        let difference = Math.abs(start - end)
+        let pointer = start > end ? parts[0] + difference : parts[0] - difference
+        let i = pointer % weekdays.length === 0 ? weekdays.length : pointer % weekdays.length
+
+        for (i; i < size; i += weekdays.length) {
+            result = [...result, `${this.rounding(i)}.${this.rounding(parts[1])}.${parts[2]}`]
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
