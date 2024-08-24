@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.7**
+* Current Version: **1.5.8**
 * Size ~ **90 kB**
 * Most of algorithms have **O(n)** time complexity
 
@@ -175,13 +175,17 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**timeByDayPart** (*part* = '', *base* = 0, *isSubtraction* = false) - returns time of day's part with minutes *base*. 
 
+-**ms** (*value* = null, *key* = 'convert') - convert / deconvert time in ms.    
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
 
 -**weekdayByDate** (*date* = '') - finds weekday by *date* and returns it. 
 
--**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month.  
+-**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month. 
+
+-**weekdayNumByYear** (*year* = 2e3, *weekday* = 'Monday') - returns num of days *weekday* in *year*.   
 
 ### * Year *
 
@@ -202,6 +206,8 @@ There are **124** methods to work with V main chapters of library: date, time, w
 -**yearsByInterval** (*num* = 1, *step* = 1, *border* = this.date.getFullYear(), *isIncrease* = true) - returns list of years with custom *length* built by cycle from *border* increasing/decreasing order by *step*.    
 
 -**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.
+
+-**yearsRound** (*value* = 2e3, *num* = 1e1, *percent* = 5e1) - returns rounded year by *value* / *num*.    
 
 ### * Num *
 

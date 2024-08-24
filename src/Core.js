@@ -2091,6 +2091,55 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    weekdayNumByYear(year = 2e3, weekday = 'Monday') {
+        let size = this.getYearSize(year)
+        let initialWeekday = this.weekdayByDate(`01.01.${year}`)
+        let difference = this.weekdaysDifferenceByWeek(initialWeekday, weekday, 0)
+        let result = 0
+
+        size = difference <= 0 ? size - difference : size - weekdays.length
+
+        result = Math.floor(size / weekdays.length)
+    
+        return result
+    }
+
+    ms(value = null, key = 'convert') {   
+        let flag = key === 'convert'
+        let result = flag ? [] : 0
+
+        if (flag) {
+            msDividers.map((el, idx) => {
+                let prev = msDividers[idx - 1]
+                let item = prev ? Math.floor((value - result[idx - 1] * msDividers[idx - 1]) / el) : Math.floor(value / el)
+          
+                result = [...result, this.rounding(item)]
+            })
+
+            result = result.join(':')
+        
+        } else if (key === 'deconvert') {
+            let parts = this.parts(value, ':', true)
+
+            if (parts.length === msDividers.length) {
+
+                parts.map((el, idx) => {
+                    result += el * msDividers[idx]
+                })
+            }
+        }
+
+        return result
+    }
+
+    yearRound(value = 2e3, num = 1e1, percent = 5e1) {
+        let border = this.cleanValue(percent, num, 0)
+        let residue = value % num
+        let result = residue < border ? value - residue : value + (num - residue)
+
+        return result
+    }
 }
 
 module.exports = Core
