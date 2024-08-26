@@ -2140,6 +2140,44 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    weekdaysDifferenceByTime(days = [], times = []) {    
+        let result = 0
+
+        times = times.map(el => this.time(el, 'deconvert'))
+
+        days = days.map(day => weekdays.map(el => el.title).indexOf(day))
+
+        result = Math.floor(days[1] - days[0]) * minutesMax
+       
+        let difference = Math.abs(times[0] - times[1])
+
+        result = times[0] > times[1] ? result - difference : result + difference
+
+        return result
+    }
+
+    dateByYearWeek(year = 2e3, num = 1e1) {
+        let residue = Math.floor(year % weekdays.length)
+        let days = weekdays.length * num + residue
+        let month = 1
+        let result = ''
+
+        days -= weekdays.length - 2
+   
+        months.map(el => {
+            let size = this.getMonthSize(el)
+
+            if (size <= days) {
+                days -= size
+                month++
+            }
+        })
+
+        result = `${this.rounding(days)}.${this.rounding(month)}.${year}`
+
+        return result
+    }
 }
 
 module.exports = Core

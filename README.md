@@ -5,9 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.8**
+* Current Version: **1.5.9**
 * Size ~ **90 kB**
 * Most of algorithms have **O(n)** time complexity
+* **2.1K** lines of code        
 
 ## Links
 
@@ -71,6 +72,20 @@ const datus = new Datus() // declare an instance of class
     console.log(datus.isTime(time_end)) // false    
 ~~~
 
+~~~
+    let num = 42
+
+    num = datus.convert(num) // 'XXXXII' as result
+
+    alert(num)
+~~~
+
+~~~
+    let dates = ['07.05.2021', '02.12.2017', 19112018, '01.09.2023', '14.18.1906']
+
+    console.log(dates.filter(el => datus.isDate(el))) // returns list of 3 items - [true, true, false, true, false]        
+~~~
+    
 ## Methods     
 
 There are **124** methods to work with V main chapters of library: date, time, weekday, year and num.   
@@ -111,7 +126,9 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**dateByParameters** (*dayBorders* = [], *monthBorders* = [], *century* = 21, *decade* = 1) - returns accurately randomly generated date by a lot of parameters.   
 
--**monthDatesByWeekday** (*date* = '', *weekday* = '') - returns list of dates by *weekday* and month of *date*.     
+-**monthDatesByWeekday** (*date* = '', *weekday* = '') - returns list of dates by *weekday* and month of *date*.
+
+-**dateByYearWeek** (*year* = 2e3, *num* = 1e1) - returns date by *num* of weeks of the *year*. 
 
 ### * Time *
 
@@ -185,7 +202,9 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**monthWeekdays** (*weekday* = '') - returns num of remaining *weekday* days in current month. 
 
--**weekdayNumByYear** (*year* = 2e3, *weekday* = 'Monday') - returns num of days *weekday* in *year*.   
+-**weekdayNumByYear** (*year* = 2e3, *weekday* = 'Monday') - returns num of days *weekday* in *year*.  
+
+-**weekdaysDifferenceByTime** (*days* = [], *times* = []) - returns difference between *days* with *times* in minutes.    
 
 ### * Year *
 
@@ -207,7 +226,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.
 
--**yearsRound** (*value* = 2e3, *num* = 1e1, *percent* = 5e1) - returns rounded year by *value* / *num*.    
+-**yearRound** (*value* = 2e3, *num* = 1e1, *percent* = 5e1) - returns rounded year by *value* / *num*.    
 
 ### * Num *
 
