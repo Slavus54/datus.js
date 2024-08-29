@@ -2178,6 +2178,76 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    exchangeYearDigit(items = [], indexes = []) {
+        let result = []
+
+        if (indexes[0] !== indexes[1]) {
+
+            items = items.map(el => String(el).split(''))
+            
+            items.map((el, idx) => {
+                let from = el.length - indexes[idx]
+                let index = Number(!Boolean(idx))
+                let into = items[index].length - indexes[index]
+                let value = ''
+
+                for (let i = 0; i < el.length; i++) {
+                    if (i === from) {
+                        value += items[index][into]
+                    } else {
+                        value += el[i]
+                    }
+                }
+
+                result = [...result, value]
+            })
+        }
+
+        return result
+    }
+
+    monthDatesByStep(date = '', step = 1) {
+        let result = []
+
+        if (this.isDate(date)) {
+            let parts = this.parts(date, '.', true)
+            let size = this.getMonthSize(parts[1])
+            let day = parts[0]
+            
+            for (day; day < size; day += step) {
+                let value = `${this.rounding(day)}.${this.rounding(parts[1])}.${parts[2]}`
+            
+                result = [...result, value]
+            }
+        }
+
+        return result
+    }
+
+    getYearDigit(year = 2e3, index = 1) {
+        let result = Math.floor(year % 1e1**index / 1e1**(index - 1))
+
+        return result
+    }
+
+    changeYearDigit(year = 2e3, index = 1, value = 1) {
+        let text = String(year).split('')
+        let position = text.length - index
+        let result = ''
+
+        text.map((el, idx) => {
+            if (idx === position) {
+                result += value
+            } else {
+                result += el
+            }
+        })
+
+        result = Number(result)
+
+        return result
+    }
 }
 
 module.exports = Core

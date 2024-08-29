@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.5.9**
+* Current Version: **1.6.0**
 * Size ~ **90 kB**
 * Most of algorithms have **O(n)** time complexity
 * **2.1K** lines of code        
@@ -130,6 +130,8 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**dateByYearWeek** (*year* = 2e3, *num* = 1e1) - returns date by *num* of weeks of the *year*. 
 
+-**monthDatesByStep** (*date* = '', *step* = 1) - generates list of dates since *date* with *step* in days throughout the whole date's month.     
+
 ### * Time *
 
 -**time** (*value* = null, *key* = 'convert', *isTwelve* = false) - received *value* in minutes and convert it to HH:MM format, or if *key* equal 'deconvert' it returned number of minutes. Flag *isTwelve* is for US time format.   
@@ -192,7 +194,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**timeByDayPart** (*part* = '', *base* = 0, *isSubtraction* = false) - returns time of day's part with minutes *base*. 
 
--**ms** (*value* = null, *key* = 'convert') - convert / deconvert time in ms.    
+-**ms** (*value* = null, *key* = 'convert') - convert / deconvert time in ms.     
 
 ### * Weekday *
 
@@ -227,6 +229,12 @@ There are **124** methods to work with V main chapters of library: date, time, w
 -**yearsByCentury** (*century* = 21, *decade* = 1) - returns array of 10 items (years) in *century* and *decade*.
 
 -**yearRound** (*value* = 2e3, *num* = 1e1, *percent* = 5e1) - returns rounded year by *value* / *num*.    
+
+-**exchangeYearDigit** (*items* = [], *indexes* = []) - exchanges places of digits by *indexes* in each year of *items* and returns result.
+
+-**getYearDigit** (*year* = 2e3, *index* = 1) - returns digit of year number by *index* position.   
+
+-**changeYearDigit** (*year* = 2e3, *index* = 1, *value* = 1) - updated with new *value* digit of year by *index* and returns year. 
 
 ### * Num *
 
