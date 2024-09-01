@@ -2248,6 +2248,26 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeResidue(time = '') {
+        let result = this.isTime(time) ? 6e1 - this.time(time, 'deconvert') % 6e1 : ''
+
+        return result
+    }
+
+    yearMove(year = 2e3, num = 1e1, isForward = true, border = 2e3) {
+        let result = isForward ? year + num : year - num
+
+        result = result <= border && isForward || result >= border && !isForward ? result : border 
+
+        return result
+    }
+
+    timePartMultiplicity(time = '', index = 1, num = 5) {
+        let result = this.isTime(time) ? this.parts(time, ':', true).reverse()[index - 1] % num === 0 : false
+
+        return result
+    }
 }
 
 module.exports = Core

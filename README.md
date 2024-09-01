@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.0**
-* Size ~ **90 kB**
+* Current Version: **1.6.1**
+* Size ~ **100 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.1K** lines of code        
+* **2.3K** lines of code        
 
 ## Links
 
@@ -59,7 +59,7 @@ const datus = new Datus() // declare an instance of class
     
     orders = orders.filter(el => datus.time(el.time, 'deconvert') <= border)        
     
-    let nearestOrders = orders.filter(el => datus.distance(el.date, deadline) <= distanceSize)    
+    let nearestOrders = orders.filter(el => datus.dateDistance(el.date, deadline) <= distanceSize)    
 ~~~
 
 ~~~
@@ -73,22 +73,20 @@ const datus = new Datus() // declare an instance of class
 ~~~
 
 ~~~
-    let num = 42
+    const WOT_TIERS_LIMIT = 1e1
 
-    num = datus.convert(num) // 'XXXXII' as result
-
-    alert(num)
+    let levels = new Array(WOT_TIERS_LIMIT).fill(0).map((_, idx) => datus.convert(idx + 1)) // ['I', 'II', 'III', 'IV',  'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 ~~~
 
 ~~~
-    let dates = ['07.05.2021', '02.12.2017', 19112018, '01.09.2023', '14.18.1906']
+    let dates = ['07.05.2021', '02.12.2017', '01.09.2023', '14.03.1906']    
 
-    console.log(dates.filter(el => datus.isDate(el))) // returns list of 3 items - [true, true, false, true, false]        
+    let days = dates.map(el => datus.dateValue(el)) /// list of days            
 ~~~
     
 ## Methods     
 
-There are **124** methods to work with V main chapters of library: date, time, weekday, year and num.   
+There are **130+** methods to work with 5 main chapters of library: *date, time, weekday, year and num*.   
 
 ### * Date and Day *
 
@@ -130,7 +128,7 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**dateByYearWeek** (*year* = 2e3, *num* = 1e1) - returns date by *num* of weeks of the *year*. 
 
--**monthDatesByStep** (*date* = '', *step* = 1) - generates list of dates since *date* with *step* in days throughout the whole date's month.     
+-**monthDatesByStep** (*date* = '', *step* = 1) - generates list of dates since *date* with *step* in days throughout the whole date's month.        
 
 ### * Time *
 
@@ -194,7 +192,11 @@ There are **124** methods to work with V main chapters of library: date, time, w
 
 -**timeByDayPart** (*part* = '', *base* = 0, *isSubtraction* = false) - returns time of day's part with minutes *base*. 
 
--**ms** (*value* = null, *key* = 'convert') - convert / deconvert time in ms.     
+-**ms** (*value* = null, *key* = 'convert') - convert / deconvert time in ms.   
+
+-**timeResidue** (*time* = '') - returns number of minutes to rich next hour.      
+
+-**timePartMultiplicity** (*time* = '', *index* = 1, *num* = 5) - returns true / false by checking time part's multiplicity to *num*.       
 
 ### * Weekday *
 
@@ -235,6 +237,8 @@ There are **124** methods to work with V main chapters of library: date, time, w
 -**getYearDigit** (*year* = 2e3, *index* = 1) - returns digit of year number by *index* position.   
 
 -**changeYearDigit** (*year* = 2e3, *index* = 1, *value* = 1) - updated with new *value* digit of year by *index* and returns year. 
+
+-**yearMove** (*year* = 2e3, *num* = 1e1, *isForward* = true, *border* = 2e3) - updates year by moving it forward / back with *border* checking.     
 
 ### * Num *
 
