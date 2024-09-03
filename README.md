@@ -4,11 +4,11 @@
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
-* Light and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.1**
+* Light, great and powerful analogue of **Moment.js**                           
+* Current Version: **1.6.2**
 * Size ~ **100 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.3K** lines of code        
+* **2.3K** lines of javascript code             
 
 ## Links
 
@@ -238,7 +238,11 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 
 -**changeYearDigit** (*year* = 2e3, *index* = 1, *value* = 1) - updated with new *value* digit of year by *index* and returns year. 
 
--**yearMove** (*year* = 2e3, *num* = 1e1, *isForward* = true, *border* = 2e3) - updates year by moving it forward / back with *border* checking.     
+-**yearMove** (*year* = 2e3, *num* = 1e1, *isForward* = true, *border* = 2e3) - updates year by moving it forward / back with *border* checking.    
+
+-**yearBorderCheck** (*year* = 2e3, *min* = 1e3, *max* = 2e3, *isIncludeBorder* = true) - checks if *year* are inside *borders*.    
+
+-**yearByProgression** (*start* = 2e3, *size* = 1e2, *steps* = [], *round* = 0) - builds list of years by maximum *size* and % of *steps* added to *start* year.    
 
 ### * Num *
 
@@ -247,6 +251,8 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 -**border** (*num* = null, *isRome* = false) - receives century (number Indian or string Roman) and returns array of first and last year of century.    
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).
+
+-**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.    
 
 ### * Filters and Validation *
 

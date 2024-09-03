@@ -2268,6 +2268,38 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearBorderCheck(year = 2e3, min = 1e3, max = 2e3, isIncludeBorder = true) {
+        let result = isIncludeBorder ? year >= min && year <= max : year > min && year < max
+
+        return result
+    }
+
+    numToDottedString(year = 2e3) {
+        let text = String(year).split('')
+        let length = text.length - 1
+        let result = []
+
+        for (let i = length; i >= 0; i--) {
+            result = [...result, (length - i) % 3 === 0 && i !== length ? text[i] + '.' : text[i]]
+        }
+
+        result = result.reverse().join('')
+
+        return result
+    }
+
+    yearsByProgression(start = 2e3, size = 1e2, steps = [], round = 0) {
+        let result = []
+
+        steps.map(el => {
+            let value = start + this.cleanValue(el, size, round)
+
+            result = [...result, value]
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
