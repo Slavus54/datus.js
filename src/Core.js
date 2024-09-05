@@ -707,16 +707,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    war(size = 'day') {
-        let days = this.difference(war_date, '-', 1e7)
-        let result = 0
-
-        size = this.getSize(size) / base
-        result = Math.floor(days / size)
-        
-        return result
-    }
-
     zodiac(date = '') {
         let year = this.parts(date, '.', true)[2]
         let difference = Math.abs(year - 19e2)
@@ -2296,6 +2286,65 @@ class Core extends HelperContainer {
             let value = start + this.cleanValue(el, size, round)
 
             result = [...result, value]
+        })
+
+        return result
+    }
+
+    timestampsByRounding(time = '', step = 1, isForward = true, isIncludeBorder = true) {
+        let value = this.time(time, 'deconvert')
+        let border = isForward ? 6e1 - value % 6e1 : value % 6e1
+        let result = []
+
+        while (border > 0) {
+            result = [...result, isForward ? this.time(value + border) : this.time(value - border)]
+            
+            border -= step
+        }
+
+        if (isIncludeBorder) {
+            result = [...result, time]
+        }
+
+        result = result.reverse()        
+
+        return result
+    }
+
+    dateByDays(value = 1e2, year = 2024) {    
+        let result = ''
+        let months = 1
+        let days = 0
+        let size = this.getMonthSize(months, year)
+
+        while (value > 0) {
+            if (value >= size) {
+                value -= size
+                months++
+
+                size = this.getMonthSize(months, year)
+            } else {
+                days = value
+                value = 0
+            }
+        }
+
+        result = `${this.rounding(days)}.${this.rounding(months)}.${year}`
+
+        return result
+    }
+
+    yearsByCenturies(centuries = [], values = []) {
+        let result = []
+        
+        values = values.filter(el => el < 1e2)
+
+        centuries.map(century => {
+            values.map(value => {
+                let item = Math.floor((century - 1) * 1e2 + value)
+
+                result = [...result, item]
+            })
         })
 
         return result

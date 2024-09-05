@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.2**
+* Current Version: **1.6.3**
 * Size ~ **100 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.3K** lines of javascript code             
+* **2.4K** lines of code and **147 methods**           
 
 ## Links
 
@@ -86,7 +86,7 @@ const datus = new Datus() // declare an instance of class
     
 ## Methods     
 
-There are **130+** methods to work with 5 main chapters of library: *date, time, weekday, year and num*.   
+There are a lot of methods to work with 5 main chapters of library: *date, time, weekday, year and num*.   
 
 ### * Date and Day *
 
@@ -128,7 +128,9 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 
 -**dateByYearWeek** (*year* = 2e3, *num* = 1e1) - returns date by *num* of weeks of the *year*. 
 
--**monthDatesByStep** (*date* = '', *step* = 1) - generates list of dates since *date* with *step* in days throughout the whole date's month.        
+-**monthDatesByStep** (*date* = '', *step* = 1) - generates list of dates since *date* with *step* in days throughout the whole date's month.   
+
+-**dateByDays** (*value* = 1e2, *year* = 2024) - builds date by *value* od dates and *year*.    
 
 ### * Time *
 
@@ -198,6 +200,8 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 
 -**timePartMultiplicity** (*time* = '', *index* = 1, *num* = 5) - returns true / false by checking time part's multiplicity to *num*.       
 
+-**timestampsByRounding** (*time* = '', *step* = 1, *isForward* = true, *isIncludeBorder* = true) - builds list of times from *time* to rounded hour time by *isForward* with *step*.   
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -243,6 +247,8 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 -**yearBorderCheck** (*year* = 2e3, *min* = 1e3, *max* = 2e3, *isIncludeBorder* = true) - checks if *year* are inside *borders*.    
 
 -**yearByProgression** (*start* = 2e3, *size* = 1e2, *steps* = [], *round* = 0) - builds list of years by maximum *size* and % of *steps* added to *start* year.    
+
+-**yearsByCenturies** (*centuries* = [], *values* = []) - generates years with of *centuries* and *values* (residue of division year on century).        
 
 ### * Num *
 
@@ -305,8 +311,6 @@ There are **130+** methods to work with 5 main chapters of library: *date, time,
 -**reading** (*text* = '', *isNum* = true) - returns minutes of text's reading duration in different formats.       
 
 -**cat** (*date* = '', *max* = 100) - converts duration of cat's life (starts by parameter *date*) into human age according life expectancy by parameter *max*.    
-
--**war** (*size* = 'day') - returns number of days or any other period type by parameter *size* since russian-ukrainian war starts.  
 
 -**zodiac** (*date* = '') - looking for zodiac sign by your birthdate and returns it. 
 
