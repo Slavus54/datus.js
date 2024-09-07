@@ -5,7 +5,7 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.3**
+* Current Version: **1.6.4**
 * Size ~ **100 kB**
 * Most of algorithms have **O(n)** time complexity
 * **2.4K** lines of code and **147 methods**           
@@ -202,6 +202,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timestampsByRounding** (*time* = '', *step* = 1, *isForward* = true, *isIncludeBorder* = true) - builds list of times from *time* to rounded hour time by *isForward* with *step*.   
 
+-**timestampsByBorders** (*min* = 6e2, *max* = 1e3, *steps* = [], *round* = 0) - returns list of times by minutes *steps* (% of difference between *max* and *min*).    
+
+-**timestampsByTimeParts** (*hours* = [], *minutes* = []) - returns list of times by parameters in order.   
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -248,7 +252,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearByProgression** (*start* = 2e3, *size* = 1e2, *steps* = [], *round* = 0) - builds list of years by maximum *size* and % of *steps* added to *start* year.    
 
--**yearsByCenturies** (*centuries* = [], *values* = []) - generates years with of *centuries* and *values* (residue of division year on century).        
+-**yearsByCenturies** (*centuries* = [], *values* = []) - generates years with of *centuries* and *values* (residue of division year on century).   
+
+-**yearDigitChanges** (*year* = 2e3) - returns list of changes (-, + or =) between neighboring pairs of *year* digits.  
 
 ### * Num *
 

@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, war_date, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, minutesMin} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, minutesMin} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -2344,6 +2344,55 @@ class Core extends HelperContainer {
                 let item = Math.floor((century - 1) * 1e2 + value)
 
                 result = [...result, item]
+            })
+        })
+
+        return result
+    }
+
+    timestampsByBorders(min = 6e2, max = 1e3, steps = [], round = 0) {
+        const difference = Math.abs(max - min)
+        let result = []
+
+        steps.map(el => {
+            let value = min + this.cleanValue(el, difference, round)
+        
+            result = [...result, this.time(value)]
+        })
+
+        return result
+    }
+
+    yearDigitChanges(value = 2e3) {
+        let text = String(value).split('').reverse().map(el => Number(el))
+        let result = []
+
+        text.map((el, idx) => {
+            let next = text[idx + 1]
+            let symbol
+
+            if (next !== undefined) {
+                if (el === next) {
+                    symbol = '='
+                } else {
+                    symbol = el > next ? '-' : '+'
+                }
+                
+                result = [...result, symbol]
+            }       
+        })
+
+        return result
+    }
+
+    timestampsByTimeParts(hours = [], minutes = []) {
+        let result = []
+    
+        hours.map(hour => {
+            minutes.map(minute => {
+                let value = hour * 6e1 + minute
+
+                result = [...result, this.time(value)]
             })
         })
 
