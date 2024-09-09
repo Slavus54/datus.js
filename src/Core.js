@@ -2398,6 +2398,53 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearByParameters(century = 2e1, quarter = 1, isEven = true, border = 0) {
+        let check = (even, num) => even ? num % 2 === 0 : num % 2 !== 0
+        let result = isEven ? 1 : 0
+        let min, max
+
+        min = Math.floor(century - 1) * 1e2 + (quarter - 1) * 25
+
+        max = min + 25
+
+        min += border
+        max -= border
+   
+        while (!check(isEven, result)) {
+            result = this.getIntervalValue([min, max])
+        }
+
+        return result
+    }
+    
+    yearBySchema(schema = '', marker = 'x') {
+        let num = schema.length === 4 ? 2 : 9
+        let result = ''
+
+        schema.split('').map((el, idx) => {
+            if (el === marker) {
+                result += idx === 0 ? this.getIntervalValue([1, num]) : this.getIntervalValue([0, 9])
+            } else {
+                result += el
+            }
+        })
+      
+        result = Number(result)
+
+        return result
+    }
+
+    yearByParity(num = 1e1, min = 1e3, max = 2e3) {
+        let border = Math.floor(max / num)
+        let result = 0
+
+        while (result < min) {
+            result = this.getIntervalValue([1, border]) * num
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
