@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.4**
+* Current Version: **1.6.6**
 * Size ~ **100 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.4K** lines of code and **147 methods**           
+* **2.5K** lines of code and **149 methods**           
 
 ## Links
 
@@ -24,15 +24,12 @@ I've met a lot of limits working with it and decided to create something to use 
 
 Now I'm looking for new features and hope you can help me to have great experience of building this library **for free**.
 
-## Getting Started         
+## Getting Started            
 
-Just import *Datus* class and API to use it.    
+import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures}*** from 'datus.js'     
 
-~~~
-import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'     
+const datus = new *Datus()*          
 
-const datus = new Datus() // declare an instance of class              
-~~~
 ## Examples
 
 ~~~ 
@@ -206,6 +203,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timestampsByTimeParts** (*hours* = [], *minutes* = []) - returns list of times by parameters in order.   
 
+-**timeHourReflection** (*time* = '') - returns number of hours before day end.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -260,7 +259,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearBySchema** (*schema* = '', *marker* = 'x') - builds an year by mathematic *schema* with variable.        
 
--**yearByParity** (*num* = 1e1, *min* = 1e3, *max* = 2e3) - randomly generates year inside borders which divisible by *num*.     
+-**yearByParity** (*num* = 1e1, *min* = 1e3, *max* = 2e3) - randomly generates year inside borders which divisible by *num*.    
+
+-**findMiddleYear** (*values* = [], *isCeil* = true) - finds middle year of list (nearest) and returns it.      
 
 ### * Num *
 

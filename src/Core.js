@@ -2445,6 +2445,32 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeHourReflection(time = '') {
+        let result = this.isTime(time) ? 24 - Math.ceil(this.time(time, 'deconvert') / 6e1) : 0
+
+        return result
+    }
+
+    findMiddleYear(values = [], isCeil = true) {
+        let min = Math.min(...values)
+        let max = Math.max(...values)
+        let difference = (max - min)
+        let residue = Math[isCeil ? 'ceil' : 'floor'](difference / 2)
+        let pick = min + residue
+        let result = 0
+
+        values.map(el => {
+            let value = Math.abs(el - pick)
+ 
+            if (residue > value) {
+                residue = value
+                result = el
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
