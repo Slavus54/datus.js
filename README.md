@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.6**
-* Size ~ **100 kB**
+* Current Version: **1.6.7**
+* Size ~ **105 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.5K** lines of code and **149 methods**           
+* **2.5K** lines of code and **152 methods**           
 
 ## Links
 
@@ -261,7 +261,13 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearByParity** (*num* = 1e1, *min* = 1e3, *max* = 2e3) - randomly generates year inside borders which divisible by *num*.    
 
--**findMiddleYear** (*values* = [], *isCeil* = true) - finds middle year of list (nearest) and returns it.      
+-**findMiddleYear** (*values* = [], *isCeil* = true) - finds middle year of list (nearest) and returns it.  
+
+-**findLastingYearEnd** (*year* = 2e3, *duration* = 5e1, *percent* = 1e1, *round* = 0) - returns year by inverse *percent* (100 - *percent*) of *duration* added to *year*. 
+
+-**findLastingYearPercent** (*year* = 2e3, *min* = 2e3, *max* = 21e2, *round* = 0) - finds % of difference between *min* and *max* by *year*.    
+
+-**sortYearsByDigit** (*arr* = [], *index* = 1) - sorting list of years by *digit* in increase order. (based on ***Insertion Sorting***)     
 
 ### * Num *
 

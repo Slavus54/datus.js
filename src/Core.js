@@ -2471,6 +2471,36 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findLastingYearEnd(year = 2e3, duration = 5e1, percent = 1e1, round = 0) {
+        let value = this.cleanValue(percent, duration, round)
+        let result = year + (duration - value)
+
+        return result
+    }
+
+    findLastingYearPercent(year = 2e3, min = 2e3, max = 21e2, round = 0) {
+        let difference = Math.abs(max - min)
+        let result = this.percent(Math.abs(year - min), difference, round)
+
+        return result
+    }
+
+    sortYearsByDigit(arr = [], index = 1) {
+        for (let i = 1; i < arr.length; i++) {
+            let current = arr[i]
+            let j = i - 1
+            
+            while (j >= 0 && this.getYearDigit(arr[j], index) > this.getYearDigit(current, index)) {
+                arr[j + 1] = arr[j]
+                j--
+            } 
+
+            arr[j + 1] = current
+        }
+
+        return arr
+    }
 }
 
 module.exports = Core
