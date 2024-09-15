@@ -1,6 +1,6 @@
 {
   "name": "datus.js",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "Library for manage date with different methods of custom formatting",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,6 @@
   "author": "Slavus54",
   "license": "NSTU",
   "dependencies": {
-    "node": "^18.4.0"
+    "node": "^22.8.0"
   }
 }

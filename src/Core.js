@@ -2501,6 +2501,55 @@ class Core extends HelperContainer {
 
         return arr
     }
+
+    getTimeParity(time = '') {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let border = this.time(time, 'deconvert')
+            let value = Math.floor(border / 2)
+            let i = 1
+
+            while (i < value) {
+                if (border % i === 0) {
+                    result = i
+                }
+                
+                i++
+            }
+        }
+
+        return result
+    }
+
+    validateYearPart(year = 2e3, start = 1, end = 1, validationText = '') {
+        let text = ''
+        let result = true
+        
+        for (let i = end; i >= start; i--) {
+            text += this.getYearDigit(year, i)
+        }
+       
+        result = eval(`${text}${validationText}`)
+
+        return result
+    }
+
+    checkTimeByBorders(time = '', min = 6e2, max = 1e3, isLowerBorderInclude = true, isHighBorderInclude = true) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            
+            result = isLowerBorderInclude ? value >= min : value > min  
+            
+            if (result === true) {
+                result = isHighBorderInclude ? value <= max : value < max
+            }            
+        }
+        
+        return result
+    }
 }
 
 module.exports = Core

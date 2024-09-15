@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.7**
+* Current Version: **1.6.8**
 * Size ~ **105 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.5K** lines of code and **152 methods**           
+* **2.6K** lines of code and **155 methods**           
 
 ## Links
 
@@ -203,7 +203,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timestampsByTimeParts** (*hours* = [], *minutes* = []) - returns list of times by parameters in order.   
 
--**timeHourReflection** (*time* = '') - returns number of hours before day end.  
+-**timeHourReflection** (*time* = '') - returns number of hours before day end. 
+
+-**getTimeParity** (*time* = '') - returns maximum number multiple of time minutes. 
+
+-**checkTimeByBorders** (*time* = '', *min* = 6e2, *max* = 1e3, *isLowerBorderInclude* = true, *isHighBorderInclude* = true) - returns true/false after validation time by munutes borders. 
 
 ### * Weekday *
 
@@ -267,7 +271,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findLastingYearPercent** (*year* = 2e3, *min* = 2e3, *max* = 21e2, *round* = 0) - finds % of difference between *min* and *max* by *year*.    
 
--**sortYearsByDigit** (*arr* = [], *index* = 1) - sorting list of years by *digit* in increase order. (based on ***Insertion Sorting***)     
+-**sortYearsByDigit** (*arr* = [], *index* = 1) - sorting list of years by *digit* in increase order. (based on ***Insertion Sorting***)    
+
+-**validateYearPart** (*year* = 2e3, *start* = 1, *end* = 1, *validationText* = '') - validates digits of year with *validationText*.   
 
 ### * Num *
 
