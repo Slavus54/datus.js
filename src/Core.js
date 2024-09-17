@@ -2550,6 +2550,37 @@ class Core extends HelperContainer {
         
         return result
     }
+
+    dateByNum(num = 1e3, round = 0) { 
+        let year = parseInt(num)
+        let residue = this.cleanValue((num % year) * 1e2, this.getYearSize(year), round) 
+        let result = this.dateByDays(residue, year)
+
+        return result
+    }
+
+    percentOfTimeMaximum(times = [], percent = 1e1, round = 0) {
+        let max = Math.max(...times.map(el => this.time(el, 'deconvert')))
+        let result = this.cleanValue(percent, max, round)
+
+        return result
+    }
+
+    findYearAverageGap(items = []) {    
+        const length = items.length - 1
+        let result = 0
+    
+        for (let i = 0; i < length; i++) {
+            let current = items[i]
+            let next = items[i + 1]
+   
+            result += Math.abs(next - current)
+        }
+
+        result = Math.round(result / length)
+
+        return result
+    }
 }
 
 module.exports = Core

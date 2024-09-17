@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.8**
-* Size ~ **105 kB**
+* Current Version: **1.6.9**
+* Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.6K** lines of code and **155 methods**           
+* **2.6K** lines of code and **158 methods**           
 
 ## Links
 
@@ -129,6 +129,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**dateByDays** (*value* = 1e2, *year* = 2024) - builds date by *value* od dates and *year*.    
 
+-**dateByNum** (*num* = 1e3, *round* = 0) - generates date from *num* of year with fractional part. 
+
 ### * Time *
 
 -**time** (*value* = null, *key* = 'convert', *isTwelve* = false) - received *value* in minutes and convert it to HH:MM format, or if *key* equal 'deconvert' it returned number of minutes. Flag *isTwelve* is for US time format.   
@@ -209,6 +211,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**checkTimeByBorders** (*time* = '', *min* = 6e2, *max* = 1e3, *isLowerBorderInclude* = true, *isHighBorderInclude* = true) - returns true/false after validation time by munutes borders. 
 
+-**percentOfTimeMaximum** (*times* = [], *percent* = 1e1, *round* = 0) - returns minutes by % of largest time.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -274,6 +278,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**sortYearsByDigit** (*arr* = [], *index* = 1) - sorting list of years by *digit* in increase order. (based on ***Insertion Sorting***)    
 
 -**validateYearPart** (*year* = 2e3, *start* = 1, *end* = 1, *validationText* = '') - validates digits of year with *validationText*.   
+
+-**findYearAverageGap** (*items* = []) - returns average difference between pairs of years.  
 
 ### * Num *
 
