@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.6.9**
+* Current Version: **1.7.0**
 * Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.6K** lines of code and **158 methods**           
+* **2.6K** lines of code and **160 methods**           
 
 ## Links
 
@@ -212,6 +212,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**checkTimeByBorders** (*time* = '', *min* = 6e2, *max* = 1e3, *isLowerBorderInclude* = true, *isHighBorderInclude* = true) - returns true/false after validation time by munutes borders. 
 
 -**percentOfTimeMaximum** (*times* = [], *percent* = 1e1, *round* = 0) - returns minutes by % of largest time.  
+
+-**findTimeWithSmallestMinutePart** (*times* = []) - finds time with smallest minute part among *times* and returns it.  
+
+-**timeByMultiplicity** (*num* = 1e1, *min* = 6e1) - generates time whose multiple is *num* and it more than *min*.  
 
 ### * Weekday *
 

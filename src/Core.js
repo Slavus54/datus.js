@@ -2581,6 +2581,37 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findTimeWithSmallestMinutePart(times = []) {
+        let max = 6e1
+        let result = ''
+
+        times.map(el => this.time(el, 'deconvert')).map(el => {
+            let value = el % 6e1
+
+            if (max > value) {
+                max = value
+                result = this.time(el)
+            }
+        })
+
+        return result
+    }
+
+    timeByMultiplicity(num = 1e1, min = 6e1) {
+        num = num > 0 && num <= 6e1 ? num : Math.abs(6e1 - num)
+        
+        let result = 0
+        let border = Math.floor(minutesMax / num)
+
+        while (result < min) {
+            result = this.getIntervalValue([0, border]) * num
+        }
+
+        result = this.time(result)
+
+        return result
+    }
 }
 
 module.exports = Core
