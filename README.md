@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.0**
+* Current Version: **1.7.1**
 * Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.6K** lines of code and **160 methods**           
+* **2.7K** lines of code and **163 methods**           
 
 ## Links
 
@@ -215,7 +215,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findTimeWithSmallestMinutePart** (*times* = []) - finds time with smallest minute part among *times* and returns it.  
 
--**timeByMultiplicity** (*num* = 1e1, *min* = 6e1) - generates time whose multiple is *num* and it more than *min*.  
+-**timeByMultiplicity** (*num* = 1e1, *min* = 6e1) - generates time whose multiple is *num* and it more than *min*. 
+
+-**findNearestTimeRoundMinutes** (*time* = '', *minutes* = [], *isIncrease* = true) - finds nearest minutes part to round up *time* and returns it. 
 
 ### * Weekday *
 
@@ -283,7 +285,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**validateYearPart** (*year* = 2e3, *start* = 1, *end* = 1, *validationText* = '') - validates digits of year with *validationText*.   
 
--**findYearAverageGap** (*items* = []) - returns average difference between pairs of years.  
+-**findYearAverageGap** (*items* = []) - returns average difference between pairs of years. 
+
+-**mostVariousYear** (*years* = []) - finds year with different digits among all and returns it.    
+
+-**filterYearsByCenturies** (*list* = [], *borders* = [], *exception* = null) - filter list of years by century parameters and returns it.  
 
 ### * Num *
 

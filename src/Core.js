@@ -986,11 +986,11 @@ class Core extends HelperContainer {
     }
 
     dateDistance(start = '', end = '', size = 'day') {
-        if (start.length === 0 | end === '') {
-            return ''
-        }
-
         let result = 0 
+
+        if (start.length === 0 | end === '') {
+            return result
+        }
 
         let firstParts = this.parts(start, '.', true)
         let secondParts = this.parts(end, '.', true)
@@ -2609,6 +2609,70 @@ class Core extends HelperContainer {
         }
 
         result = this.time(result)
+
+        return result
+    }
+
+    mostVariousYear(years = []) {   
+        let changes = 0
+        let result = 0
+
+        years.map(el => {
+            let value = String(el).split('').map(el => Number(el))
+            let difference = 0
+
+            value.map((item, i) => {
+                let next = value[i + 1]
+
+                if (next !== undefined) {
+                    difference += Math.abs(item - next)
+                }
+            })
+           
+            if (difference > changes) {
+                changes = difference
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    findNearestTimeRoundMinutes(time = '', minutes = [], isIncrease = true) {
+        let border = 6e1
+        let result = 0
+
+        if (this.isTime(time)) {
+            let residue = this.time(time, 'deconvert')
+
+            residue = residue % 6e1
+            residue = isIncrease ? 6e1 - residue : residue
+            
+            minutes.map(el => {
+                let difference = Math.abs(el - residue)
+
+                if (difference < border) {
+                    border = difference
+                    result = el
+                }
+            })
+        }
+
+        return result
+    }
+
+    filterYearsByCenturies(list = [], borders = [], exception = null) {
+        let result = []
+  
+        borders = borders.map(el => (el - 1)*1e2)
+        
+        const check = num => borders[0] <= num && borders[1] >= num
+
+        list.map(el => {
+            if (check(el) && Math.ceil(el / 1e2) !== exception) {
+                result = [...result, el]
+            }      
+        })
 
         return result
     }
