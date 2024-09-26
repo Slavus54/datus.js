@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.1**
+* Current Version: **1.7.2**
 * Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.7K** lines of code and **163 methods**           
+* **2.7K** lines of code and **165 methods**           
 
 ## Links
 
@@ -131,6 +131,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**dateByNum** (*num* = 1e3, *round* = 0) - generates date from *num* of year with fractional part. 
 
+-**filterDatesByMonthGap** (*dates* = [], *min* = 1e1, *max* = 1e2, *round* = 0) - filter days of year's month inside borders and returns list of dates.    
+
 ### * Time *
 
 -**time** (*value* = null, *key* = 'convert', *isTwelve* = false) - received *value* in minutes and convert it to HH:MM format, or if *key* equal 'deconvert' it returned number of minutes. Flag *isTwelve* is for US time format.   
@@ -218,6 +220,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**timeByMultiplicity** (*num* = 1e1, *min* = 6e1) - generates time whose multiple is *num* and it more than *min*. 
 
 -**findNearestTimeRoundMinutes** (*time* = '', *minutes* = [], *isIncrease* = true) - finds nearest minutes part to round up *time* and returns it. 
+
+-**filterTimesByInterval** (*timestamps* = [], *start* = 1e1, *num* = 1, *isMinutes* = false) - filters time's part inside interval by parameters.      
 
 ### * Weekday *
 

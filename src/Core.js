@@ -2676,6 +2676,47 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimesByInterval(timestamps = [], start = 1e1, num = 1, isMinutes = false) {
+        let index = Number(isMinutes)
+        let result = []
+
+        const check = time => time >= start && time <= start + num
+
+        timestamps.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+
+                if (check(parts[index])) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterDatesByMonthGap(dates = [], min = 1e1, max = 1e2, round = 0) {
+        let result = []
+
+        const check = num => num >= min && num <= max
+
+        dates.map(el => {
+            if (this.isDate(el)) {
+                let parts = this.parts(el, '.', true)
+                let size = this.getMonthSize(parts[1], parts[2])
+
+                let value = this.percent(parts[0], size, round)
+
+                if (check(value)) {
+                    result = [...result, el]
+                }
+            }
+           
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
