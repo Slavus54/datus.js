@@ -2717,6 +2717,44 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimePartsByInterval(time = '', min = 1, max = 1e1) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let parts = this.parts(time, ':', true)
+
+            parts.map(el => {
+                if (el >= min && el <= max && result) {
+                    result = true
+                } else {
+                    result = false
+                }
+            })
+        }
+
+        return result
+    }
+
+    yearsDifferenceOrder(min = 1e3, max = 2e3) {
+        let difference = Math.abs(max - min)
+        let result = 0
+
+        while (difference > 1e1) {
+            difference *= .1
+            result++
+        }
+
+        result = 1e1**result
+
+        return result
+    }
+
+    timeByRatio(hours = 1e1, num = 1) {
+        let result = this.time(hours * 6e1 + hours * num)
+
+        return result
+    }
 }
 
 module.exports = Core

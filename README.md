@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.2**
+* Current Version: **1.7.3**
 * Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.7K** lines of code and **165 methods**           
+* **2.8K** lines of code and **168 methods**           
 
 ## Links
 
@@ -221,7 +221,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findNearestTimeRoundMinutes** (*time* = '', *minutes* = [], *isIncrease* = true) - finds nearest minutes part to round up *time* and returns it. 
 
--**filterTimesByInterval** (*timestamps* = [], *start* = 1e1, *num* = 1, *isMinutes* = false) - filters time's part inside interval by parameters.      
+-**filterTimesByInterval** (*timestamps* = [], *start* = 1e1, *num* = 1, *isMinutes* = false) - filters time's part inside interval by parameters.  
+
+-**filterTimePartsByInterval** (*time* = '', *min* = 1, *max* = 1e1) - validate time if hour and minute parts are between *min* and *max* borders.    
+
+-**timeByRatio** (*hours* = 1e1, *num* = 1) - generates time by sum of *hours* and minutes equal *hours* * *num* (ratio).        
 
 ### * Weekday *
 
@@ -293,7 +297,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**mostVariousYear** (*years* = []) - finds year with different digits among all and returns it.    
 
--**filterYearsByCenturies** (*list* = [], *borders* = [], *exception* = null) - filter list of years by century parameters and returns it.  
+-**filterYearsByCenturies** (*list* = [], *borders* = [], *exception* = null) - filter list of years by century parameters and returns it.    
+
+-**yearsDifferenceOrder** (*min* = 1e3, *max* = 2e3) - returns number as power of 10 nearest difference between years.  
 
 ### * Num *
 
@@ -303,7 +309,7 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).
 
--**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.    
+-**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.       
 
 ### * Filters and Validation *
 
