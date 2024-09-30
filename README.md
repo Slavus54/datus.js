@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.3**
+* Current Version: **1.7.4**
 * Size ~ **110 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.8K** lines of code and **168 methods**           
+* **2.8K** lines of code and **170 methods**           
 
 ## Links
 
@@ -300,6 +300,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**filterYearsByCenturies** (*list* = [], *borders* = [], *exception* = null) - filter list of years by century parameters and returns it.    
 
 -**yearsDifferenceOrder** (*min* = 1e3, *max* = 2e3) - returns number as power of 10 nearest difference between years.  
+
+-**yearsInsideBorders** (*min* = 1e3, *max* = 2e3, *step* = 1) - generates list of years inside borders with step.  
+
+-**findNearestYearFromList** (*value* = 1e3, *list* = [], *isEven* = true) - finds nearest to *value* year among *list*.    
 
 ### * Num *
 

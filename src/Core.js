@@ -2755,6 +2755,39 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearsInsideBorders(min = 1e3, max = 2e3, step = 1) {
+        let result = []
+
+        while (min < max) {
+            result = [...result, min]
+
+            min += step
+        }
+
+        return result
+    }
+
+    findNearestYearFromList(value = 1e3, list = [], isEven = true) {
+        let border = 1e3
+        let result = 0
+
+        for (let i = 0; i < list.length; i++) {
+            let item = list[i]
+            let flag = isEven ? item % 2 === 0 : item % 2 !== 0
+            
+            if (flag) {
+                let difference = Math.abs(value - item)
+
+                if (difference < border) {
+                    result = item
+                    border = difference
+                }
+            }
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
