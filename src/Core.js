@@ -2788,6 +2788,91 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimesByParity(times = [], num = 1e1, borders = [0, minutesMax]) {
+        const check = int => borders[0] <= int && borders[1] >= int
+        let result = []        
+
+        times.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+                let flag = value % num === 0 && check(value)
+
+                if (flag) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    numDigitInResidueExist(num = 1e1, position = 1) {
+        let digit = this.getYearDigit(num, position)
+        let items = String(num).split('.')[1].split('')
+        let result = false
+
+        items.map(el => {
+            if (Number(el) === digit) {
+                result = true
+            }
+        })
+
+        return result
+    }
+
+    digitsOfNum(num = 1e1) {
+        const int = num
+
+        let result = []
+        let position = 1
+
+        while (num > 0) {
+            let value = this.getYearDigit(int, position) * 10**(position - 1)
+
+            result = [...result, value]
+            
+            num -= value
+            position++
+        }
+
+        result = result.reverse()
+
+        return result
+    }
+
+    filterYearsByDeviation(list = [], year = 1e3, dispersion = 5, isEven = null) {
+        let result = []
+
+        list.map(el => {
+            let difference = Math.abs(year - el)
+            let check = false
+
+            if (difference <= dispersion) {
+                if (isEven !== null) {
+                    check = isEven === true && el % 2 === 0 || isEven === false && el % 2 !== 0
+                } else {
+                    check = true
+                }
+            }
+
+            if (check) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    numResidueSum(num = 1e1) {
+        let result = 0
+
+        if (String(num).includes('.')) {
+            result = String(num).split('.')[1].split('').map(el => Number(el)).reduce((acc, cur) => acc + cur)
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

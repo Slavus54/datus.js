@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.4**
-* Size ~ **110 kB**
+* Current Version: **1.7.5**
+* Size ~ **120 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.8K** lines of code and **170 methods**           
+* **2.9K** lines of code and **175 methods**           
 
 ## Links
 
@@ -225,7 +225,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterTimePartsByInterval** (*time* = '', *min* = 1, *max* = 1e1) - validate time if hour and minute parts are between *min* and *max* borders.    
 
--**timeByRatio** (*hours* = 1e1, *num* = 1) - generates time by sum of *hours* and minutes equal *hours* * *num* (ratio).        
+-**timeByRatio** (*hours* = 1e1, *num* = 1) - generates time by sum of *hours* and minutes equal *hours* * *num* (ratio).   
+
+-**filterTimesByParity** (*times* = [], *num* = 1e1, *borders* = [0, minutesMax]) - returns filtered list of times by checking multiplicity on *num* and if it inside *borders*.      
 
 ### * Weekday *
 
@@ -305,6 +307,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findNearestYearFromList** (*value* = 1e3, *list* = [], *isEven* = true) - finds nearest to *value* year among *list*.    
 
+-**filterYearsByDeviation** (*list* = [], *year* = 1e3, *dispersion* = 5, *isEven* = null) - filters years by *dispersion* and *isEven* and returns result. 
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -313,7 +317,13 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).
 
--**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.       
+-**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.      
+
+-**numDigitInResidueExist** (*num* = 1e1, *position* = 1) - checks if digit *num* by *position* exist in it residue.    
+
+-**digitsOfNum** (*num* = 1e1) - returns list of num's digits, each one is multiplied by powered 10.        
+
+-**numResidueSum** (*num* = 1e1) - counts sum of all digits of num's fractional part.        
 
 ### * Filters and Validation *
 
