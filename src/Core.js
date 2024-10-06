@@ -2873,6 +2873,95 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimesByDifference(times = [], difference = 1e1) {
+        let result = []
+
+        times.map((el, idx) => {
+            if (this.isTime(el)) {
+                let next = times[idx + 1]
+
+                if (next) {
+                    let value = this.time(el, 'deconvert')
+                    let toCompare = this.time(next, 'deconvert')
+                
+                    if (Math.abs(value - toCompare) <= difference) {
+                        result = [...result, el]
+                    }
+                }
+            
+            }            
+        })
+
+        return result
+    }   
+
+    numSimpleProgression(start = 1e3, step = 1, length = 1e1, isIncrease = true) {
+        let result = []
+        let value = start
+
+        for (let i = 0; i < length; i++) {
+            value = isIncrease ? value + step : value - step
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    timestampsByRadius(base = 6e2, border = 1e2, forward = 1, back = forward) {
+        const sum = forward + back
+
+        let step = Math.round(border / back)
+        let result = []
+        let value = base - border
+
+        for (let i = 0; i < sum; i++) {
+            result = [...result, this.time(value)]
+            
+            if (i === back) {
+                step = Math.round(border / forward)
+            }
+
+            value += step
+        }
+
+        return result
+    }
+
+    filterYearsByRadius(list = [], radius = 1e1, middle = 5e1) {
+        let borders = [middle - radius, middle + radius]
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+
+            if (borders[0] <= value && borders[1] >= value) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterYearBySchema(value = 1e3, schema = '', marker = '*') {
+        let symbols = String(value).split('')
+        let result = true
+
+        symbols.map(el => Number(el)).map((el, idx) => {
+            let check = schema[idx]
+           
+            if (check !== marker) {
+                check = Number(check)
+                
+                if (el !== check) {
+                    result = false
+                }             
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core

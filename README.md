@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.5**
+* Current Version: **1.7.6**
 * Size ~ **120 kB**
 * Most of algorithms have **O(n)** time complexity
-* **2.9K** lines of code and **175 methods**           
+* **3K** lines of code and **180 methods**           
 
 ## Links
 
@@ -227,7 +227,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timeByRatio** (*hours* = 1e1, *num* = 1) - generates time by sum of *hours* and minutes equal *hours* * *num* (ratio).   
 
--**filterTimesByParity** (*times* = [], *num* = 1e1, *borders* = [0, minutesMax]) - returns filtered list of times by checking multiplicity on *num* and if it inside *borders*.      
+-**filterTimesByParity** (*times* = [], *num* = 1e1, *borders* = [0, minutesMax]) - returns filtered list of times by checking multiplicity on *num* and if it inside *borders*.    
+
+-**filterTimesByDifference** (*times* = [], *difference* = 1e1) - filters list of times by *difference* in munutes between current and next in each pair.   
+
+-**timestampsByRadius** (*base* = 6e2, *border* = 1e2, *forward* = 1, *back* = forward) - generates list of times with radius (*border*) and nums of times (*back* and *forward*) more and less than *base*.    
 
 ### * Weekday *
 
@@ -307,7 +311,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findNearestYearFromList** (*value* = 1e3, *list* = [], *isEven* = true) - finds nearest to *value* year among *list*.    
 
--**filterYearsByDeviation** (*list* = [], *year* = 1e3, *dispersion* = 5, *isEven* = null) - filters years by *dispersion* and *isEven* and returns result. 
+-**filterYearsByDeviation** (*list* = [], *year* = 1e3, *dispersion* = 5, *isEven* = null) - filters years by *dispersion* and *isEven* and returns result.  
+
+-**filterYearsByRadius** (*list* = [], *radius* = 1e1, *middle* = 5e1) - filters years checking each inside borders by *radius* from *middle*.  
+
+-**filterYearsBySchema** (*value* = 1e3, *schema* = '', *marker* = '*') - filters year by text *schema* with *marker* as random digit and returns true / false.   
 
 ### * Num *
 
@@ -323,7 +331,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**digitsOfNum** (*num* = 1e1) - returns list of num's digits, each one is multiplied by powered 10.        
 
--**numResidueSum** (*num* = 1e1) - counts sum of all digits of num's fractional part.        
+-**numResidueSum** (*num* = 1e1) - counts sum of all digits of num's fractional part.   
+
+-**numSimpleProgression** (*start* = 1e3, *step* = 1, *length* = 1e1, *isIncrease* = true) - builds a number progression by parameters. 
 
 ### * Filters and Validation *
 
