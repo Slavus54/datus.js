@@ -874,7 +874,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    filterBySchema(content = '', isDate = true, schema = '', index = 0) {
+    filterPartBySchema(content = '', isDate = true, schema = '', index = 0) {
         let parts = this.parts(content, this.getSymbol(isDate), true)
         let result = true
 
@@ -2957,6 +2957,87 @@ class Core extends HelperContainer {
                 if (el !== check) {
                     result = false
                 }             
+            }
+        })
+
+        return result
+    }
+
+    timeTransform(time = '', num = 1e1, isIncrease = true) {
+        let result = ''
+
+        if (this.time(time)) {
+            let value = this.time(time, 'deconvert')
+
+            value = isIncrease ? value + num : value - num
+
+            result = this.time(value)
+        }
+
+        return result
+    }
+
+    filterYearsByDifference(list = [], min = 0, max = 1e1) {
+        let result = []
+
+        const check = num => num >= min && num <= max
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(el - next)
+
+                if (check(difference)) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    averageTimeByIndexParity(list = [], num = 1) {
+        const length = Math.floor(list.length / num)
+        let result = 0
+        
+        list.map((el, idx) => {
+            if (this.isTime(el) && idx !== 0 && (idx + 1) % num === 0) {
+                result += this.time(el, 'deconvert')
+            }
+        })
+
+        result = Math.round(result / length)
+
+        result = this.time(result)
+
+        return result
+    }
+
+    findLargestTimeDifference(list = []) {
+        let result = 0
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = this.time(this.timeDistance(el, next), 'deconvert')
+
+                if (difference > result) {
+                    result = difference
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByMultiplicity(list = [], num = 1) {
+        let result = []
+
+        list.map(el => {
+            if (el % num === 0) {
+                result = [...result, el]
             }
         })
 

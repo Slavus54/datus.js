@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.6**
+* Current Version: **1.7.7**
 * Size ~ **120 kB**
 * Most of algorithms have **O(n)** time complexity
-* **3K** lines of code and **180 methods**           
+* **3.1K** lines of code and **185 methods**           
 
 ## Links
 
@@ -231,7 +231,13 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterTimesByDifference** (*times* = [], *difference* = 1e1) - filters list of times by *difference* in munutes between current and next in each pair.   
 
--**timestampsByRadius** (*base* = 6e2, *border* = 1e2, *forward* = 1, *back* = forward) - generates list of times with radius (*border*) and nums of times (*back* and *forward*) more and less than *base*.    
+-**timestampsByRadius** (*base* = 6e2, *border* = 1e2, *forward* = 1, *back* = forward) - generates list of times with radius (*border*) and nums of times (*back* and *forward*) more and less than *base*.        
+
+-**timeTransform** (*time* = '', *num* = 1e1, *isIncrease* = true) - updates time with *num* minutes and returns result.    
+
+-**averageTimeByIndexParity** (*list* = [], *num* = 1) - counts average times of indexes divided by *num* without residue.  
+
+-**findLargestTimeDifference** (*list* = []) - finds largest difference between neighboring times and returns it in minutes.     
 
 ### * Weekday *
 
@@ -315,7 +321,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterYearsByRadius** (*list* = [], *radius* = 1e1, *middle* = 5e1) - filters years checking each inside borders by *radius* from *middle*.  
 
--**filterYearsBySchema** (*value* = 1e3, *schema* = '', *marker* = '*') - filters year by text *schema* with *marker* as random digit and returns true / false.   
+-**filterYearsBySchema** (*value* = 1e3, *schema* = '', *marker* = '*') - filters year by text *schema* with *marker* as random digit and returns true / false.  
+
+-**filterYearsByDifference** (*list* = [], *min* = 0, *max* = 1e1) - checks neighboring years difference by *min* and *max* borders.    
+
+-**filterYearsByMultiplicity** (*list* = [], *num* = 1) - returns list of years divided by *num* without residue.   
 
 ### * Num *
 
@@ -347,7 +357,7 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**isWeekend** (*time* = '12:30', *body* = '', *marker* = 'x') - checks and returns if today is Saturday/Sunday. 
 
--**filterBySchema** (*content* = '', *isDate* = true, *schema* = '', *index* = 0) - check date or time period by running code in *schema*. 
+-**filterPartBySchema** (*content* = '', *isDate* = true, *schema* = '', *index* = 0) - check date or time period by running code in *schema*. 
 
 -**similarity** (*content* = '', *isDate* = true, *mask* = '') - compare date/time with *mask* and returns % analogy by cheking each period.
 
