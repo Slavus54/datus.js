@@ -5,16 +5,18 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.7**
-* Size ~ **120 kB**
+* Current Version: **1.7.8**
+* Size ~ **125 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.1K** lines of code and **185 methods**           
+* **3.2K** lines of code and **190 methods**           
 
 ## Links
 
 To download - *https://www.npmjs.com/package/datus.js* 
 
-To look code - *https://github.com/Slavus54/datus.js* 
+To look code - *https://github.com/Slavus54/datus.js*
+
+To try for yourself - *soon*    
 
 ## History
 
@@ -237,7 +239,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**averageTimeByIndexParity** (*list* = [], *num* = 1) - counts average times of indexes divided by *num* without residue.  
 
--**findLargestTimeDifference** (*list* = []) - finds largest difference between neighboring times and returns it in minutes.     
+-**findLargestTimeDifference** (*list* = []) - finds largest difference between neighboring times and returns it in minutes.    
+
+-**checkTimeByMultiplicityNumbers** (*time* = '', *nums* = []) - validates minutes of time by checking each element of *nums* by multiplicity for this value.   
 
 ### * Weekday *
 
@@ -327,6 +331,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterYearsByMultiplicity** (*list* = [], *num* = 1) - returns list of years divided by *num* without residue.   
 
+-**findYearsAverageCenturyGap** (*list* = []) - returns average years to pass over the century. 
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -344,6 +350,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**numResidueSum** (*num* = 1e1) - counts sum of all digits of num's fractional part.   
 
 -**numSimpleProgression** (*start* = 1e3, *step* = 1, *length* = 1e1, *isIncrease* = true) - builds a number progression by parameters. 
+
+-**numPercentProgression** (*num* = 1, *percent* = 1e1, *iterations* = 1, *round* = 0) - multiplies *num* by *iterations* on *percent* = (1 + *percent* * 0.01).    
+
+-**analysisProgressionIterations** (*list* = []) - analyzes list of numbers and returns array of math actions and values.    
 
 ### * Filters and Validation *
 
@@ -473,7 +483,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**life** (*century* = 2e1, *percent* = 1e1, *size* = 8e1) - returns years of life with % of *size* in *century*.   
 
--**lifePart** (*periods* = [], *century* = 21, *round* = 0) - returns % of lifetime in *century*.        
+-**lifePart** (*periods* = [], *century* = 21, *round* = 0) - returns % of lifetime in *century*.   
+
+-**stream** (*times* = [], *durations* = []) - sets in order list of *times* with *durations*.  
 
 ### * Find *
 

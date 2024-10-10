@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, minutesMin} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, timePartsLimits} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -3040,6 +3040,115 @@ class Core extends HelperContainer {
                 result = [...result, el]
             }
         })
+
+        return result
+    }
+
+    numPercentProgression(num = 1, percent = 1e1, iterations = 1, round = 0) {
+        const step = 1 + this.cleanValue(percent, 1, 2)
+        let result = num
+        
+        for (let i = 0; i < iterations; i++) {
+            result *= step
+        } 
+
+        result = this.cleanValue(1e2, result, round)
+
+        return result
+    }
+
+    analysisProgressionIterations(list = []) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let couple = [el, next]
+                let difference = Math.abs(el - next)
+                let max = Math.max(...couple)
+                let min = Math.min(...couple)
+                let symbol
+
+                if (max % min !== 0) {
+                    symbol = el <= next ? '+' : '-'
+                } else if (difference >= min && max % min === 0) {
+                    symbol = el < next ? '*' : '/'
+                    
+                    difference = Math.floor(max / min) 
+                }
+
+                let iteration = `${symbol} ${difference}`
+
+                if (result.find(item => item === iteration) === undefined) {
+                    result = [...result, iteration]
+                }                
+            }
+        })
+        
+        return result
+    }
+
+    checkTimeByMultiplicityNumbers(time = '', nums = []) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+
+            nums.map(el => {
+                if (value % el !== 0) {
+                    result = false
+                }
+            })
+        }
+
+        return result
+    }
+
+    findYearsAverageCenturyGap(list = []) {
+        let result = 0
+
+        list.map(el => {
+            let value = 1e2 - el % 1e2
+
+            result += value
+        })
+
+        result = Math.round(result / list.length)
+
+        return result
+    }
+
+    stream(times = [], durations = []) {
+        let result = [times[0]]
+        let index = 0
+
+        for (let i = 1; i < times.length; i++) {
+            let start = this.time(times[i], 'deconvert')
+            let end = start + durations[i]
+            
+            let startToCompare = this.time(times[index], 'deconvert') 
+            let endToCompare = startToCompare + durations[index]
+
+            let right = result.length
+            let left = 0
+
+            while (startToCompare > start && endToCompare > start && index > left) {
+                startToCompare = this.time(times[index], 'deconvert') 
+                endToCompare = startToCompare + durations[index]
+
+                index--
+            }
+
+            while (startToCompare < end && endToCompare < end && index < right) {
+                startToCompare = this.time(times[index], 'deconvert') 
+                endToCompare = startToCompare + durations[index]
+
+                index++
+            }
+
+            result = [...result.slice(left, index), times[i], ...result.slice(index, right)]
+        }
 
         return result
     }
