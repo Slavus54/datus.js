@@ -30,7 +30,20 @@ Now I'm looking for new features and hope you can help me to have great experien
 
 import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures}*** from 'datus.js'     
 
-const datus = new *Datus()*          
+- - -
+
+*Datus* - main class in library to work with.         
+
+*weekdaysTitles* and *weekdaysTags* - list of weekdays by it's name and tag (Monday like Mon).  
+
+*dayParts* - list of day's parts.   
+
+*minutesMax* - max border of time in minutes.   
+
+*periods* - list of time's periods (from second to year).   
+
+*timeMeasures* - list of time's measures in day (from ms to h with size in seconds).    
+
 
 ## Examples
 
