@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.8**
+* Current Version: **1.7.9**
 * Size ~ **125 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.2K** lines of code and **190 methods**           
+* **3.3K** lines of code and **195 methods**           
 
 ## Links
 
@@ -243,6 +243,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**checkTimeByMultiplicityNumbers** (*time* = '', *nums* = []) - validates minutes of time by checking each element of *nums* by multiplicity for this value.   
 
+-**filterTimesByMove** (*list* = [], *isIncrease* = true) - builds list of times if each one fits by *isIncrease* row flag.     
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -332,6 +334,14 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**filterYearsByMultiplicity** (*list* = [], *num* = 1) - returns list of years divided by *num* without residue.   
 
 -**findYearsAverageCenturyGap** (*list* = []) - returns average years to pass over the century. 
+
+-**filterYearsByParityOfDifference** (*list* = [], *num* = 1) - filters years pairs by *num* multiplicity of difference.    
+
+-**filterYearsByResidueFill** (*list* = []) - returns years by pairs after checking if century residue of first item can be filled by residue of next.  
+
+-**findYearsParitySubsequences** (*list* = [], *seq* = []) - filters years by sequence of multiplicity and returns result.  
+
+-**yearsBorders** (*list* = []) - returns [min, max] borders of years list. 
 
 ### * Num *
 

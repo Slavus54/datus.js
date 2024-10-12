@@ -3152,6 +3152,120 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterYearsByParityOfDifference(list = [], num = 1) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(el - next)
+
+                if (difference % num === 0) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueFill(list = []) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                if (next % 1e2 >= 1e2 - el % 1e2) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByDifferenceComparing(list = [], num = 1e3, isMore = true) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+            
+            if (next) {
+                let difference = Math.abs(next - el)
+
+                if (isMore && difference > num || !isMore && difference < num) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    findYearsParitySubsequences(list = [], seq = []) {
+        let result = []
+        let subsequence = []
+        let index = 0
+
+        for (let i = 0; i < list.length; i++) {
+            let value = list[i]
+            let parity = seq[index]
+
+            if (value % parity === 0) {
+                subsequence = [...subsequence, value]
+                
+                index++
+            } else {
+                result = [...result, subsequence]
+
+                index = 0
+                subsequence = []
+            }
+        }
+
+        result = result.filter(el => el.length === seq.length).flat(1)
+
+        return result
+    }
+
+    filterTimesByMove(list = [], isIncrease = true) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+                let latest = result.length !== 0 ? this.time(result[result.length - 1], 'deconvert') : 0
+                let check = isIncrease ? latest < value : latest > value 
+
+                if (check) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    yearsBorders(list = []) {
+        let min = 1e6
+        let max = 0
+        let result
+
+        list.map(el => {
+            if (el > max) {
+                max = el
+            } else if (el < min) {
+                min = el
+            }
+        })
+
+        result = [min, max]
+
+        return result
+    }
 }
 
 module.exports = Core
