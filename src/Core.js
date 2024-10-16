@@ -3266,6 +3266,92 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearsCenturies(list = []) {
+        let max = Math.ceil(list[0] / 1e2)
+        let min = max
+        let result = [min]
+
+        const check = num => min <= num && max >= num
+
+        list.map(el => {
+            let value = Math.ceil(el / 1e2)
+
+            if (!check(value)) {
+                let differenceMax = Math.abs(max - value)
+                let differenceMin = Math.abs(min - value)
+             
+                if (differenceMin > 1 || differenceMax > 1) {
+                    result = [...result, value]
+                } else if (differenceMax === 1) {
+                    max = value
+                    result = [...result, value]
+                } else if (differenceMin === 1) {
+                    min = value
+                    result = [...result, value]
+                }
+            }
+        })
+
+        result = result.sort()
+
+        return result
+    }
+
+    filterYearsByVariation(list = [], year = 1e3, less = 0, more = 0) {
+        const max = year + more
+        const min = year - less
+
+        let result = []
+
+        list.map(el => {
+            if (el <= max && el >= min) {
+                result = [...result, el]
+            }    
+        })
+
+        return result
+    }
+
+    timeAmbit(time = '', num = 1e1) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+
+            result = [this.time(value - num), this.time(value + num)]
+        }
+
+        return result
+    }
+
+    timeMultiplicityResidue(time = '', num = 6e1, round = 0) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+
+            value %= num
+
+            result = this.percent(value, num, round)
+        }
+
+        return result
+    }
+
+    yearsByCustomSizes(year = 1e3, sizes = [], iterations = 1) {
+        let result = []
+
+        for (let i = 0; i < iterations; i++) {
+            sizes.map(el => {
+                result = [...result, year + el]
+                
+                year += el
+            })
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

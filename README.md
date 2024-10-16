@@ -5,18 +5,16 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.7.9**
-* Size ~ **125 kB** 
+* Current Version: **1.8.0**
+* Size ~ **150 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.3K** lines of code and **195 methods**           
+* **3.4K** lines of code and **200 methods**           
 
 ## Links
 
 To download - *https://www.npmjs.com/package/datus.js* 
 
 To look code - *https://github.com/Slavus54/datus.js*
-
-To try for yourself - *soon*    
 
 ## History
 
@@ -256,7 +254,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**checkTimeByMultiplicityNumbers** (*time* = '', *nums* = []) - validates minutes of time by checking each element of *nums* by multiplicity for this value.   
 
--**filterTimesByMove** (*list* = [], *isIncrease* = true) - builds list of times if each one fits by *isIncrease* row flag.     
+-**filterTimesByMove** (*list* = [], *isIncrease* = true) - builds list of times if each one fits by *isIncrease* row flag. 
+
+-**timeAmbit** (*time* = '', *num* = 1e1) - returns upper and lower limits of time's minutes range. 
+
+-**timeMultiplicityResidue** (*time* = '', *num* = 6e1, *round* = 0) - counts minutes ot *time* as residue from division it's value on *num*.   
 
 ### * Weekday *
 
@@ -355,6 +357,12 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**findYearsParitySubsequences** (*list* = [], *seq* = []) - filters years by sequence of multiplicity and returns result.  
 
 -**yearsBorders** (*list* = []) - returns [min, max] borders of years list. 
+
+-**yearsCenturies** (*list* = []) - finds all centuries of year list and returns sorted array.  
+
+-**filterYearsByVariation** (*list* = [], *year* = 1e3, *less* = 0, *more* = 0) - filters years by checking each one inside borders.    
+
+-**yearsByCustomSizes** (*year* = 1e3, *sizes* = [], *iterations* = 1) - generates list of years with custom steps by parameters.   
 
 ### * Num *
 
