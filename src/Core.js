@@ -3352,6 +3352,85 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearsAllocation(borders = [], step = 1) {
+        let max = Math.max(...borders)
+        let min = Math.min(...borders)
+        let result = []
+
+        while (min <= max) {
+            result = [...result, min]
+
+            min += step           
+        }
+
+        return result
+    }
+
+    timeByPercentOfStep(time = '', step = 1e1, percent = 1e1, isForward = true) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let base = this.time(time, 'deconvert')
+            let value = this.cleanValue(percent, step, 0)
+
+            result = isForward ? base + value : base - value
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+
+    yearAmbit(year = 1e3, num = 1e1, isCheckCentury = false) {
+        let result = [year - num, year + num]
+
+        if (isCheckCentury) {
+            let century = Math.floor(year / 1e2)
+
+            result = result.map(el => {
+                if (century === Math.floor(el / 1e2)) {
+                    return el
+                } else {
+                    return year
+                }
+            })
+        }
+
+        return result
+    }
+
+    yearsMutateByIndex(list = [], index = 1, num = 0, isIncrease = true) {
+        let result = []
+
+        list.map((el, idx) => {
+            let position = idx + 1
+            let value = el
+
+            if (position % index === 0) {
+                value = isIncrease ? value + num : value - num
+            }
+
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    yearsFromCentre(year = 1e3, step = 1, radius = 1) {
+        let d = radius * 2
+        let result = []
+
+        year -= step * radius
+
+        for (let i = 0; i < d; i++) {
+            result = [...result, year]
+
+            year += step
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

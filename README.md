@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.0**
+* Current Version: **1.8.1**
 * Size ~ **150 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.4K** lines of code and **200 methods**           
+* **3.5K** lines of code and **205 methods**           
 
 ## Links
 
@@ -260,6 +260,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timeMultiplicityResidue** (*time* = '', *num* = 6e1, *round* = 0) - counts minutes ot *time* as residue from division it's value on *num*.   
 
+-**timeByPercentOfStep** (*time* = '', *step* = 1e1, *percent* = 1e1, *isForward* = true) - updates *time* by addition or subtraction % of minutes *step*.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -363,6 +365,14 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**filterYearsByVariation** (*list* = [], *year* = 1e3, *less* = 0, *more* = 0) - filters years by checking each one inside borders.    
 
 -**yearsByCustomSizes** (*year* = 1e3, *sizes* = [], *iterations* = 1) - generates list of years with custom steps by parameters.   
+
+-**yearsAllocation** (*borders* = [], *step* = 1) - generates list of years inside *borders* with *step*.   
+
+-**yearAmbit** (*year* = 1e3, *num* = 1e1, *isCheckCentury* = false) - builds borders of *year* with *num* radius. 
+
+-**yearsMutateByIndex** (*list* = [], *index* = 1, *num* = 0, *isIncrease* = true) - changes each element of year *list* by it's index checking.    
+
+-**yearsFromCentre** (*year* = 1e3, *step* = 1, *radius* = 1) - generates list of years from *year* centre by *radius* and *step*.  
 
 ### * Num *
 
