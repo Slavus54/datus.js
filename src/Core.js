@@ -3431,6 +3431,126 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearByPercentInsideBorders(min = 1e3, max = 2e3, percent = 5) {
+        let difference = Math.abs(max - min)
+        let result = min + this.cleanValue(percent, difference, 0)
+    
+        return result
+    }
+
+    findNearestYearByMultiplicity(year = 1e3, num = 1, isMore = true) {
+        let size = Math.floor(year / num)
+        let result = isMore ? size + 1 : size - 1
+
+        result *= num
+
+        return result
+    }
+
+    timeIntersection(time = '', min = 1, max = 1) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            let step = min
+
+            while ((min % step !== 0 || max % step !== 0) && step < max) {
+                step += min
+            }
+
+            result = value + step
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+
+    isYear(value = null) {
+        let result = false
+
+        if (value !== null && value !== undefined) {
+            result = typeof value === 'number' && value >= 0 && value <= 3e3
+        }
+
+        return result
+    }
+
+    numLevelsOfMultiplicity(value = 2e3, num = 1) {
+        let result = 0
+
+        while (value % num === 0) {
+            value /= num
+            result++
+        }
+
+        return result
+    }
+
+    timesInsideBorders(min = 1e2, max = 1e3, step = 1e1) {
+        let result = []
+
+        while (min < max) {
+            result = [...result, this.time(min)]
+
+            min += step
+        }
+
+        return result
+    }
+
+    sizeOfEra(year = 1e1, round = 0) {
+        let result = this.percent(year, this.date.getFullYear(), round)
+
+        return result
+    }
+
+    yearsByExceptTemplateDigit(year = 1e3, num = 1) {
+        const length = String(year).length
+
+        let digit = this.getYearDigit(year, num)
+        let result = []
+
+        for (let i = Number(num === length); i < 1e1; i++) {
+            let difference = Math.abs(digit - i) * 1e1**(num - 1)
+         
+            if (i !== digit) {
+                result = [...result, i < digit ? year - difference : year + difference]
+            }
+        }
+
+        return result
+    }
+
+    yearsByPairs(start = 1e3, num = 5, step = 1, difference = 1) {
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            result = [...result, start, start + difference]
+        
+            start += step
+        }
+
+        return result
+    }
+
+    filterYearsByEqualAdjacentDigits(list = [], position = 1) {
+        let result = []
+
+        list.map(el => {
+            let text = String(el)
+            let index = position + (text.length > position ? 1 : -1)
+            let value = this.getYearDigit(el, position)
+            let toCompare = this.getYearDigit(el, index)
+          
+            if (value === toCompare) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core

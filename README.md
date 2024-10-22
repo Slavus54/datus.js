@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.1**
+* Current Version: **1.8.2**
 * Size ~ **150 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.5K** lines of code and **205 methods**           
+* **3.6K** lines of code and **215 methods**           
 
 ## Links
 
@@ -262,6 +262,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timeByPercentOfStep** (*time* = '', *step* = 1e1, *percent* = 1e1, *isForward* = true) - updates *time* by addition or subtraction % of minutes *step*.  
 
+-**timeIntersection** (*time* = '', *min* = 1, *max* = 1) - added number of munutes to *time* as a result of addition *min* before that sum become multiplicity to *max*.   
+
+-**timesInsideBorders** (*min* = 1e2, *max* = 1e3, *step* = 1e1) - generates list of times by *step* inside borders.     
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -374,6 +378,20 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearsFromCentre** (*year* = 1e3, *step* = 1, *radius* = 1) - generates list of years from *year* centre by *radius* and *step*.  
 
+-**yearByPercentInsideBorders** (*min* = 1e3, *max* = 2e3, *percent* = 5) - founds year located inbside borders by % and returns it.    
+
+-**findNearestYearByMultiplicity** (*year* = 1e3, *num* = 1, *isMore* = true) - returns nearest year to *year* divided on *num* without residue.    
+
+-**isYear** (*value* = null) - validates a *value* and returns true / false.    
+
+-**sizeOfEra** (*year* = 1e1, *round* = 0) - returns % of year size in relation to our era since the birth of Christ.   
+
+-**yearsByExceptTemplateDigit** (*year* = 1e3, *num* = 1) - generates list of years, each one has digit by *num* position not equal to *year* digit.    
+
+-**yearsByPairs** (*start* = 1e3, *num* = 5, *step* = 1, *difference* = 1) - builds list of years in pairs by parameters.   
+
+-**filterYearsByEqualAdjacentDigits** (*list* = [], *position* = 1) - returns validates list of years, each one has equal adjacent digit by *position*.     
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -394,7 +412,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**numPercentProgression** (*num* = 1, *percent* = 1e1, *iterations* = 1, *round* = 0) - multiplies *num* by *iterations* on *percent* = (1 + *percent* * 0.01).    
 
--**analysisProgressionIterations** (*list* = []) - analyzes list of numbers and returns array of math actions and values.    
+-**analysisProgressionIterations** (*list* = []) - analyzes list of numbers and returns array of math actions and values.   
+
+-**numLevelsOfMultiplicity** (*value* = 2e3, *num* = 1) - counts times of division *value* on *num* without residue.    
 
 ### * Filters and Validation *
 
