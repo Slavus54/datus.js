@@ -1300,8 +1300,8 @@ class Core extends HelperContainer {
         return result
     }
 
-    timeByPercent(num = 1e1, round = 0) {
-        let value = this.cleanValue(num, minutesMax, round)
+    timeByPercent(num = 1e1, max = minutesMax, round = 0) {
+        let value = this.cleanValue(num, max, round)
         let result = this.time(Math.floor(value))
 
         return result
@@ -3548,6 +3548,93 @@ class Core extends HelperContainer {
                 result = [...result, el]
             }
         })
+
+        return result
+    }
+
+    filterYearsByParityDigits(list = [], parity = []) {
+        let result = []
+
+        list.map(el => {
+            let text = String(el).split('')
+            let flag = true
+
+            text.map((_, i) => {
+                let value = this.getYearDigit(el, i + 1)
+             
+                if (parity[i] !== (value % 2 === 0)) {
+                    flag = false
+                }
+            })
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    timeByMinuteResiduePercent(time = '', percent = 1e1, size = 6e1, isAfter = true) {
+        let result = ''
+
+        if (this.isTime(time)) {
+            let minutes = this.time(time, 'deconvert') 
+            let residue = minutes % size
+            let value = this.cleanValue(percent, isAfter ? size - residue : residue, 0)
+
+            result = this.time(isAfter ? minutes + value : Math.floor(minutes / size) * size + value)
+        }
+
+        return result
+    }
+
+    findNearestYearByPercent(list = [], percent = 1e1) {
+        const min = Math.min(...list)
+        const max = Math.max(...list)
+
+        let difference = Math.abs(max - min)
+        let value = min + this.cleanValue(percent, difference, 0)
+        let distance = 1e5
+        let result = 0
+
+        list.map(el => {
+            let change = Math.abs(el - value)
+
+            if (change < distance) {
+                distance = change
+                result = el
+            }
+        })
+    
+        return result
+    }
+
+    timeBorders(time = '', percent = 5e1, size = 1e2, isForward = true) {
+        let result = []
+
+        if (this.isTime(time) && percent >= 0 && percent <= 1e2) {
+            let value = this.time(time, 'deconvert')
+            let back = 1e2 - percent
+            let right, left 
+
+            if (isForward) {
+                right = percent
+                left = back
+            } else {
+                right = back
+                left = percent 
+            }
+
+            result = [this.time(value - this.cleanValue(left, size, 0)), this.time(value + this.cleanValue(right, size, 0))]
+        }
+
+        return result
+    }
+
+    percentByYearInsideBorders(min = 1e3, max = 2e3, year = 1e3) {
+        let difference = Math.abs(max - min)
+        let result = this.percent(Math.abs(year - min), difference, 0)
 
         return result
     }
