@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.3**
+* Current Version: **1.8.4**
 * Size ~ **150 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.7K** lines of code and **220 methods**           
+* **3.8K** lines of code and **225 methods**           
 
 ## Links
 
@@ -402,6 +402,12 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**percentByYearInsideBorders** (*min* = 1e3, *max* = 2e3, *year* = 1e3) - returns as % position of *year* inside given borders.    
 
+-**findDispersionOfCentury** (*list* = [], *century* = 2e1) - finds difference between min and max year of *century* among elements of the list.    
+
+-**findMaximumOfCentury** (*list* = [], *century* = 2e1, *isEven* = null) - returns max year of century in *list*.  
+
+-**yearsByCenturiesRandomlyRow** (*centuries* = [], *borders* = [], *iterations* = 1) - generates list of randomly years by parameters.  
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -425,6 +431,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**analysisProgressionIterations** (*list* = []) - analyzes list of numbers and returns array of math actions and values.   
 
 -**numLevelsOfMultiplicity** (*value* = 2e3, *num* = 1) - counts times of division *value* on *num* without residue.    
+
+-**numCompareWithBorders** (*num* = 1, *list* = [], *isMore* = true, *percent* = null) - filters years by comparing with num as border. 
+
+-**numPositionInsideBorders** (*num* = 1, *min* = 1, *max* = 1e1, *round* = 0) - returns % as position of *num* inside borders. 
 
 ### * Filters and Validation *
 

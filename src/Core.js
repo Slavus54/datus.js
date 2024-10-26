@@ -416,7 +416,7 @@ class Core extends HelperContainer {
 
         if (isDate) {
             if (key === 'letter') {
-                result = `${months[parts[1] - 1]} ${parts[0]}, ${parts[2]}`
+                result = `${months[parts[1] - 1]} ${parts[0]}th, ${parts[2]}`
             } else if (key === 'year') {
                 result = parts[1] > 6 ? parts[2] + 1 : parts[2]
             }
@@ -3635,6 +3635,93 @@ class Core extends HelperContainer {
     percentByYearInsideBorders(min = 1e3, max = 2e3, year = 1e3) {
         let difference = Math.abs(max - min)
         let result = this.percent(Math.abs(year - min), difference, 0)
+
+        return result
+    }
+
+    findDispersionOfCentury(list = [], century = 2e1) {
+        const year = (century - 1) * 1e2
+        
+        let min = 1e5
+        let max = 0
+        let result = 0
+    
+        list.map(el => {
+            if (el > year && el % year < 1e2) {
+                if (el > max) {
+                    max = el
+                } else if (el < min) {
+                    min = el
+                }
+            }
+        })
+
+        result = max - min
+
+        return result
+    }
+
+    findMaximumOfCentury(list = [], century = 2e1, isEven = null) {
+        const year = (century - 1) * 1e2
+        let result = 0
+
+        list.map(el => {
+            if (el > year && el % year < 1e2 && result < el) {
+                if (isEven !== null) {
+                    let flag = el % 2 === 0
+                
+                    if (isEven === flag) {
+                        result = el
+                    }
+                } else {
+                    result = el
+                }
+            }
+        })
+    
+        return result
+    }
+
+    yearsByCenturiesRandomlyRow(centuries = [], borders = [], iterations = 1) {
+        let result = []
+
+        for (let i = 0; i < iterations; i++) {
+            centuries.map(el => {
+                let value = (el - 1) * 1e2 + this.getIntervalValue(borders)
+
+                result = [...result, value]
+            })
+        }
+
+        return result
+    }
+
+    numCompareWithBorders(num = 1, list = [], isMore = true, percent = null) {
+        const border = this.cleanValue(percent, num, 0)
+        let result = []
+
+        list.map(el => {
+            let flag = isMore && num > el || !isMore && num < el
+
+            if (percent !== null) {
+                let difference = Math.abs(el - num)
+
+                if (difference > border) {
+                    flag = false
+                }
+            }
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    numPositionInsideBorders(num = 1, min = 1, max = 1e1, round = 0) {
+        let difference = Math.abs(max - min)
+        let result = this.percent(Math.abs(num - min), difference, round)
 
         return result
     }
