@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.4**
+* Current Version: **1.8.5**
 * Size ~ **150 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **3.8K** lines of code and **225 methods**           
+* **3.8K** lines of code and **230 methods**           
 
 ## Links
 
@@ -406,7 +406,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findMaximumOfCentury** (*list* = [], *century* = 2e1, *isEven* = null) - returns max year of century in *list*.  
 
--**yearsByCenturiesRandomlyRow** (*centuries* = [], *borders* = [], *iterations* = 1) - generates list of randomly years by parameters.  
+-**yearsByCenturiesRandomlyRow** (*centuries* = [], *borders* = [], *iterations* = 1) - generates list of randomly years by parameters. 
+
+-**yearsByCenturyBorders** (*borders* = [], *num* = 1e1, *step* = 5) - builds list of years between centuries with *num* residue and *step*.    
+
+-**ilterYearsByDifferenceSubsequence** (*list* = [], *seq* = []) - returns filtered years, each pairs of them has difference in *seq* position.  
 
 ### * Num *
 
@@ -435,6 +439,12 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**numCompareWithBorders** (*num* = 1, *list* = [], *isMore* = true, *percent* = null) - filters years by comparing with num as border. 
 
 -**numPositionInsideBorders** (*num* = 1, *min* = 1, *max* = 1e1, *round* = 0) - returns % as position of *num* inside borders. 
+
+-**buildNumBorders** (*min* = 0, *numbers* = []) - builds list of borders as pairs in *numbers* chain starts from *min*.    
+
+-**findMaximumNumDifferenceByIndexedDistance** (*list* = [], *percent* = 1e1) - looking for max difference between numbers on distance by *percent* of list length. 
+
+-**findNumDistanceByDifference** (*list* = [], *percent* = 1e1) - returns positions of number which have difference by % (max - min).      
 
 ### * Filters and Validation *
 

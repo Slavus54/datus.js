@@ -3725,6 +3725,99 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    buildNumBorders(min = 0, numbers = []) {
+        let result = []
+
+        for (let i = 0; i < numbers.length; i++) {
+            let current = numbers[i]
+
+            result = [...result, [min, current]]
+        
+            min = current
+        }
+
+        return result
+    }
+
+    yearsByCenturyBorders(borders = [], num = 1e1, step = 5) {
+        let result = []
+
+        borders = borders.map(el => (el - 1) * 1e2 + num)
+
+        while (borders[0] <= borders[1]) {
+            result = [...result, borders[0]]
+
+            borders[0] += step
+        }
+
+        return result
+    }
+
+    filterYearsByDifferenceSubsequence(list = [], seq = []) {
+        let result = []
+        let index = 0
+        
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(next - el)
+            
+                if (difference === seq[index]) {
+                    result = [...result, el, next]
+                    index++
+                }
+            }
+        })
+
+        return result
+    }
+
+    findMaximumNumDifferenceByIndexedDistance(list = [], percent = 1e1) {
+        let distance = this.cleanValue(percent, list.length, 0)
+        let result = 0
+        let index = 0
+
+        while (index < (list.length - distance)) {
+            let first = list[index]
+            let second = list[distance + index]
+        
+            let difference = Math.abs(first - second)
+
+            if (difference > result) {
+                result = difference
+            }
+
+            index++
+        }
+
+        return result
+    }
+
+    findNumDistanceByDifference(list = [], percent = 1e1) {
+        let max = Math.max(...list)
+        let min = Math.min(...list)
+        let difference = Math.abs(max - min)
+        let deviation = 1e5
+        let result = []
+
+        difference = this.cleanValue(percent, difference, 0)
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let value = Math.abs(list[j] - list[i])
+                let odds = Math.abs(value - difference)
+       
+                if (odds < deviation) {
+                    result = [i, j]
+                    deviation = odds
+                }
+            }
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
