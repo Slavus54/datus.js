@@ -3818,6 +3818,103 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    nearestTimesByMultiplicity(time = '', num = 5, radius = 1) {
+        let result = []
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            let steps = Math.floor(value / num)
+
+            value = steps * num
+            value -= num * radius
+            
+            for (let i = 0; i < radius * 2; i++) {
+                value += num
+
+                result = [...result, this.time(value)]
+            }
+        }
+
+        return result
+    }
+
+    filterYearsByDifferenceInverval(list = [], min = 0, max = 1e1) {
+        let result = []
+
+        const check = num => num >= min && num <= max
+            
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(next - el)
+
+                if (check(difference)) {
+                    result = [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
+
+    yearsByCenturiesMultiplicity(centuries = [], min = 0, max = 1e2, num = 1) {
+        let result = []
+
+        centuries.map(el => {
+            let base = (el - 1) * 1e2 
+            let start = base + min
+            let end = base + max
+
+            start = Math.floor(start / num) * num
+
+            while (start < end) {
+                result = [...result, start]
+                
+                start += num
+            }
+        })
+
+        return result
+    }
+
+    findNumLargestCompareSubsequence(list = [], num = 1, isMore = true) {
+        let result = []
+        let seq = []
+        let maxlength = 0
+
+        list.map(el => {
+            let check = isMore && num > el || !isMore && num < el
+
+            if (check) {
+                seq = [...seq, el]
+            } else {
+                seq = []
+            }
+
+            if (seq.length > maxlength) {
+                result = seq
+                maxlength = seq.length
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueExclude(list = [], num = 1e1) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+
+            if (value !== num) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
