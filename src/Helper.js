@@ -1,4 +1,4 @@
-const {sizes} = require('./data')
+const {sizes, datePeriods} = require('./data')
 
 class HelperContainer {
     percent(value = 0, total = 1e2, round = 1) {
@@ -77,6 +77,10 @@ class HelperContainer {
 
     getIntervalValue(borders = []) {
         return Math.floor(borders[0] + Math.round(Math.random() * Math.abs(borders[0] - borders[1])))
+    }
+
+    getDatePeriodValue(date, period = 'day') {
+        return Number(date.split('.')[datePeriods.indexOf(period)])
     }
 }
 

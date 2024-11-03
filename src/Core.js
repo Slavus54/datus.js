@@ -174,18 +174,20 @@ class Core extends HelperContainer {
 
             indexes = [...indexes, value]
         })
-
+       
         for (let i = 0; i < indexes.length; i++) {
             let value = indexes[i]
 
             if (max < value) {
                 max = value
-            } else if (min > value) {
+            } 
+            
+            if (min > value) {
                 min = value
             }
         }
 
-        return max - min
+        return Math.abs(max - min)
     }
 
     convert(value = null, key = 'convert') {
@@ -1137,11 +1139,11 @@ class Core extends HelperContainer {
         return result
     }
 
-    deadlineOfMonth(date = '02.12.1805', percent = 5e2, round = 0) {
+    deadlineOfMonth(date = '02.12.1805', percent = 5e1, round = 0) {
         let parts = this.parts(date, '.', true)
         let size = this.getMonthSize(parts[1], parts[2])
         let result = parts[0] + this.cleanValue(percent, size, round)
-
+   
         return result
     }    
 
@@ -3912,6 +3914,230 @@ class Core extends HelperContainer {
                 result = [...result, el]
             }
         })
+
+        return result
+    }
+
+    findNumMultiplicityList(list = [], num = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = el % num
+
+            if (!Boolean(value)) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueInterval(list = [], min = 0, max = 1e2, isEven = null) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+            let flag = value >= min && value <= max
+
+            if (flag && isEven !== null) {
+                flag = isEven && value % 2 === 0 || !isEven && value % 2 !== 0
+            }
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    timeByMinutePercent(time = '', num = 1e2, list = [], round = 0) {
+        let result = []
+        
+        if (this.isTime(time)) {
+            const base = this.time(time, 'deconvert')
+        
+            list.map(el => {
+                let value = this.cleanValue(Math.abs(el), num, round)
+                
+                value = el > 0 ? base + value : base - value
+
+                result = [...result, this.time(value)]
+            })
+        }
+
+        return result
+    }
+
+    filterYearsByCenturyExclude(list = [], century = 0) {
+        let result = []
+
+        list.map(el => {
+            let value = Math.ceil(el / 1e2)
+        
+            if (value !== century) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterTimeByMinuteBorders(time = '', num = 1e1, isInside = true) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let borders = [num, 6e1 - num] 
+            let value = this.time(time, 'deconvert') % 6e1
+           
+            result = isInside ? value >= borders[0] && value <= borders[1] : (value <= borders[0] || value >= borders[1])
+        }
+
+        return result
+    }
+
+    filterYearsByCenturyRadius(list = [], century = 2e1, num = 1e1) {
+        let base = (century - 1) * 1e2
+        let borders = [base - num, base + num]
+        let result = []
+
+        list.map(el => {
+            if (el >= borders[0] && el <= borders[1]) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    yearsByRow(year = 1e3, steps = [], jump = 1e1, iterations = 1) {
+        let result = []
+
+        for (let i = 0; i < iterations; i++) {
+            for (let j = 0; j < steps.length; j++) {    
+                let step = steps[j]
+
+                year += step
+
+                result = [...result, year]
+            }
+
+            year += jump
+        }
+
+        return result
+    }
+
+    numPercentBorders(num = 1, percent = 1e1, round = 0) { 
+        let size = this.cleanValue(percent, num, round)
+        let result = [num - size, num + size]
+    
+        return result
+    }
+
+    yearsByFractions(start = 1e3, end = 2e3, list = []) {   
+        const difference = Math.abs(end - start)
+        const isIncrease = start < end
+        const max = Math.max(...list)
+
+        let result = []
+
+        list.map(el => {
+            let size = Math.floor(el / max * difference)
+            
+            let value = isIncrease ? start + size : start - size
+            
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    findNumDigitPercentFromAll(num = 1, digit = 1, round = 0) {
+        let value = this.getYearDigit(num, digit)
+        let result = this.percent(value * 1e1**(digit - 1), num, round)
+
+        return result
+    }
+
+    filterTimesByPartsDifferenceValue(list = [], min = 0, max = 1e2, round = 0) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+                let value = Math.min(...parts)
+                let difference = Math.abs(parts[1] - parts[0])
+                let percent = this.percent(difference, value, round)
+
+                if (percent >= min && percent <= max) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    numReverse(num = 1) {
+        const length = String(num).length
+        let result = new Array(length).fill(0)
+
+        for (let i = 1; i <= length; i++) {
+            let digit = this.getYearDigit(num, i)
+
+            result[i] = digit
+        }
+
+        result = Number(result.join(''))
+
+        return result
+    }
+
+    yearsByJumping(year = 1e3, steps = [], jumps = []) {
+        let result = []
+
+        for (let i = 0; i <= jumps.length; i++) {
+            steps.map(el => {
+                year += el
+
+                result = [...result, year]
+            })
+
+            year += jumps[i]
+        }
+
+        return result
+    }
+
+    filterTimesByPartsComparing(list = [], isMore = true) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+                let flag = isMore ? parts[0] > parts[1] : parts[0] <= parts[1]
+            
+                if (flag) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    timeByRandomlyGap(time = '', num = 1e1, isIncrease = true) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            let gap = this.getIntervalValue([0, num])
+
+            value = isIncrease ? value + gap : value - gap
+
+            result = this.time(value)
+        }
 
         return result
     }
