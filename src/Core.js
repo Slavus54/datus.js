@@ -4141,6 +4141,95 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearByRandomlyGap(year = 1e3, num = 1e1, isIncrease = true, isEven = null) {
+        let gap = this.getIntervalValue([0, num])
+        let result = isIncrease ? year + gap : year - gap
+    
+        if (isEven !== null) {
+            while (isEven && result % 2 !== 0 || !isEven && result % 2 === 0) {
+                gap = this.getIntervalValue([0, num])
+                
+                result = isIncrease ? year + gap : year -gap
+            }
+        }
+
+        return result
+    }
+
+    filterYearsByDifferenceResidueInterval(list = [], min = 1e1, max = 5e1) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(el % 1e2 - next % 1e2)
+
+                if (difference >= min && difference <= max) {
+                    result = result[result.length - 1] === el ? [...result, next] : [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
+    
+    yearsByRandomlyDeviation(year = 1e3, num = 1, max = 1e1, isIncrease = true) {
+        let result = []
+
+        for (let i =  0; i < num; i++) {
+            let value = this.getIntervalValue([0, max])
+
+            value = isIncrease ? year + value : year - value
+
+            result = [...result, value]
+        }
+    
+        return result
+    } 
+    
+    filterTimesByPartsMultiplicity(list = [], num = 1) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+                let flag = true
+
+                parts.map(part => {
+                    if (part % num !== 0) {
+                        flag = false
+                    }
+                })
+
+                if (flag) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterAdjacentYearsBySameCentury(list = [], isSpread = true) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let flag = Math.ceil(el / 1e2) === Math.ceil(next / 1e2)
+                let value = result[result.length - 1] === el ? [next] : [el, next]
+
+                if (flag) {
+                    result = isSpread ? [...result, ...value] : [...result, value]
+                }
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core

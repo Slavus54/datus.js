@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.7**
+* Current Version: **1.8.8**
 * Size ~ **160 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.1K** lines of code and **250 methods**           
+* **4.2K** lines of code and **255 methods**           
 
 ## Links
 
@@ -284,6 +284,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**timeByRandomlyGap** (*time*= '', *num* = 1e1, *isIncrease* = true) - added or subtract randombly generated value [0 - *num*] to *time*.  
 
+-**filterTimesByPartsMultiplicity** (*list* = [], *num* = 1) - returns only those times, which all parts (hours and minutes) divided on *num* without any residue.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -442,7 +444,15 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearsByFractions** (*start* = 1e3, *end* = 2e3, *list* = []) - returns array generated as [] of *start* + (el / *list* max * difference between *start* and *end* - fraction).   
 
--**yearsByJumping** (*year* = 1e3, *steps* = [], *jumps* = []) - builds list of years by *steps* of every interation and *jump* after that.  
+-**yearsByJumping** (*year* = 1e3, *steps* = [], *jumps* = []) - builds list of years by *steps* of every interation and *jump* after that. 
+
+-**yearByRandomlyGap** (*year* = 1e3, *num* = 1e1, *isIncrease* = true, *isEven* = null) - generates year base on *year* with *num* randomly gap.   
+
+-**filterYearsByDifferenceResidueInterval** (*list* = [], *min* = 1e1, *max* = 5e1) - filters if difference between years residue (el % 100) in each pair more than *min* and less than *max*.  
+
+-**yearsByRandomlyDeviation** (*year* = 1e3, *num* = 1, *max* = 1e1, *isIncrease* = true) - returns list of years generated as array based on *year* with randomly deviation of *num*.  
+
+-**filterAdjacentYearsBySameCentury** (*list* = [], *isSpread* = true) - returns list of years which pair is same century.  
 
 ### * Num *
 
