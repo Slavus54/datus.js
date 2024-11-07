@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.8**
-* Size ~ **160 kB** 
+* Current Version: **1.8.9**
+* Size ~ **165 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.2K** lines of code and **255 methods**           
+* **4.2K** lines of code and **260 methods**           
 
 ## Links
 
@@ -286,6 +286,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterTimesByPartsMultiplicity** (*list* = [], *num* = 1) - returns only those times, which all parts (hours and minutes) divided on *num* without any residue.  
 
+-**filterTimeWithGapByMultiplicity** (*time* = '', *gap* = 1e1, *num* = 1, *isForward* = true) - validates if *time* with nminute *gap* divided on *num* without residue.    
+
+-**filterAdjecentTimesByPartActionMultiplicity** (*list* = [], *num* = 1, *isMinutes* = true, *isSum* = true) - returns only those adjecent times, which has sum / difference of minutes or hours divided on *num* without residue. 
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -454,6 +458,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterAdjacentYearsBySameCentury** (*list* = [], *isSpread* = true) - returns list of years which pair is same century.  
 
+-**yearDispersionByRadius** (*year* = 1e3, *num* = 1) - randomly generates borders of years by *num* radius.    
+
+-**yearBordersByPercent** (*year* = 1e3, *size* = 1e2, *borders* = []) - returns borders built by % of *size* in *borders*. 
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -497,6 +505,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**findNumDigitPercentFromAll** (*num* = 1, *digit* = 1, *round* = 0) - counts % from *num* as *digit* of *num* (#2 1368 - 68 into %).  
 
 -**numReverse** (*num* = 1) - just reverses given number.   
+
+-**largestFractionaNumPartByDividerInterval** (*num* = 1, *interval* = []) - finds divider of *num* among list of *interval*, which divides *num* with largest fractional part.  
 
 ### * Filters and Validation *
 

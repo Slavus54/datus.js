@@ -4230,6 +4230,74 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    yearDispersionByRadius(year = 1e3, num = 1) {
+        let border = this.getIntervalValue([0, num])
+        let result = [year - border, year + border]
+    
+        return result
+    }
+
+    yearBordersByPercent(year = 1e3, size = 1e2, borders = []) {
+        let result = borders.map((el, idx) => eval(`${year}${Boolean(idx) ? '+' : '-'}${this.cleanValue(el, size, 0)}`) )
+
+        return result
+    }
+
+    filterTimeWithGapByMultiplicity(time = '', gap = 1e1, num = 1, isForward = true) {
+        let result = true
+
+        if (this.isTime(time)) {
+            let minutes = this.time(time, 'deconvert') 
+
+            minutes = isForward ? minutes + gap : minutes - gap
+
+            result = minutes % num === 0
+        }
+
+        return result
+    }
+
+    largestFractionaNumPartByDividerInterval(num = 1, interval = []) {
+        let length = 0
+        let result = 0
+
+        for (let i = interval[0]; i < interval[1]; i++) {
+            let value = String((num % i / i))
+
+            if (value.includes('.')) {
+                value = value.split('.')[1]
+            }
+
+            if (value.length > length) {
+                length = value.length
+                result = i
+            }
+        }
+
+        return result
+    }
+
+    filterAdjecentTimesByPartActionMultiplicity(list = [], num = 1, isMinutes = true, isSum = true) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (this.isTime(el) && this.isTime(next)) {
+                let index = Number(isMinutes)
+                let symbol = isSum ? '+' : '-'
+                let parts = [this.parts(el, ':', true)[index], this.parts(next, ':', true)[index]]
+                let flag = eval(`${parts[1]}${symbol}${parts[0]}`) % num === 0
+
+                if (flag) {
+                    result = result[result.length - 1] === el ? [...result, next] : [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
