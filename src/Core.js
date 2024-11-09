@@ -4298,6 +4298,118 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    nearestBaseOfNumPower(num = 1, power = 2) {
+        let result = 1
+
+        while (result**power < num) {
+            result++
+        }
+
+        result--
+
+        return result
+    }
+
+    filterYearsByMultiplicitySubsequence(list = [], numbers = []) {
+        let result = []
+        let seq = []
+        let index = 0
+
+        list.map(el => {
+            let num = numbers[index]
+            let flag = el % num === 0
+
+            if (flag) {
+                seq = [...seq, el]
+                
+                if (index < numbers.length - 1) {
+                    index++
+                } else {
+                    index = 0
+                }
+
+            } else if (!flag && index !== 0) {    
+                         
+                result = [...result, ...seq]
+      
+                seq = []
+                index = 0
+            }
+        })
+
+        return result
+    }
+
+    filterTimesByAveragePart(list = [], num = 1, min = 1, max = 1, isMinutes = true) {
+        let index = Number(isMinutes)
+        let result = []
+        let sum = 0
+
+        list.map(el => {
+            let part = this.parts(el, ':', true)[index]
+            let average = result.length !== 0 ? Math.round((sum + part) / (result.length + 1)) : part
+ 
+            if (result.length < num && average >= min && average <= max) {              
+                sum += part
+                result = [...result, el]
+            }            
+        })
+
+        return result
+    }
+
+    findYearsByMultiplicityOnDistance(year = 1e3, border = 1e1, num = 1) {
+        let max = year + border
+        let result = []
+        
+        year = Math.floor(year / num) * num
+
+        while (year < max) {
+            result = [...result, year]
+            year += num
+        }
+
+        return result
+    }
+
+    getNumTask(num = 1, symbol = '+') {
+        let result = ''
+        let first, second
+
+        if (symbol === '*') {
+            first = Math.floor(Math.random() * num)
+            second = num / first
+
+            while (num % second !== 0) {
+                first = Math.floor(Math.random() * num)
+                second = num / first
+            }
+
+        } else if (symbol === '/') {
+            first = Math.floor(Math.random() * num**2)
+            second = first / num
+
+            while (first % num !== 0) {
+                first = Math.floor(Math.random() * num**2)
+                second = first / num
+            }
+
+        } else {
+
+            first = Math.floor(Math.random() * num)
+            
+            if (symbol === '-') {
+                first += num
+            }
+
+            second = Math.abs(num - first)
+        }
+
+        result = `${first} ${symbol} ${second}`
+
+        return result
+    }
 }
 
 module.exports = Core

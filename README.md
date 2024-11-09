@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.8.9**
-* Size ~ **165 kB** 
+* Current Version: **1.9.0**
+* Size ~ **170 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.2K** lines of code and **260 methods**           
+* **4.3K** lines of code and **265 methods**           
 
 ## Links
 
@@ -290,6 +290,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterAdjecentTimesByPartActionMultiplicity** (*list* = [], *num* = 1, *isMinutes* = true, *isSum* = true) - returns only those adjecent times, which has sum / difference of minutes or hours divided on *num* without residue. 
 
+-**filterTimesByAveragePart** (*list* = [], *num* = 1, *min* = 1, *max* = 1, *isMinutes* = true) - returns only those times, which has average part by *isMinutes* flag inside borders.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -462,6 +464,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**yearBordersByPercent** (*year* = 1e3, *size* = 1e2, *borders* = []) - returns borders built by % of *size* in *borders*. 
 
+-**filterYearsByMultiplicitySubsequence** (*list* = [], *numbers* = []) - validates years by sequence of multiplicity numbers *numbers*.    
+
+-**findYearsByMultiplicityOnDistance** (*year* = 1e3, *border* = 1e1, *num* = 1) - builds list of year by *border* distance with step *num*.    
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -506,7 +512,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**numReverse** (*num* = 1) - just reverses given number.   
 
--**largestFractionaNumPartByDividerInterval** (*num* = 1, *interval* = []) - finds divider of *num* among list of *interval*, which divides *num* with largest fractional part.  
+-**largestFractionaNumPartByDividerInterval** (*num* = 1, *interval* = []) - finds divider of *num* among list of *interval*, which divides *num* with largest fractional part. 
+
+-**nearestBaseOfNumPower** (*num* = 1, *power* = 2) - returns base, which will be too close by powering to *num*.   
+
+-**getNumTask** (*num* = 1, *symbol* = '+') - generates simple math task.   
 
 ### * Filters and Validation *
 
