@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.0**
-* Size ~ **170 kB** 
+* Current Version: **1.9.1**
+* Size ~ **175 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.3K** lines of code and **265 methods**           
+* **4.4K** lines of code and **275 methods**           
 
 ## Links
 
@@ -122,7 +122,7 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**percentOfMonth** (*date* = '', *num* = 1, *period* = 'day', *round* = 0) - returns % of remaining days of date's month by *period* and *num*.
 
--**monthDayBorder** (*date* = '', *num* = 1e1) - checks days by parameter *number*  "if it less or equal to days before month end" and returns true/false.   
+-**monthDayBorder** (*date* = '', *num* = 1e1) - checks days by parameter *num* "if it less or equal to days before month end" and returns true/false.   
 
 -**dateByPercent** (*percent* = 1e1, *num* = 1e3, *round* = 0) - returns date by % with year *num*.
 
@@ -290,7 +290,13 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterAdjecentTimesByPartActionMultiplicity** (*list* = [], *num* = 1, *isMinutes* = true, *isSum* = true) - returns only those adjecent times, which has sum / difference of minutes or hours divided on *num* without residue. 
 
--**filterTimesByAveragePart** (*list* = [], *num* = 1, *min* = 1, *max* = 1, *isMinutes* = true) - returns only those times, which has average part by *isMinutes* flag inside borders.  
+-**filterTimesByAveragePart** (*list* = [], *num* = 1, *min* = 1, *max* = 1, *isMinutes* = true) - returns only those times, which has average part by *isMinutes* flag inside borders. 
+
+-**filterTimesByPartsResidue** (*list* = [], *num* = 1, *residue* = 1, *isMinutes* = true) - validates only those times with part by *isMinutes* divided on *num* with *residue*.   
+
+-**timeByPartsMultiplicity** (*nums* = []) - generates time by parts *nums* with multiplication values. 
+
+-**findNearestTimeMultiplicityPart** (*time* = '', *num* = 1, *isMinutes* = true) - updates *time* by multiplicity check of each part by *num*. 
 
 ### * Weekday *
 
@@ -468,6 +474,14 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findYearsByMultiplicityOnDistance** (*year* = 1e3, *border* = 1e1, *num* = 1) - builds list of year by *border* distance with step *num*.    
 
+-**yearsByMultipleStep** (*year* = 1e3, *max* = 1e1, *num* = 1, *step* = 1) - returns *num* length list with randomly elements *year* + *max*.  
+
+-**filterYearByDigitsDifference** (*year* = 1e3, *digits* = [], *min* = 1, *max* = 1e1) - validates year by sum of differences adjacent digits and returns true or false.   
+
+-**filterYearsByResidueDeviation** (*list* = [], *num* = 5e1, *size* = 1e1) - filters years by checking residue (/ 100) inside borders by *num* with deviation *size*.  
+
+-**findAverageYearsDeviation** (*list* = [], *num* = 1) - returns average difference of residue (/ 100) between *num* and elements of *list*.    
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -517,6 +531,12 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**nearestBaseOfNumPower** (*num* = 1, *power* = 2) - returns base, which will be too close by powering to *num*.   
 
 -**getNumTask** (*num* = 1, *symbol* = '+') - generates simple math task.   
+
+-**findNumDigitPercentFromOtherDigit** (*num* = 1e1, *digit* = 2, *other* = 1, *round* = 0) - returns rounded % of *digit* from *other*.    
+
+-**findNearestNumByMultiplicity** (*num* = 1, *times* = 1, *multiple* = 1) - returns nearest multiplication *num* on *times* divided on *multiple* without any residue. 
+
+-**findSmallestNumByMultipleList** (*list* = []) - builds multiplication of each element of *list* while current value divided on element without residue.  
 
 ### * Filters and Validation *
 

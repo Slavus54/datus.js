@@ -4410,6 +4410,148 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findNumDigitPercentFromOtherDigit(num = 1e1, digit = 2, other = 1, round = 0) {
+        let value = this.getYearDigit(num, digit) * 1e1**(digit - 1)
+        let toCompare = this.getYearDigit(num, other) * 1e1**(other - 1)
+        let result = this.percent(value, toCompare, round) 
+
+        return result
+    }
+
+    filterTimesByPartsResidue(list = [], num = 1, residue = 1, isMinutes = true) {
+        const index = Number(isMinutes)
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let part = this.parts(el, ':', true)[index]
+
+                if (part % num === residue) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    yearsByMultipleStep(year = 1e3, max = 1e1, num = 1, step = 1) {
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            let value = year + this.getIntervalValue([1, max]) * step
+       
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    findNearestNumByMultiplicity(num = 1, times = 1, multiple = 1) {
+        let result = Math.floor(num * times)
+
+        result = Math[result % multiple < Math.round(multiple / 2) ? 'floor' : 'ceil'](result / multiple) * multiple
+
+        return result
+    }
+
+    findSmallestNumByMultipleList(list = []) {
+        let result = 1
+
+        for (let i = 0; i < list.length; i++) {
+            let num = list[i]
+
+            if (result % num !== 0) {
+                result *= num
+            }
+        }
+
+        return result
+    }
+
+    timeByPartsMultiplicity(nums = []) {
+        let result = []
+
+        timePartsBorders.map((el, idx) => {
+            let num = nums[idx]
+            let border = Math.floor(el / num)
+            let value = this.getIntervalValue([1, border]) * num 
+
+            result = [...result, value]
+        })
+
+        result = result.map(el => this.rounding(el)).join(':')
+
+        return result
+    }
+
+    filterYearByDigitsDifference(year = 1e3, digits = [], min = 1, max = 1e1) { 
+        let difference = 0
+        let result = true
+
+        digits.map((el, idx) => {
+            let current = this.getYearDigit(year, el)
+            let next = this.getYearDigit(year, digits[idx + 1])
+
+            if (next) {
+                difference += Math.abs(current - next)
+            }
+        })
+
+        result = difference >= min && difference <= max
+        
+        return result
+    }
+
+    findNearestTimeMultiplicityPart(time = '', num = 1, isMinutes = true) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let parts = this.parts(time, ':', true)
+            let current = parts[Number(isMinutes)]
+            let next = parts[Number(!isMinutes)]
+
+            let value = Math[current % num < Math.round(num / 2) ? 'floor' : 'ceil'](current / num) * num
+        
+            result = isMinutes ? next * 6e1 + value : value * 6e1 + next
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+    
+    filterYearsByResidueDeviation(list = [], num = 5e1, size = 1e1) {
+        const borders = [num - size, num + size]
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+            let flag = value >= borders[0] && value <= borders[1]
+       
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return  result
+    }
+
+    findAverageYearsDeviation(list = [], num = 1) {
+        let result = 0
+
+        list.map(el => {
+            let value = el % 1e2
+            let difference = Math.abs(value - num)
+
+            result += difference
+        })
+
+        result = Math.round(result / list.length)
+
+        return result
+    }
 }
 
 module.exports = Core
