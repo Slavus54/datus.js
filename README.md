@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.1**
-* Size ~ **175 kB** 
+* Current Version: **1.9.2**
+* Size ~ **180 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.4K** lines of code and **275 methods**           
+* **4.5K** lines of code and **280 methods**           
 
 ## Links
 
@@ -298,6 +298,8 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findNearestTimeMultiplicityPart** (*time* = '', *num* = 1, *isMinutes* = true) - updates *time* by multiplicity check of each part by *num*. 
 
+-**findAverageTimePart** (*list* = [], *isMinutes* = true) - returns average value of hours or minutes in *list*.       
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -480,7 +482,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**filterYearsByResidueDeviation** (*list* = [], *num* = 5e1, *size* = 1e1) - filters years by checking residue (/ 100) inside borders by *num* with deviation *size*.  
 
--**findAverageYearsDeviation** (*list* = [], *num* = 1) - returns average difference of residue (/ 100) between *num* and elements of *list*.    
+-**findAverageYearsDeviation** (*list* = [], *num* = 1) - returns average difference of residue (/ 100) between *num* and elements of *list*.   
+
+-**changeYearsByNearestResidueMultiplicity** (*list* = [], *num* = 1) - updates list of years by finding nearest residue (/ 100) of *num* multiplicity value.   
+
+-**yearsByRandomlySchemaDeviation** (*year* = 1e3, *schema* = [], *forward* = 1e1, *back* = forward) - builds list of years by true (forward) / false (back) moving *schema*.   
 
 ### * Num *
 
@@ -537,6 +543,10 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 -**findNearestNumByMultiplicity** (*num* = 1, *times* = 1, *multiple* = 1) - returns nearest multiplication *num* on *times* divided on *multiple* without any residue. 
 
 -**findSmallestNumByMultipleList** (*list* = []) - builds multiplication of each element of *list* while current value divided on element without residue.  
+
+-**getNumDigitFactorial** (*num* = 1) - generates factorial value based on num's digits.    
+
+-**getNumSequence** (*list* = [], *isIncrease* = true) - finds smallest/largest value and builds sequence by *isIncrese* flag with grow/decrease ordered numbers for one iteration.   
 
 ### * Filters and Validation *
 

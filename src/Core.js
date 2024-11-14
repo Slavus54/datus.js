@@ -4552,6 +4552,85 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findAverageTimePart(list = [], isMinutes = true) {
+        let result = 0
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let part = this.parts(el, ':', true)[Number(isMinutes)]
+
+                result += part
+            }
+        })
+
+        result = Math.round(result / list.length)
+
+        return result
+    }
+
+    changeYearsByNearestResidueMultiplicity(list = [], num = 1) {
+        const half = Math.round(num / 2)
+        let result = list
+
+        result = result.map(el => {
+            let residue = el % 1e2
+            let value = el - residue
+
+            residue = Math[residue % num <= half ? 'floor' : 'ceil'](residue / num) * num
+            value += residue
+
+            return value
+        })
+
+        return result
+    }
+
+    getNumDigitFactorial(num = 1) {        
+        let length = String(num).length
+        let index = 1
+        let result = 1
+    
+        while (index <= length) {
+            let digit = this.getYearDigit(num, index)
+            let flag = Boolean(digit)
+            
+            result = flag ? result * digit : digit
+            index = flag ? index + 1 : length   
+        }
+
+        return result
+    }
+
+    yearsByRandomlySchemaDeviation(year = 1e3, schema = [], forward = 1e1, back = forward) {
+        let result = []
+
+        schema.map(el => {
+            let value = this.getIntervalValue([0, el ? forward : back])
+            
+            value = el ? year + value : year - value
+
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    getNumSequence(list = [], isIncrease = true) {
+        let result = []
+        let latest = Math[isIncrease ? 'min' : 'max'](...list)
+
+        list.map(el => {
+            let flag = isIncrease ? el >= latest : el <= latest
+
+            if (flag) {
+                result = [...result, el]
+                latest = el 
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
