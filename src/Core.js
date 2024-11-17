@@ -4631,6 +4631,47 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimesByNearestPart(list = [], num = 1e1, difference = 0, isMinutes = true) {
+        let result = ''
+
+        list.map(el => {
+            let value = this.parts(el, ':', true)[Number(isMinutes)]
+            let size = Math.abs(num - value)
+
+            if (size <= difference) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+    
+    splitNum(num = 1, digit = 1) {
+        let result = []           
+        let value = 0
+
+        for (let i = 1; i <= digit; i++) {
+            value += this.getYearDigit(num, i) * 1e1**(i - 1)
+        }
+
+        result = [value, num - value]
+
+        return result
+    }
+
+    joinNum(list = [], iterations = 1, power = 2) {
+        let result = 0
+
+        for (let i = 0; i < iterations; i++) {
+            let value = list[Math.floor(Math.random() * list.length)]
+            let extent = this.getIntervalValue([0, power])
+    
+            result += value * 1e1**extent
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

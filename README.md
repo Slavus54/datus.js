@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.2**
-* Size ~ **180 kB** 
+* Current Version: **1.9.3**
+* Size ~ **190 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.5K** lines of code and **280 methods**           
+* **4.6K** lines of code and **283 methods**           
 
 ## Links
 
@@ -98,7 +98,7 @@ import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, mi
     
 ## Methods     
 
-There are a lot of methods to work with 5 main chapters of library: *date, time, weekday, year and num*.   
+There are a lot of methods to work with 5 main essences of library: *date, time, weekday, year and num*.   
 
 ### * Date and Day *
 
@@ -298,7 +298,9 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**findNearestTimeMultiplicityPart** (*time* = '', *num* = 1, *isMinutes* = true) - updates *time* by multiplicity check of each part by *num*. 
 
--**findAverageTimePart** (*list* = [], *isMinutes* = true) - returns average value of hours or minutes in *list*.       
+-**findAverageTimePart** (*list* = [], *isMinutes* = true) - returns average value of hours or minutes in *list*.   
+
+-**filterTimesByNearestPart** (*list* = [], *num* = 1e1, *difference* = 0, *isMinutes* = true) - returns only those times, which has part by *isMinutes* different from *num* <= *difference*.         
 
 ### * Weekday *
 
@@ -546,7 +548,11 @@ There are a lot of methods to work with 5 main chapters of library: *date, time,
 
 -**getNumDigitFactorial** (*num* = 1) - generates factorial value based on num's digits.    
 
--**getNumSequence** (*list* = [], *isIncrease* = true) - finds smallest/largest value and builds sequence by *isIncrese* flag with grow/decrease ordered numbers for one iteration.   
+-**getNumSequence** (*list* = [], *isIncrease* = true) - finds smallest/largest value and builds sequence by *isIncrese* flag with grow/decrease ordered numbers for one iteration. 
+
+-**splitNum** (*num* = 1, *digit* = 1) - splits *num* on two values: first *digit* of number and *num* - first. 
+
+-**joinNum** (*list* = [], *iterations* = 1, *power* = 2) - generates values as sum of random choosen number from *list* powered by random extent from 0 to *power*.      
 
 ### * Filters and Validation *
 
