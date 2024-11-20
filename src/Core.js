@@ -4672,6 +4672,46 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterTimesByDynamicDifference(list = [], min = 0, max = 1e1, round = 0) { 
+        const key = 'deconvert'
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let distance = this.time(this.timeDistance(el, next), key)
+                let difference = this.percent(distance, this.time(el, key), round) 
+             
+                if (difference >= min && difference <= max) {
+                    result = result[result.length - 1] === el ? [...result, next] : [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByCenturyDifference(list = []) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let latest = result[result.length - 1]
+                let current = Math.ceil(el / 1e2)
+                let difference = Math.abs(current - Math.ceil(next / 1e2))
+            
+                if (Boolean(difference) && Math.ceil(latest / 1e2) !== current) {
+                    result = latest === el ? [...result, next] : [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core

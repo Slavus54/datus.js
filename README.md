@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.3**
+* Current Version: **1.9.4**
 * Size ~ **190 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.6K** lines of code and **283 methods**           
+* **4.6K** lines of code and **285 methods**           
 
 ## Links
 
@@ -300,7 +300,9 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findAverageTimePart** (*list* = [], *isMinutes* = true) - returns average value of hours or minutes in *list*.   
 
--**filterTimesByNearestPart** (*list* = [], *num* = 1e1, *difference* = 0, *isMinutes* = true) - returns only those times, which has part by *isMinutes* different from *num* <= *difference*.         
+-**filterTimesByNearestPart** (*list* = [], *num* = 1e1, *difference* = 0, *isMinutes* = true) - returns only those times, which has part by *isMinutes* different from *num* <= *difference*.  
+
+-**filterTimesByDynamicDifference** (*list* = [], *min* = 0, *max* = 1e1, *round* = 0) - filters times by pairs, for each one difference between elements should be inside *min* and *max* as % of first value in pair.     
 
 ### * Weekday *
 
@@ -489,6 +491,8 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 -**changeYearsByNearestResidueMultiplicity** (*list* = [], *num* = 1) - updates list of years by finding nearest residue (/ 100) of *num* multiplicity value.   
 
 -**yearsByRandomlySchemaDeviation** (*year* = 1e3, *schema* = [], *forward* = 1e1, *back* = forward) - builds list of years by true (forward) / false (back) moving *schema*.   
+
+-**filterYearsByCenturyDifference** (*list* = []) - filters years by pairs (first and second, second and third), in which elements have diffirence al least 1 century.    
 
 ### * Num *
 
