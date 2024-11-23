@@ -5,10 +5,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.4**
+* Current Version: **1.9.5**
 * Size ~ **190 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.6K** lines of code and **285 methods**           
+* **4.6K** lines of code and **290 methods**           
 
 ## Links
 
@@ -304,6 +304,8 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterTimesByDynamicDifference** (*list* = [], *min* = 0, *max* = 1e1, *round* = 0) - filters times by pairs, for each one difference between elements should be inside *min* and *max* as % of first value in pair.     
 
+-**findAverageTimesGap** (*list* = [], *marker* = 1e3) - returns average difference between times and *marker* in minutes.   
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -492,7 +494,9 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**yearsByRandomlySchemaDeviation** (*year* = 1e3, *schema* = [], *forward* = 1e1, *back* = forward) - builds list of years by true (forward) / false (back) moving *schema*.   
 
--**filterYearsByCenturyDifference** (*list* = []) - filters years by pairs (first and second, second and third), in which elements have diffirence al least 1 century.    
+-**filterYearsByCenturyDifference** (*list* = []) - filters years by pairs (first and second, second and third), in which elements have diffirence al least 1 century.  
+
+-**sortYearsByResidue** (*list* = [], *isIncrease* = true) - takes only those years, which are increase/decrease in order by *isIncrease*.     
 
 ### * Num *
 
@@ -556,7 +560,13 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**splitNum** (*num* = 1, *digit* = 1) - splits *num* on two values: first *digit* of number and *num* - first. 
 
--**joinNum** (*list* = [], *iterations* = 1, *power* = 2) - generates values as sum of random choosen number from *list* powered by random extent from 0 to *power*.      
+-**joinNum** (*list* = [], *iterations* = 1, *power* = 2) - generates values as sum of random choosen number from *list* powered by random extent from 0 to *power*.    
+
+-**getNumByDigit** (*num* = 1) - returns randomly generated number, which length is *num*.  
+
+-**factorizeNum** (*num* = 1, *size* = 1, *min* = 1, *max* = 1) - builds an array of dividers of *num* with *size* length.  
+
+-**findNumNearestPowerDifference** (*num* = 1, *power* = 2, *isPrev* = true, *round* = 0) - returns % of difference between nearest powered numbers of *num*.   
 
 ### * Filters and Validation *
 

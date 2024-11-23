@@ -4712,6 +4712,79 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    getNumByDigit(num = 1) {
+        let result = 0
+
+        for (let i = 0; i < num; i++) {
+            result += this.getIntervalValue([Number(i === 0), 9]) * 1e1**i
+        }
+
+        return result
+    }
+
+    factorizeNum(num = 1, size = 1, min = 1, max = 1) {
+        let result = []
+
+        for (let i = 0; i < size; i++) { 
+            let value = this.getIntervalValue([min, max])
+          
+            while (num % value !== 0) {
+                value = this.getIntervalValue([min, max])
+            }
+
+            result = [...result, value]
+            num /= value
+        }
+
+        return result
+    }
+
+    sortYearsByResidue(list = [], isIncrease = true) {
+        let result = []
+        let residue = isIncrease ? 0 : 1e2
+        
+        list.map(el => {
+            let value = el % 1e2
+            let flag = isIncrease ? value >= residue : value <= residue
+            
+            if (flag) {
+                result = [...result, el]
+                residue = value
+            }
+        })
+
+        return result
+    }
+
+    findNumNearestPowerDifference(num = 1, power = 2, isPrev = true, round = 0) {
+        const square = num**power
+        let result = [num - 1, num + 1]
+
+        result = result.map(el => el**power).map(el => Math.abs(square - el))
+        
+        result = this.percent(result[Number(!isPrev)], result[Number(isPrev)], round)
+
+        return result
+    }
+
+    findAverageTimesGap(list = [], marker = 1e3) {
+        let result = 0
+        let num = 0
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let gap = Math.abs(marker - this.time(el, 'deconvert')) 
+
+                result += gap
+                num++
+            }
+        })
+
+        result = Math.round(result / num)
+
+        return result
+    }
 }
 
 module.exports = Core
