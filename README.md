@@ -1,14 +1,12 @@
-# Datus.JS       
-
 ## About       
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.5**
+* Current Version: **1.9.6**
 * Size ~ **190 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.6K** lines of code and **290 methods**           
+* **4.7K** lines of code and **295 methods**           
 
 ## Links
 
@@ -304,7 +302,9 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterTimesByDynamicDifference** (*list* = [], *min* = 0, *max* = 1e1, *round* = 0) - filters times by pairs, for each one difference between elements should be inside *min* and *max* as % of first value in pair.     
 
--**findAverageTimesGap** (*list* = [], *marker* = 1e3) - returns average difference between times and *marker* in minutes.   
+-**findAverageTimesGap** (*list* = [], *marker* = 1e3) - returns average difference between times and *marker* in minutes.  
+
+-**filterTimesByMinutePartChangingByGap** (*list* = [], *num* = 1e1, *min* = 0, *max* = 1e2, *isAddition* = true) - updates minutes by *num* and *isAddition*, then filters by comparing previous and current minutes values inside % borders by *min* and *max*.   
 
 ### * Weekday *
 
@@ -496,7 +496,11 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterYearsByCenturyDifference** (*list* = []) - filters years by pairs (first and second, second and third), in which elements have diffirence al least 1 century.  
 
--**sortYearsByResidue** (*list* = [], *isIncrease* = true) - takes only those years, which are increase/decrease in order by *isIncrease*.     
+-**sortYearsByResidue** (*list* = [], *isIncrease* = true) - takes only those years, which are increase/decrease in order by *isIncrease*.  
+
+-**filterYearsByResidueMultiplicityOnCentury** (*list* = []) - returns years, which century is multiplicity for residue (/ 100).    
+
+-**yearsByMultiplicityInterval** (*min* = 1e3, *max* = 2e3, *num* = 1) - generates years from *min* to *min* by *num* as step and multiplicity number.  
 
 ### * Num *
 
@@ -567,6 +571,10 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 -**factorizeNum** (*num* = 1, *size* = 1, *min* = 1, *max* = 1) - builds an array of dividers of *num* with *size* length.  
 
 -**findNumNearestPowerDifference** (*num* = 1, *power* = 2, *isPrev* = true, *round* = 0) - returns % of difference between nearest powered numbers of *num*.   
+
+-**findNumDeviationPercent** (*list* = [], *num* = 1, *isMore* = true, *round* = 0) - counts deviation by *num* as % of max / min number (by *isMore*) of *list*.   
+
+-**filterNumByDifferenceMultiplicity** (*list* = []) - filters and returns only those numbers, which difference is multiplicity for them both.   
 
 ### * Filters and Validation *
 

@@ -4785,6 +4785,81 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findNumDeviationPercent(list = [], num = 1, isMore = true, round = 0) {
+        let difference = Math.abs(Math.max(...list) - Math.min(...list))
+        let value = Math.abs(Math[isMore ? 'max' : 'min'](...list) - num)
+        let result = this.percent(value, difference, round)
+
+        return result
+    }
+
+    filterNumByDifferenceMultiplicity(list = []) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(next - el)
+
+                if (!Boolean(next % difference) && !Boolean(el % difference)) {
+                    result = result[result.length - 1] === el ? [...result, next] : [...result, el, next]
+                }
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueMultiplicityOnCentury(list = []) {
+        let result = []
+
+        list.map(el => {
+            let residue = el % 1e2
+            let century = Math.floor(el / 1e2)
+
+            if (residue % century === 0) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterTimesByMinutePartChangingByGap(list = [], num = 1e1, min = 0, max = 1e2, isAddition = true) {
+        let result = []
+
+        list.map(el => {
+            let value = this.time(el, 'deconvert')
+            let minutes = value % 6e1
+
+            value = isAddition ? value + num : value - num
+
+            let part = this.parts(this.time(value), ':', true)[1]
+            let difference = this.percent(part, minutes, 0)
+            
+            if (difference >= min && difference <= max) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    yearsByMultiplicityInterval(min = 1e3, max = 2e3, num = 1) {
+        let result = []
+
+        min = Math.ceil(min / num) * num
+
+        while (min < max) {
+            result = [...result, min]
+            
+            min += num            
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
