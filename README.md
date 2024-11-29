@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.6**
+* Current Version: **1.9.7**
 * Size ~ **190 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.7K** lines of code and **295 methods**           
+* **4.8K** lines of code and **300 methods**           
 
 ## Links
 
@@ -306,6 +306,8 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterTimesByMinutePartChangingByGap** (*list* = [], *num* = 1e1, *min* = 0, *max* = 1e2, *isAddition* = true) - updates minutes by *num* and *isAddition*, then filters by comparing previous and current minutes values inside % borders by *min* and *max*.   
 
+-**timestampsByRadomlyDeviation** (*time* = '', *num* = 1, *radius* = 1e1, *isIncrease* = true) - generates list of times by *radius* and *isInrease* based on *time*.  
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -502,6 +504,8 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**yearsByMultiplicityInterval** (*min* = 1e3, *max* = 2e3, *num* = 1) - generates years from *min* to *min* by *num* as step and multiplicity number.  
 
+-**filterYearsByQuarterSchema** (*list* = [], *schema* = []) - filters and returns only those year, which residue (/ 100) inside *schema* of quarters.
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -574,7 +578,13 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findNumDeviationPercent** (*list* = [], *num* = 1, *isMore* = true, *round* = 0) - counts deviation by *num* as % of max / min number (by *isMore*) of *list*.   
 
--**filterNumByDifferenceMultiplicity** (*list* = []) - filters and returns only those numbers, which difference is multiplicity for them both.   
+-**filterNumByDifferenceMultiplicity** (*list* = []) - filters and returns only those numbers, which difference is multiplicity for them both.  
+
+-**findNumResiduePercent** (*num* = 1, *divider* = 1, *round* = 0) - returns % of *num* residue by *divider*.   
+
+-**countNumDigit** (*num* = 1, *digit* = 1) - counts quantity of *digit* in *num*.  
+
+-**findNumSymmentry** (*list* = [], *round* = 0) - returns % of *list* symmetry.    
 
 ### * Filters and Validation *
 

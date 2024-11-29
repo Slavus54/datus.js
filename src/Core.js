@@ -4860,6 +4860,92 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findNumResiduePercent(num = 1, divider = 1, round = 0) {
+        let result = this.percent(num % divider * divider, num, round) 
+
+        return result
+    }
+
+    timestampsByRadomlyDeviation(time = '', num = 1, radius = 1e1, isIncrease = true) {
+        const base = this.time(time, 'deconvert')
+        let result = []
+
+        for (let i = 0; i < num; i++) {
+            let value = this.getIntervalValue([0, radius])
+
+            value = isIncrease ? base + value : base - value
+
+            result = [...result, this.time(value)]
+        }
+
+        return result
+    }
+
+    countNumDigit(num = 1, digit = 1) { 
+        let flag = true
+        let latest = 1
+        let counter = 1
+        let result = 0
+                
+        while (flag) {
+            let value = this.getYearDigit(num, counter)
+
+            if (value === digit) {
+                result++
+            }
+
+            if (value !== 0) {
+                latest = value
+            } else {
+                latest--
+            
+                flag = Boolean(latest)
+            }
+           
+            counter++
+        }
+
+        return result
+    }
+
+    filterYearsByQuarterSchema(list = [], schema = []) {
+        let result = []
+        let index = 0
+
+        list.map(el => {
+            let quarter = Math.ceil(el % 1e2 / 25)
+
+            if (schema[index] === quarter) {
+                result = [...result, el]
+                index++
+            }
+        })
+
+        return result
+    }
+
+    findNumSymmentry(list = [], round = 0) {
+        const length = list.length
+
+        let index = Math.floor(length / 2)
+        let result = 0
+
+        for (let i = 0; i < index; i++) {
+            let left = list[i]
+            let right = list[length - i - 1]
+            
+            let difference = Math.abs(left - right)
+         
+            difference = this.percent(difference, right < left ? right : left, round)
+   
+            result += difference 
+        }   
+
+        result = 1e2 - Math.round(result / index)
+
+        return result
+    }
 }
 
 module.exports = Core
