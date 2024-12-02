@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.7**
-* Size ~ **190 kB** 
+* Current Version: **1.9.8**
+* Size ~ **195 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.8K** lines of code and **300 methods**           
+* **4.9K** lines of code and **310 methods**           
 
 ## Links
 
@@ -308,6 +308,12 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**timestampsByRadomlyDeviation** (*time* = '', *num* = 1, *radius* = 1e1, *isIncrease* = true) - generates list of times by *radius* and *isInrease* based on *time*.  
 
+-**findTimeBorders** (*list* = []) - finds borders as range of time *list* and returns it [min, max] times. 
+
+-**findPercentOfTime** (*time* = '', *round* = 0) - counts % of time from day duration in minutes and returns rounded value.    
+
+-**checkTimePartsByOneDigitDifference** (*time* = '') - returns true if time's parts is not similar with only one digit. 
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -350,9 +356,7 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**yearMove** (*year* = 2e3, *num* = 1e1, *isForward* = true, *border* = 2e3) - updates year by moving it forward / back with *border* checking.    
 
--**yearBorderCheck** (*year* = 2e3, *min* = 1e3, *max* = 2e3, *isIncludeBorder* = true) - checks if *year* are inside *borders*.    
-
--**yearByProgression** (*start* = 2e3, *size* = 1e2, *steps* = [], *round* = 0) - builds list of years by maximum *size* and % of *steps* added to *start* year.    
+-**yearBorderCheck** (*year* = 2e3, *min* = 1e3, *max* = 2e3, *isIncludeBorder* = true) - checks if *year* are inside *borders*.        
 
 -**yearsByCenturies** (*centuries* = [], *values* = []) - generates years with of *centuries* and *values* (residue of division year on century).   
 
@@ -504,7 +508,13 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**yearsByMultiplicityInterval** (*min* = 1e3, *max* = 2e3, *num* = 1) - generates years from *min* to *min* by *num* as step and multiplicity number.  
 
--**filterYearsByQuarterSchema** (*list* = [], *schema* = []) - filters and returns only those year, which residue (/ 100) inside *schema* of quarters.
+-**filterYearsByQuarterSchema** (*list* = [], *schema* = []) - filters and returns only those year, which residue (/ 100) inside *schema* of quarters.  
+
+-**convertYearResidueIntoGap** (*year* = 1e3) - returns base of year (1964 => 1900) + converted residue 64 => 36 as year.   
+
+-**findYearsSubsequenceByAverageResidue** (*list* = [], *num* = 1e1, *fault* = 0, *round* = 0) - finds list of year which average residue (/ 100) is inside % of *num* by *fault*.  
+
+-**findYearsSubseqenceByDeviationSchema** (*list* = [], *num* = 1e3, *schema* = []) - builts list of year according on comparing each element with *num* if it will be more => true, less -false by *schema*.     
 
 ### * Num *
 
@@ -585,6 +595,16 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 -**countNumDigit** (*num* = 1, *digit* = 1) - counts quantity of *digit* in *num*.  
 
 -**findNumSymmentry** (*list* = [], *round* = 0) - returns % of *list* symmetry.    
+
+-**findNumRowDispersion** (*list* = []) - counts num equals max / min ratio in row. 
+
+-**mixNumList** (*list* = []) - just mixes list of numbers and returns result.  
+
+-**findNumListAverageDeviation** (*list* = [], *num* = 1, *isMore* = null) - returns average *list* deviation from *num* by flag *isMore*.  
+
+-**findNearestNumByPairsMultiplication** (*list* = [], *num* = 1) - finds nearest to *num* multiplication of numbers in *list*. 
+
+-**numDivisionOnDigit** (*num* = 1, *digit* = 1) - returns *num* divided by *digit* number.   
 
 ### * Filters and Validation *
 

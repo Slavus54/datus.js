@@ -4946,6 +4946,182 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findTimeBorders(list = []) {
+        let result = [minutesMax, 0]
+        
+        list.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+
+                if (value > result[1]) {
+                    result[1] = value
+                } else if (value < result[0]) {
+                    result[0] = value
+                }
+            }
+        })
+
+        result = result.map(el => this.time(el))
+
+        return result
+    }
+
+    findNumRowDispersion(list = []) {
+        let result = 1e6
+        let pointer = 0
+
+        list.map(el => {
+            if (el > pointer) {
+                pointer = el 
+            } else if (el < result) {
+                result = el
+            }
+        })
+
+        result = Math.round(pointer / result)
+
+        return result
+    }
+
+    convertYearResidueIntoGap(year = 1e3) {
+        let result = Math.floor(year / 1e2) * 1e2 + (1e2 - year % 1e2)
+
+        return result
+    }
+
+    mixNumList(list = []) {
+        let result = new Array(list.length).fill(null)
+
+        list.map((el, idx) => {
+            let index = Math.floor(Math.random() * list.length)
+
+            while (result[index] !== null || index === idx) {
+                index = Math.floor(Math.random() * list.length)
+            }
+
+            result[index] = el
+        })
+
+        return result
+    }
+
+    findPercentOfTime(time = '', round = 0) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            result = this.time(time, 'deconvert')
+            result = this.percent(result, minutesMax, round)
+        }
+
+        return result
+    }
+
+    findNumListAverageDeviation(list = [], num = 1, isMore = null) {
+        let result = 0
+        let counter = 0
+
+        list.map(el => {
+            let difference = Math.abs(el - num)
+            let flag = isMore && el >= num || !isMore && el <= num || isMore === null
+
+            if (flag) {
+                result += difference
+                counter++
+            }            
+        })
+
+        result = Math.round(result / counter)
+
+        return result
+    }
+
+    findYearsSubsequenceByAverageResidue(list = [], num = 1e1, fault = 0, round = 0) {
+        const delta = this.cleanValue(fault, num, round)
+        const borders = [num - delta, num + delta]
+
+        let result = []
+        let value = 0
+
+        list.map(el => {
+            let residue = el % 1e2
+            let volume = Math.round((value + residue) / (result.length + 1))
+     
+            if ((volume >= borders[0] && volume <= borders[1]) || result.length === 0) {
+                result = [...result, el]
+                value += residue
+            } 
+        })
+
+        if (result.length === 1) {
+            result = []
+        }
+
+        return result
+    }
+
+    findNearestNumByPairsMultiplication(list = [], num = 1) {
+        let change = num
+        let result = 0
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                if (i !== j) {
+                    current *= next
+
+                    let difference = Math.abs(current - num)
+
+                    if (difference < change) {
+                        result = current
+                        change = difference
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    checkTimePartsByOneDigitDifference(time = '') {
+        let result = true
+
+        if (this.isTime(time)) {
+            let parts = this.parts(time, ':', true)
+            let difference = Math.abs(parts[0] - parts[1])
+
+            if (difference !== 1 && difference !== 1e1) {
+                result = false
+            }
+        }
+
+        return result
+    }
+
+    numDivisionOnDigit(num = 1, digit = 1) {
+        let value = this.getYearDigit(num, digit) * 1e1**(digit - 1)
+        let result = Math.round(num / value)
+
+        return result
+    }
+
+    findYearsSubseqenceByDeviationSchema(list = [], num = 1e3, schema = []) {
+        let result = []
+        let index = 0
+
+        list.map(el => {
+            let isMore = schema[index]
+
+            if (isMore && el >= num || !isMore && el <= num) {
+                result = [...result, el]
+                index++
+            }
+        })
+
+        return result
+    }
 }
 
 module.exports = Core
