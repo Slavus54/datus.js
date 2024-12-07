@@ -1,13 +1,12 @@
 {
   "name": "datus.js",
-  "version": "1.9.8",
+  "version": "1.9.9",
   "description": "Library for manage date with different methods of custom formatting",
   "main": "index.js",
   "scripts": {
     "dev": "node index.js"
   },
   "keywords": [
-    "JS",
     "date",
     "time",
     "year",

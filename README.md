@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.8**
-* Size ~ **195 kB** 
+* Current Version: **1.9.9**
+* Size ~ **200 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **4.9K** lines of code and **310 methods**           
+* **5.1K** lines of code and **320 methods**           
 
 ## Links
 
@@ -312,7 +312,11 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findPercentOfTime** (*time* = '', *round* = 0) - counts % of time from day duration in minutes and returns rounded value.    
 
--**checkTimePartsByOneDigitDifference** (*time* = '') - returns true if time's parts is not similar with only one digit. 
+-**checkTimePartsByOneDigitDifference** (*time* = '') - returns true if time's parts is not similar with only one digit.    
+
+-**lexisTime** (*time* = '') - makes great text about *time*.   
+
+-**filterTimesBySchema** (*list* = [], *schema* = '', *marker* = 'x') - returns only those times, which were built according to *schema*.   
 
 ### * Weekday *
 
@@ -514,7 +518,11 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findYearsSubsequenceByAverageResidue** (*list* = [], *num* = 1e1, *fault* = 0, *round* = 0) - finds list of year which average residue (/ 100) is inside % of *num* by *fault*.  
 
--**findYearsSubseqenceByDeviationSchema** (*list* = [], *num* = 1e3, *schema* = []) - builts list of year according on comparing each element with *num* if it will be more => true, less -false by *schema*.     
+-**findYearsSubseqenceByDeviationSchema** (*list* = [], *num* = 1e3, *schema* = []) - builts list of year according on comparing each element with *num* if it will be more => true, less -false by *schema*.   
+
+-**yearsResidueBorders** (*list* = []) - generates year's [min, max] borders by residue (/ 100).    
+
+-**transformYearsResidue** (*list* = [], *ratio* = 1) - updates year's residue by *ratio*.  
 
 ### * Num *
 
@@ -604,7 +612,19 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findNearestNumByPairsMultiplication** (*list* = [], *num* = 1) - finds nearest to *num* multiplication of numbers in *list*. 
 
--**numDivisionOnDigit** (*num* = 1, *digit* = 1) - returns *num* divided by *digit* number.   
+-**numDivisionOnDigit** (*num* = 1, *digit* = 1) - returns *num* divided by *digit* number. 
+
+-**inverseNum** (*num* = 1) - inverses each digit of num and returns result.    
+
+-**getNumByRandomlyDigit** (*num* = 1, *digit* = 1) - updates *num* by changing *digit* randomly.   
+
+-**getNumPairs** (*list* = [], *isIncrease* = null) - returns all pairs of numbers by *isIncrease* in *list*.   
+
+-**discardNumDigits** (*num* = 1, *digit* = 1) - subtracts number by *digit* from *num*.    
+
+-**nearestPowerOfNumAndBase** (*num* = 1, *base* = 1, *accuracy* = 1) - returns nearest power of *base* to build *num*. 
+
+-**getNumMultiplicationPairs** (*num* = 1) - finds all pairs of numbers which multiplication is equal to *num*.  
 
 ### * Filters and Validation *
 

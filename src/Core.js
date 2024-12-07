@@ -5122,6 +5122,188 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    inverseNum(num = 1) {
+        const text = String(num)
+        const length = text.length
+
+        let result = 0
+
+        for (let i = 0; i < length; i++) {
+            let digit = Number(text[i])
+          
+            if (digit !== 0) {
+                result += (1e1 - digit) * 1e1**(length - i - 1)
+            }
+        }
+
+        return result
+    }
+
+    getNumByRandomlyDigit(num = 1, digit = 1) {
+        const length = String(num).length
+        let result = 0
+
+        for (let i = 0; i < length; i++) {
+            let index = length - i
+            let value = digit === index ? this.getIntervalValue([Boolean(digit) ? 0 : 1, 9]) : this.getYearDigit(num, index)
+
+            result += value * 1e1**(index - 1)
+        }
+
+        return result
+    }
+
+    yearsResidueBorders(list = []) {
+        let min = list[0]
+        let max = 0
+        let result
+        
+        list.map(el => {
+            let value = el % 1e2
+
+            if (value > max % 1e2) {
+                max = el
+            } else if (value < min % 1e2) {
+                min = el
+            }
+        })
+
+        result = [min, max]
+
+        return result
+    }
+
+    getNumPairs(list = [], isIncrease = null) {
+        let result = []
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                let flag = isIncrease && current < next || !isIncrease && current > next || isIncrease === null
+
+                if (flag) {
+                    result = [...result, [current, next]]
+                }
+            }
+        }
+
+        return result
+    }
+
+    lexisTime(time = '') {
+        let result = ''
+    
+        if (this.isTime(time)) {
+            let parts = this.parts(time, ':', true)
+            let isQuarter = parts[1] >= 15 && parts[1] % 15 === 0
+
+            if (isQuarter) {
+                result = `${Math.floor(parts[1] / 15)} quarters after ${parts[0]} hours`
+            } else {
+                if (Math.abs(6e1 - parts[1]) < 15 || parts[1] < 15) {
+                    let isMore = parts[1] > 3e1
+                    let difference = isMore ? 6e1 - parts[1] : parts[1]
+
+                    result = `${difference} minutes ${isMore ? 'before' : 'after'} ${isMore ? parts[0] + 1 : parts[0]} hours`
+                } else {
+                    result = `${parts[0]} hours and ${parts[1]} minutes`
+                }
+            }
+        }
+
+        return result
+    }
+
+    discardNumDigits(num = 1, digit = 1) {
+        let result = num
+        
+        for (let i = 1; i <= digit; i++) {
+            let value = this.getYearDigit(num, i)
+
+            result -= value * 1e1**(i - 1)
+        }
+
+        return result
+    }
+
+    nearestPowerOfNumAndBase(num = 1, base = 1, accuracy = 1) {
+        const value = 1e1**(- accuracy)
+        let result = 1
+    
+        while (base**result <= num) {
+            result++
+        }
+       
+        result--
+
+        while (base**result < num) {
+            result += value
+        }
+
+        result -= value
+
+        result = this.toRound(result, accuracy)
+
+        return result
+    }
+
+    transformYearsResidue(list = [], ratio = 1) {
+        let result = []
+
+        result = list.map(el => {
+            let value = el % 1e2
+
+            value = Math.floor(value * ratio)
+
+            return Math.floor(el / 1e2) * 1e2 + value
+        })
+
+        return result
+    }
+
+    filterTimesBySchema(list = [], schema = '', marker = 'x') {
+        let result = []
+
+        list.map(el => {
+            let flag = true
+
+            String(el).split('').map((item, idx) => {
+                let toCompare = schema[idx]
+
+                if (flag && toCompare !== marker) {
+                    flag = item === toCompare
+                }
+            })
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    getNumMultiplicationPairs(num = 1) {
+        const border = Math.floor(num / 2)
+
+        let result = []
+        let pointer = 1
+        
+        while (pointer < border) {
+            let residue = num % pointer === 0
+
+            if (residue) {
+                result = [...result, [pointer, num / pointer]]
+            }
+
+            pointer++
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
