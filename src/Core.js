@@ -5304,6 +5304,173 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    getNumDividers(num = 1) {
+        const half = Math.floor(num / 2)
+        let result = [1]
+
+        for (let i = 2; i <= half; i++) {
+            if (num % i === 0) {
+                result = [...result, i]
+            }
+        }
+
+        result = [...result, num]
+
+        return result
+    }
+
+    getNumListNearestPair(list = [], percent = 1e1, round = 0) {
+        const length = list.length
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                let difference = Math.abs(current - next)
+            
+                difference = this.percent(difference, current, round)
+
+                if (i !== j && difference <= percent) {
+                    result = [current, next]
+                    percent = difference
+                }
+            }
+        }
+
+        return result
+    }
+
+    getNumLargestPairDifference(list = []) {
+        let result = 0
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(el - next)
+
+                if (difference > result) {
+                    result = difference
+                }
+            }
+        })
+
+        return result
+    }
+
+    smoothYearListByResidue(list = [], num = 5e1) {
+        let result = []
+        let amount = 0
+        
+        list.map(el => {
+            const value = el % 1e2
+            const base = Math.floor(el / 1e2) * 1e2
+            let difference = Math.abs(value - num)
+            let isMore = value >= num
+       
+            if (isMore) {
+                amount += difference
+                result = [...result, base + num]
+            } else {
+                if (amount >= difference) {
+                    result = [...result, base + num]
+                    amount -= difference
+                } else {
+                    result = [...result, el + amount]
+                    amount - 0
+                }
+            }
+        })
+
+        return result
+    }
+
+    findOppositeTime(time = '') {   
+        let result = 0
+
+        if (this.isTime(time)) {
+            result = this.parts(time, ':', true).map((el, idx) => timePartsLimits[idx] - el).reduce((acc, el, idx) => acc + time_sizes[idx] * el, 0)
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+
+    findAllNumListPairsByMultiplicityDifference(list = [], num = 1) {
+        let result = []
+
+        list.map((el, idx) => {
+            let next = list[idx + 1]
+
+            if (next) {
+                let difference = Math.abs(el - next)
+
+                if (difference % num === 0) {
+                    result = [...result, [el, next]]
+                }
+            }
+        })
+
+        return result
+    }
+
+    jumpNumList(list = []) {
+        let index = 1
+        let result = list[index - 1]
+
+        while (result > 0 && index < list.length) {
+            let value = list[index]
+
+            index += value
+
+            if (value !== undefined) {
+                result = value
+            }
+        }
+
+        return result
+    }
+
+    getYearDistanceByCenturyResidue(year = 1e3, residue = 5e1) {
+        let value = year % 1e2
+        let result = Math.abs(value - residue)
+        
+        if (value > residue) {
+            result = 1e2 - result
+        }
+
+        return result
+    }
+
+    roundYearListByResidueToMultiplicityNum(list = [], border = 1, num = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+
+            result = [...result, value >= border ? Math.ceil(el / num) * num : el]
+        })
+
+        return result
+    }
+
+    transferTimeMinutePart(time = '') {
+        let result = 0
+
+        if (this.isTime(time)) {
+            result = this.time(time, 'deconvert')
+
+            result = Math.ceil(result / 6e1) * 6e1 + (6e1 - result % 6e1)
+        }
+
+        result = this.time(result)
+
+        return result
+    }
 }
 
 module.exports = Core

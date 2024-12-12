@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **1.9.9**
+* Current Version: **2.0.0**
 * Size ~ **200 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.1K** lines of code and **320 methods**           
+* **5.1K** lines of code and **330 methods**           
 
 ## Links
 
@@ -318,6 +318,10 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterTimesBySchema** (*list* = [], *schema* = '', *marker* = 'x') - returns only those times, which were built according to *schema*.   
 
+-**findOppositeTime** (*time* = '') - turns over time's hours and minutes.  
+
+-**transferTimeMinutePart** (*time* = '') - turns over minutes of *time* and rounding hours.     
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -398,7 +402,7 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**filterYearsByRadius** (*list* = [], *radius* = 1e1, *middle* = 5e1) - filters years checking each inside borders by *radius* from *middle*.  
 
--**filterYearsBySchema** (*value* = 1e3, *schema* = '', *marker* = '*') - filters year by text *schema* with *marker* as random digit and returns true / false.  
+-**filterYearBySchema** (*value* = 1e3, *schema* = '', *marker* = '*') - filters year by text *schema* with *marker* as random digit and returns true / false.  
 
 -**filterYearsByDifference** (*list* = [], *min* = 0, *max* = 1e1) - checks neighboring years difference by *min* and *max* borders.    
 
@@ -524,6 +528,12 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**transformYearsResidue** (*list* = [], *ratio* = 1) - updates year's residue by *ratio*.  
 
+-**smoothYearListByResidue** (*list* = [], *num* = 5e1) - changes list of year by smooth element's resodue (/ 100), which should be closer to *num*.    
+
+-**getYearDistanceByCenturyResidue** (*year* = 1e3, *residue* = 5e1) - counts difference between *year* residue (/ 100) and *residue*.  
+
+-**roundYearListByResidueToMultiplicityNum** (*list* = [], *border* = 1, *num* = 1) - updates year's residue if it more than *border* by rounding to *num*.  
+
 ### * Num *
 
 -**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
@@ -624,7 +634,17 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**nearestPowerOfNumAndBase** (*num* = 1, *base* = 1, *accuracy* = 1) - returns nearest power of *base* to build *num*. 
 
--**getNumMultiplicationPairs** (*num* = 1) - finds all pairs of numbers which multiplication is equal to *num*.  
+-**getNumMultiplicationPairs** (*num* = 1) - finds all pairs of numbers which multiplication is equal to *num*. 
+
+-**getNumDividers** (*num* = 1) - returns all dividers on *num*.    
+
+-**getNumListNearestPair** (*list* = [], *percent* = 1e1, *round* = 0) - finds the most close values in *list* by *percent* of difference.  
+
+-**getNumLargestPairDifference** (*num* = 1) - returns pair with largest difference of numbers. 
+
+-**findAllNumListPairsByMultiplicityDifference** (*list* = [], *num* = 1) - filters and returns only those numbers, which pair's difference divided on *num* without residue.   
+
+-**jumpNumList** (*num* = 1) - jumping on numbers list and returns latest value, which can reach. (Jump Game)   
 
 ### * Filters and Validation *
 
