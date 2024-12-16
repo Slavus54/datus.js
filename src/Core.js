@@ -5471,6 +5471,94 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    findAverageNumListByPartition(list = [], size = 1, isMax = true) {
+        let border = 0
+        let index = 0
+        let result = 0
+    
+        for (let i = 0; i < list.length; i++) {
+            let value = list[i]
+  
+            if (i % size === 0 && i !== 0) {
+                let average = Math.round(border / index)
+                let flag = isMax ? average > result : average < result
+                
+                if (flag) {
+                    result = average
+                    border = 0
+                    index = 0
+                }
+            } 
+            
+            border += value
+            index++
+        }
+
+        return result
+    }
+    
+    buildNumListByPeak(start = 1, end = 1, num = 1, size = 1, position = 1) {
+        let result = []
+        let step = Math.round(Math.abs(start - num) / (position - 1)) 
+        let isIncrease = num > start
+        let isHalf = false
+
+        for (let i = 0; i < size; i++) {
+            if (!isHalf && i === position - 1) {
+                step = Math.round(Math.abs(end - num) / (size - position)) 
+                isIncrease = num < end
+                isHalf = true  
+            }
+           
+            result = [...result, start]
+            start = isIncrease ? start + step : start - step
+        }
+
+        return result
+    }
+
+    sortTimesByMinuteQuarters(list = []) {
+        let result = new Array(4).fill([])
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+
+                let index = Math.floor((value % 6e1) / 15)
+            
+                result[index] = [...result[index], el]
+            }
+        })
+
+        return result
+    }
+
+    roundYearByBorderMultiplicity(year = 1e3, border = 1e1, num = 1) {
+        let result = Math.abs(year % 1e2 - border)
+
+        result = Math.floor(result / num) * num + year
+
+        return result
+    }
+
+    findNumListAverageFault(list = [], num = 1, round = 2) {
+        let result = 0
+        let counter = 0
+
+        list.map(el => {
+            let value = el % 1
+
+            if (value !== 0) {
+                result += Math.abs(value - num)
+                counter++
+            }
+        })
+
+        result = this.toRound(result / counter, round)
+
+        return result
+    }
 }
 
 module.exports = Core

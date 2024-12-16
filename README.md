@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **2.0.0**
-* Size ~ **200 kB** 
+* Current Version: **2.0.1**
+* Size ~ **210 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.1K** lines of code and **330 methods**           
+* **5.2K** lines of code and **335 methods**           
 
 ## Links
 
@@ -320,7 +320,9 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**findOppositeTime** (*time* = '') - turns over time's hours and minutes.  
 
--**transferTimeMinutePart** (*time* = '') - turns over minutes of *time* and rounding hours.     
+-**transferTimeMinutePart** (*time* = '') - turns over minutes of *time* and rounding hours.    
+
+-**sortTimesByMinuteQuarters** (*list* = []) - quickly sorts times by minutes quarters and returns list with 4 quarters times.  
 
 ### * Weekday *
 
@@ -532,7 +534,9 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**getYearDistanceByCenturyResidue** (*year* = 1e3, *residue* = 5e1) - counts difference between *year* residue (/ 100) and *residue*.  
 
--**roundYearListByResidueToMultiplicityNum** (*list* = [], *border* = 1, *num* = 1) - updates year's residue if it more than *border* by rounding to *num*.  
+-**roundYearListByResidueToMultiplicityNum** (*list* = [], *border* = 1, *num* = 1) - updates year's residue if it more than *border* by rounding to *num*. 
+
+-**roundYearByBorderMultiplicity** (*year* = 1e3, *border* = 1e1, *num* = 1) - updates year by *num* rounding it's residue (/ 100) subtracted *border*.
 
 ### * Num *
 
@@ -645,6 +649,12 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 -**findAllNumListPairsByMultiplicityDifference** (*list* = [], *num* = 1) - filters and returns only those numbers, which pair's difference divided on *num* without residue.   
 
 -**jumpNumList** (*num* = 1) - jumping on numbers list and returns latest value, which can reach. (Jump Game)   
+
+-**findAverageNumListByPartition** (*list* = [], *size* = 1, *isMax* = true) - finds average number of all list's subseqences parted by *size*. 
+
+-**buildNumListByPeak** (*start* = 1, *end* = 1, *num* = 1, *size* = 1, *position* = 1) - builts list of numbers with *num* peak by parameters. 
+
+-**findNumListAverageFault** (*list* = [], *num* = 1, *round* = 2) - counts fault of fractional part of each *list* number.  
 
 ### * Filters and Validation *
 
