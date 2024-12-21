@@ -3,47 +3,43 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **2.0.1**
+* Current Version: **2.0.2**
 * Size ~ **210 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.2K** lines of code and **335 methods**           
+* **5.3K** lines of code and **340 methods**           
 
 ## Links
 
 To download - *https://www.npmjs.com/package/datus.js*     
 
-To try library - *https://portal-datus.vercel.app*    
-
-To look code - *https://github.com/Slavus54/datus.js*      
-
-## History
-
-When I had been building web apps on React since 2020 I used to manipulate dates with powerful library **Moment.js**   
-
-I've met a lot of limits working with it and decided to create something to use instead it on **JavaScript**  
-
-Now I'm looking for new features and hope you can help me to have great experience of building this library **for free**.
+To try library - *https://portal-datus.vercel.app*     
 
 ## Getting Started            
 
-import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures}*** from 'datus.js'     
+import   
+
+***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures}***       
+
+from 'datus.js'      
 
 - - -
 
-*Datus* - main class in library to work with.         
+**Datus** - main class in library to work with.         
 
-*weekdaysTitles* and *weekdaysTags* - list of weekdays by it's name and tag (Monday like Mon).  
+**weekdaysTitles** and **weekdaysTags** - list of weekdays by it's name and tag ("Monday" => "Mon").  
 
-*dayParts* - list of day's parts.   
+**dayParts** - time parts of day.   
 
-*minutesMax* - max border of time in minutes.   
+**minutesMax** - max border of time in minutes.   
 
-*periods* - list of time's periods (from second to year).   
+**periods** - list of time's periods (from second to year).   
 
-*timeMeasures* - list of time's measures in day (from ms to h with size in seconds).    
+**timeMeasures** - list of time's measures in day (from ms to h with size in seconds).    
 
 
 ## Examples
+
+Just changing of date from nowadays
 
 ~~~ 
     const [date, setDate] = useState<string>(datus.now('date'))  
@@ -60,6 +56,8 @@ import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, mi
     <button onClick={() => setDays(days + 1)}>Another Day<button>        
 ~~~
 
+Filtering list of orders by time (more or less)    
+
 ~~~
     const border = 1140 // 19:00            
     const deadline = '01.01.1970' // IPhone's nightmare     
@@ -72,9 +70,11 @@ import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, mi
     let nearestOrders = orders.filter(el => datus.dateDistance(el.date, deadline) <= distanceSize)    
 ~~~
 
+Validation times
+
 ~~~
     let time_start = '12:30'        
-    let time_end = '18 hours 15 minutes'        
+    let time_end = '18 15'        
     
     // let's check these times
     
@@ -82,11 +82,15 @@ import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, mi
     console.log(datus.isTime(time_end)) // false    
 ~~~
 
+Getting Rome numbers as tiers in World of Tanks 
+
 ~~~
     const WOT_TIERS_LIMIT = 1e1
 
-    let levels = new Array(WOT_TIERS_LIMIT).fill(0).map((_, idx) => datus.convert(idx + 1)) // ['I', 'II', 'III', 'IV',  'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+    new Array(WOT_TIERS_LIMIT).fill(0).map((_, idx) => datus.convert(idx + 1)) // ['I', 'II', 'III', 'IV',  'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 ~~~
+
+Can get list of days from date
 
 ~~~
     let dates = ['07.05.2021', '02.12.2017', '01.09.2023', '14.03.1906']    
@@ -96,7 +100,7 @@ import ***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, mi
     
 ## Methods     
 
-There are a lot of methods to work with 5 main essences of library: *date, time, weekday, year and num*.   
+There are a lot of methods to work with 5 main themes of library: *date, time, weekday, year and num*.   
 
 ### * Date and Day *
 
@@ -324,6 +328,8 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**sortTimesByMinuteQuarters** (*list* = []) - quickly sorts times by minutes quarters and returns list with 4 quarters times.  
 
+-**isCleanTime** (*time* = '') - returns true/false depending on max time's part divided on min without residue.     
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -536,7 +542,11 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 
 -**roundYearListByResidueToMultiplicityNum** (*list* = [], *border* = 1, *num* = 1) - updates year's residue if it more than *border* by rounding to *num*. 
 
--**roundYearByBorderMultiplicity** (*year* = 1e3, *border* = 1e1, *num* = 1) - updates year by *num* rounding it's residue (/ 100) subtracted *border*.
+-**roundYearByBorderMultiplicity** (*year* = 1e3, *border* = 1e1, *num* = 1) - updates year by *num* rounding it's residue (/ 100) subtracted *border*. 
+
+-**findYearsDeviationSubsequenceByResidueList** (*list* = [], *nums* = []) - finds largest subsequence with each year's residue more than nums each element.    
+
+-**allYearsBordersByParameters** (*length* = 1e1, *century* = 2e1, *num* = 1) - generates year borders in *century* with step *length*. 
 
 ### * Num *
 
@@ -655,6 +665,10 @@ There are a lot of methods to work with 5 main essences of library: *date, time,
 -**buildNumListByPeak** (*start* = 1, *end* = 1, *num* = 1, *size* = 1, *position* = 1) - builts list of numbers with *num* peak by parameters. 
 
 -**findNumListAverageFault** (*list* = [], *num* = 1, *round* = 2) - counts fault of fractional part of each *list* number.  
+
+-**findOppositeNum** (*num* = 1) - returns number as deductible value from *num* * 10 powering. 
+
+-**getNumFractions** (*num* = 1, *max* = num, *min* = 1, *multiplicity* = 1) - scatters numbers inside borders which sum will be equal to *num*.         
 
 ### * Filters and Validation *
 

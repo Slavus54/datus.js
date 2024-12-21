@@ -5559,6 +5559,1562 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    isCleanTime(time = '') {
+        let result = false
+
+        if (this.isTime(time)) {
+            const parts = this.parts(time, ':', true)
+
+            let max = Math.max(...parts)
+            let min = Math.min(...parts)
+
+            result = max % min === 0             
+        }
+
+        return result
+    }
+
+    findYearsDeviationSubsequenceByResidueList(list = [], nums = []) {
+        let result = []
+        let pointer = 0
+
+        list.map(el => {
+            let value = el % 1e2
+            let num = nums[pointer]
+
+            result = [...result, value > num]
+
+            pointer = pointer < nums.length - 1 ? pointer + 1 : 0
+        })
+
+        return result
+    }
+
+    findOppositeNum(num = 1) {
+        let result = 0
+        let pointer = 0
+
+        while (result < num) {
+            result = 1e1**pointer
+            pointer++
+        }
+
+        result -= num
+
+        return result
+    }
+
+    allYearsBordersByParameters(length = 1e1, century = 2e1, num = 1) {
+        const max = century*1e2 - length
+
+        let result = []
+        let pointer = (century - 1)*1e2
+
+        pointer = Math.ceil(pointer / num) * num
+
+        while (pointer <= max) {
+            result = [...result, [pointer, pointer + length]]
+
+            pointer += num
+        }
+
+        return result
+    }
+
+    getNumFractions(num = 1, max = num, min = 1, multiplicity = 1) {
+        let result = []
+
+        while (num > 0) {
+            let value = this.getIntervalValue([num < min ? num : min, num < max ? num : max])
+        
+            while (value % multiplicity !== 0 && value < num) {
+                value = this.getIntervalValue([num < min ? num : min, num < max ? num : max])
+            }
+
+            result = [...result, value]
+            num -= value
+        }
+
+        return result
+    }
+
+    changeTimeByPercent(time = '', num = 0, isMinutes = true, isIncrease = true, round = 0) {
+        let result = ''
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            let part = this.parts(time, ':', true)[isMinutes]
+
+            num = Math.abs(num) > 1e2 ? num % 1e2 : num
+
+            part = this.percent(num, part, round)
+            part = isMinutes ? part : part * 6e1
+
+            value = isIncrease ? value + part : value - part
+
+            if (value >= 0 && value <= minutesMax) {
+                result = this.time(value)
+            }
+        }
+
+        return result
+    }
+
+    findNumListBorder(list = [], isMax = true, num = 1) {
+        let result = isMax ? 0 : Math.max(...list)
+
+        list.map(el => {
+            let flag = isMax ? el > result : el < result
+        
+            if (flag && el % num === 0) {
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueOutsideBorders(list = [], min = 1, max = 1e1, num = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+        
+            if ((value < min || value > max) && value % num === 0) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterTimesByPartsDifferenceMultiplicity(list = [], num = 1) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+                let difference = Math.abs(parts[0] - parts[1])
+
+                if (difference % num === 0) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    getAllYearsBordersFromList(list = [], difference = 1e1, isMore = true, num = 1) {
+        let result = []
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                if (i !== j) {
+                    let size = Math.abs(current - next)
+                    let flag = isMore ? size >= difference : size <= difference
+                    let value = current <= next ? [current, next] : [next, current]
+
+                    if (flag && size % num === 0 && result.find(el => el[0] === value[0]) === undefined) { 
+                        result = [...result, value]
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    findNearestTimeByMultiplicity(time = '', num = 1) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+
+            result = Math[value % num > Math.round(num / 2) ? 'ceil' : 'floor'](value / num) * num
+        }
+
+        result = this.time(result)
+
+        return result
+    }
+
+    transformYearsBordersByMultiplicity(borders = [], num = 1, isInside = true) {
+        let result = borders.map((el, idx) => Math[Boolean(idx) ? isInside ? 'floor' : 'ceil' : isInside ? 'ceil' : 'floor'](el / num) * num)
+
+        return result
+    }
+
+    findAllTimePairsBySumMultiplicity(list = [], num = 1) {
+        const length = list.length
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                if (i !== j) {
+                    let current = this.time(list[i], 'deconvert')
+                    let next = this.time(list[j], 'deconvert')
+                
+                    let flag = (current + next) % num === 0
+
+                    if (flag) {
+                        let value = current <= next ? [list[i], list[j]] : [list[j], list[i]]
+
+                        if (result.find(el => el[0] === value[0]) === undefined) {
+                            result = [...result, value]
+                        }                        
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    findTermsOfNumByMultiplicityList(num = 1, list = [], quantity = 1) {
+        let result = []
+        let pointer = 0
+
+        for (let i = 0; i < quantity; i++) {
+            let value = list[pointer]
+            let border = Math.floor(num / (value * (quantity - i))) 
+  
+            value *= this.getIntervalValue([1, border])
+        
+            pointer = pointer < list.length - 1 ? pointer + 1 : 0
+            result = [...result, value]
+            num -= value
+        }
+
+        return result
+    }
+
+    getNumResiduePercent(num = 1, divider = 1, round = 0) {    
+        let result = num % divider
+
+        result = this.percent(result, divider, round)
+
+        return result
+    }
+
+    yearByMultiplicityRandomly(num = 1, min = 1e3, max = 2e3) {
+        let result = 0
+
+        min = Math.ceil(min / num)
+        max = Math.floor(max / num)
+
+        result = this.getIntervalValue([min, max]) * num
+
+        return result
+    }
+
+    smoothTimesByMultiplicity(list = [], num = 1) {
+        let result = []
+        let amount = 0
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+                let residue = value % num
+                let toCompare = num - residue
+
+                if (residue <= toCompare) {
+                    value = Math.floor(value / num) * num
+                    amount += residue 
+                } else if (amount >= toCompare && residue >= toCompare) {
+                    value = Math.ceil(value / num) * num
+                    amount -= toCompare 
+                }
+
+                result = [...result, this.time(value)]
+            }
+        })
+
+        return result
+    }
+
+    transformNumByDigit(num = 1, digit = 1, multiplier = 1) {
+        const length = String(num).length
+        let result = 0
+
+        for (let i = 1; i <= length; i++) {
+            let value = this.getYearDigit(num, i) * 1e1**(i - 1)
+        
+            if (i === digit) {
+                value *= multiplier
+            }
+         
+            result += value
+        }
+
+        return result
+    }
+
+    getNumRepdigit(num = 1, digit = 1) {
+        const length = String(num).length
+        let value = this.getYearDigit(num, digit)
+        let result = 0
+
+        for (let i = 1; i <= length; i++) {
+            result += value*1e1**(i - 1)
+        }
+
+        return result
+    }
+
+    findYearsPairsByDifferenceMultiplicity(list = [], min = 0, max = 1e1, num = 1) {
+        const length = list.length
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                if (i !== j) {
+                    let current = list[i]
+                    let next = list[j]
+
+                    let difference = Math.abs(current - next)
+                    let flag = difference <= max && difference >= min && difference % num === 0
+                    let value = current < next ? [current, next] : [next, current]
+
+                    if (flag && result.find(pair => pair[0] === value[0]) === undefined) {
+                        result = [...result, value]
+                    }
+                }
+            } 
+        }
+
+        return result
+    }
+
+    findAllTimestampsByMultiplicity(num = 1, min = 1e2, max = 6e2) {
+        let result = []
+
+        min = Math.ceil(min / num) * num
+       
+        while (min < max) {
+            result = [...result, this.time(min)]
+
+            min += num
+        }
+
+        return result
+    }
+
+    mixNumDigits(num = 1) {
+        let text = String(num)
+        let result = new Array(text.length).fill(null)
+  
+        for (let i = 1; i <= text.length; i++) {
+            let power = Math.floor(Math.random() * text.length)
+
+            while (result[power] !== null && result[power] === Number(text[power]) || power === i) {
+                power = Math.floor(Math.random() * text.length)
+            }
+
+            result[power] = this.getYearDigit(num, i) * 1e1**power
+        }
+
+        result = result.reduce((acc, el) => acc + el)
+
+        return result
+    }
+
+    timestampsByHoursAndRatio(list = [], ratio = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = Math.round(el * (6e1 + ratio)) 
+        
+            result = [...result, this.time(value)]
+        })
+
+        return result
+    }
+
+    filterYearsByRatio(list = [], ratio = 1, isMore = true) {
+        let result = []
+
+        list.map(el => {
+            let century = Math.floor(el / 1e2)
+            let value = (el % 1e2) / century
+        
+            let flag = isMore && value >= ratio || !isMore && value < ratio
+        
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    getValueByProbability(initial = null, wrong = null, num = 1e1, isRight = null) {
+        let borders = []
+        let fromEndHalf = Math.round((1e2 - num) / 2) 
+        let result = 0
+
+        if (isRight === null) {
+            borders = [fromEndHalf, num + fromEndHalf]
+        } else {
+            if (isRight === true) {
+                borders = [1e2 - num, 1e2]
+            } else {    
+                borders = [0, num]
+            }
+        }
+
+        result = Math.floor(Math.random() * 1e2)
+      
+        result = borders[0] <= result && borders[1] >= result ? initial : wrong
+
+        return result
+    }
+
+    exchangeNumInPairsByMultiplicityComparing(list = [], isMore = true, num = 1) {
+        const middle = Math.floor(list.length / 2)
+        let result = []
+       
+        for (let i = 0; i <= middle; i++) {
+            let index = i * 2
+
+            let current = list[index]
+            let next = list[index + 1]
+            let pair = [current, next]
+        
+            let value = Math[isMore ? 'max' : 'min'](...pair)
+
+            result = [...result, value % num === 0 ? [next, current] : pair]
+        }
+
+        result = result.flat(1).filter(el => el)
+
+        return result
+    }
+
+    getNumByParameters(min = 1, max = 1, isIncludeBorders = true, num = 1) {
+        let borders = [min, max]
+        let result = 1
+
+        if (!isIncludeBorders) {
+            borders = borders.map((el, idx) => Boolean(idx) ? el - 1 : el + 1)
+        }
+
+        borders = borders.map((el, idx) => Math[Boolean(idx) ? 'floor' : 'ceil'](el / num))
+      
+        result = Math.floor((borders[0] + Math.floor(Math.random() * Math.abs(borders[1] - borders[0]))) * num)
+
+        return result
+    }
+
+    dateBySeason(year = 1e3, season = 'Summer') {
+        let months = []
+        let index = seasons.indexOf(season)
+        let result = ''
+
+        if (index !== -1) {
+            let length = Boolean(index) ? 3 : 2
+
+            months = new Array(length).fill(0).map((_, idx) => Boolean(index) ? index * length + idx : idx + 1) 
+        
+            if (!Boolean(index)) {
+                months = [12, ...months]
+            }
+
+            let month = months[Math.floor(Math.random() * months.length)]
+            let size = this.getMonthSize(month)
+
+            result = `${this.rounding(this.getIntervalValue([1, size]))}.${this.rounding(month)}.${year}`
+        }
+
+        return result
+    }
+
+    getNumByRandom(length = 1) {
+        let value = new Date().getMilliseconds()
+        let result = [value, Math.abs(1e3 - value)]       
+        let pointer = result.map(el => String(el).length).reduce((acc, el) => acc + el)
+        let index = 0
+
+        while (pointer < length) {
+            let current = result[index]
+            let next = result[result.length - 1]
+            
+            value = Math.abs(current - next)
+            result = [...result, value]
+            
+            pointer = result.map(el => String(el).length).reduce((acc, el) => acc + el)
+           
+            index++
+        }
+
+        result = Number(result.join('').slice(0, length))
+
+        return result
+    }
+
+    getYearInsideBordersByPercentMultiplicity(min = 1e3, max = min, percent = 1e1, num = 1, isMore = true) {
+        let result = min + this.cleanValue(percent, Math.abs(max - min), 0)
+
+        result = Math[isMore ? 'ceil' : 'floor'](result / num) * num
+
+        return result
+    }
+
+    getNumListByPercentBordersMultiplicity(border = 1e3, min = 1e1, max = min, num = 1, round = 0) {
+        let result = []
+
+        min = Math.ceil(this.cleanValue(min, border, round) / num) * num
+        max = this.cleanValue(max, border, round)
+
+        while (min < max) {
+            result = [...result, min]
+
+            min += num
+        }
+
+        return result
+    }
+
+    findAllNumListPairsByPercentDifferenceComparing(list = [], num = 1e1, isMore = true, round = 0) {
+        let result = []
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                if (i !== j) {
+                    let pair = current > next ? [next, current] : [current, next]
+                    let difference = this.percent(Math.abs(pair[0] - pair[1]), pair[0], round)
+                    
+                    let flag = isMore && difference >= num || !isMore && difference <= num
+
+                    if (flag) {
+                        result = [...result, pair]
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    findAverageTimesDeviationByCycle(time = '', list = [], cycle = 3e1, round = 0) {
+        const border = this.time(time, 'deconvert')
+        let result = 0
+
+        list.map(el => {
+            let value = this.time(el, 'deconvert')
+            let num = Math.floor(Math.abs(border - value) / cycle) * cycle
+
+            let toCompare = value > border ? value - num : value + num
+            let difference = this.percent(Math.abs(value - toCompare), value, round)
+            
+            result += difference
+        })
+
+        result = Math.round(result / list.length)
+
+        return result
+    }
+
+    findAllYearsByCenturyAndResidueDifference(list = [], century = 0, min = 0, max = min) {
+        let result = []
+
+        const getDifference = (pair = [], isResidue = true) => {
+            pair = pair.map(el => isResidue ? el % 1e2 : Math.ceil(el / 1e2))
+            
+            let difference = Math.abs(pair[0] - pair[1])
+            
+            return difference
+        }
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                let pair = current > next ? [next, current] : [current, next]
+                let value = getDifference(pair)
+                let flag = min <= value && max >= value && getDifference(pair, false) === century
+
+                if (flag && result.find(el => el[0] === pair[0]) === undefined) {
+                    result = [...result, pair]
+                }
+            }
+        }
+
+        result = result.flat(1)
+
+        return result
+    }
+
+    getLargestNumFromDigits(num = 1) {
+        let length = String(num).length
+        let list = new Array(1e1).fill(null)
+        let result = 0
+
+        list = list.map((_, idx) => {
+            return {digit: idx, counter: 0}
+        })
+
+        for (let i = 1; i <= length; i++) {
+            let digit = this.getYearDigit(num, i)
+
+            list.map(el => {
+                if (el.digit === digit) {
+                    el.counter += 1
+                }
+            })
+        }
+
+        for (let i = list.length - 1; i > 0; i--) {
+            let item = list[i]
+
+            for (let j = 0; j < item.counter; j++) {
+                result += item.digit * 1e1**(length - 1)
+                
+                length--
+            }
+        }
+
+        return result
+    }
+
+    findNearestYearByResidue(list = [], num = 5e1) {
+        let difference = num
+        let result = 0
+        
+        list.map(el => {
+            let size = Math.abs(el % 1e2 - num)
+
+            if (size < difference) {
+                difference = size
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    yearsByMultiplicityList(from = 1e3, to = 2e3, list = []) {
+        let result = []
+        let index = 0
+        let pointer = Math.ceil(from / list[index]) * list[index]
+
+        while (pointer < to) {
+            result = [...result, pointer]
+            pointer += list[index]
+
+            index = index < list.length - 1 ? index + 1 : 0 
+            pointer = Math.ceil(pointer / list[index]) * list[index]
+        }   
+
+        return result
+    }
+
+    timestampsByDayPartition(start = 1e3, num = 0) {
+        let result = []
+        let pointer = start
+
+        while (pointer < minutesMax) {
+            result = [...result, this.time(pointer)]
+
+            pointer += num
+        }
+
+        return result
+    }
+
+    filterNumbersByMultiplicityExclude(list = [], num = 1, exclude = 1) {
+        let value = num * exclude
+        let result = []
+
+        list.map(el => {
+            let flag = el % num === 0 && el % value !== 0
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    findNearestYearsPairByResidue(list = []) {
+        const length = list.length
+        let pointer = 1e2
+        let result = []
+        
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                let current = list[i]
+                let next = list[j]
+            
+                if (i !== j) {
+                    let difference = Math.abs(current - next)
+
+                    if (difference < pointer) {
+                        pointer = difference
+                        result = [current, next]
+                    }
+                }
+            }  
+        }
+
+        return result
+    }
+
+    timestampsByRandomlyDeviationFlagList(time = '', forward = 1e1, back = forward, list = [], num = 1) {
+        let base = this.time(time, 'deconvert')
+        let result = []
+
+        list.map(isForward => {
+            let value = isForward ? forward : back
+
+            value = this.getIntervalValue([0, value])
+            value = Math.floor(value / num) * num
+            value = isForward ? base + value : base - value
+
+            result = [...result, this.time(value)]
+        })
+
+        return result
+    }
+
+    yearsByMultiplicityParts(year = 1e3, border = 1e2, parts = [], num = 1) {
+        let result = []
+
+        parts.map(el => {
+            let value = this.cleanValue(el, border, 0)
+
+            value = Math.floor(value / num) * num
+
+            result = [...result, year + value]
+        })
+
+        return result
+    }
+
+    timeByRandomlyMultiplicity(time = '', max = 1e1, num = 1, isForward = true) {
+        let result = this.time(time, 'deconvert')
+        let value = Math.floor(max / num)
+
+        value = this.getIntervalValue([0, value])
+        value *= num
+
+        result = isForward ? result + value : result - value
+        result = this.time(result)
+
+        return result
+    }
+
+    yearsByOppositeResidueCenturiesMultiplicity(residue = 1e1, centuries = [], num = 1) {
+        const border = 1e2 - residue
+        let result = []
+
+        centuries.map(el => {
+            let pointer = Math.floor(el / 1e2) * 1e2 + residue
+
+            pointer = Math.ceil(pointer / num) * num
+
+            while (pointer < border) {
+                result = [...result, pointer]
+
+                pointer += num
+            }
+        })
+
+        return result
+    }
+
+    addNumResidue(num = 1, percent = 1e1, round = 0) {
+        let result = this.cleanValue(percent, num, round)
+        let power = 0
+
+        while (result*1e1**(-power) > 1) {
+            power++
+        }
+
+        result = result*1e1**(-power)
+        result += num
+
+        return result
+    }
+
+    groupYearsByResidueParts(list = [], num = 1e1) {
+        const length = Math.ceil(1e2 / num)
+        let result = new Array(length).fill([])
+
+        list.map(el => {
+            let value = el % 1e2
+            let index = Math.floor(value / num)
+
+            result[index] = [...result[index], el]
+        })
+
+        return result
+    }
+
+    timestampsByMinutePartInsideBorders(min = 6e2, max = min, part = 1e1) {
+        let result = []
+
+        min = Math[min % 6e1 <= part ? 'floor' : 'ceil'](min / 6e1) * 6e1
+        min += part
+
+        while (min < max) {
+            
+            result = [...result, this.time(min)]
+
+            min += 6e1
+        }
+
+        return result
+    }
+
+    numDigitCleavage(num = 1, digit = 1, divider = 1) {
+        let length = String(num).length
+        let value = this.getYearDigit(num, digit) 
+        let result = 0
+
+        if (value !== 0) {
+            let current = Math.floor(value / divider)
+            let next = value - current
+          
+            for (let i = 1; i <= length; i++) {
+                let flag = i < digit
+           
+                if (digit === i) {
+                    result += current * 1e1**(i - 1) + next * 1e1**i
+                }  else {
+                    let item = this.getYearDigit(num, i)
+                 
+                    result += flag ? item * 1e1**(i - 1) : item * 1e1**(i)
+                }
+            }
+        }
+
+        return result
+    }
+
+    updateNumDigit(num = 1, position = 1, value = 1) {
+        let digit = this.getYearDigit(num, position)        
+        let result = num - digit * 1e1**(position - 1)
+
+        result += value * 1e1**(position - 1)
+
+        return result
+    }
+
+    isYearOver(year = 1e3, num = 1e1) {
+        num %= 1e2
+
+        let result = (year + num) % 1e2 < num
+
+        return result
+    }
+
+    isYearResidueMultiplicity(year = 1e3, num = 1) {
+        let result = year % 1e2 % num === 0
+
+        return result
+    }
+
+    yearsByPositionRowDistance(current = 1e3, next = 2e3, distance = 1e2, percent = 1e1) {
+        const step = Math.abs(current - next) 
+        let isIncrease = current < next
+        let pointer = this.cleanValue(percent, distance, 0)
+        let result = []
+
+        pointer = Math.floor(pointer / step) * step
+        pointer = current - pointer
+        
+        let border = pointer + distance
+
+        while (pointer < border) {
+            result = [...result, pointer]
+            
+            pointer = isIncrease ? pointer + step : pointer - step
+        }
+
+        return result
+    }
+
+    getTimeDigit(time = '', isMinutes = true, isJunior = true) {
+        const value = this.time(time, 'deconvert')
+        let result = isMinutes ? value % 6e1 : Math.floor(value / 6e1) 
+
+        result = isJunior ? result % 1e1 : Math.floor(result / 1e1)
+
+        return result
+    }
+
+    numSumList(value = 1, percent = 1e1, num = 1) {
+        const max = this.cleanValue(percent, value, 0)
+        let result = []
+        let pointer = value
+        let sum = 0
+
+        while (pointer > 0) {
+            let item = this.getIntervalValue([1, max])
+            item = Math.floor(item / num) * num
+
+            result = [...result, item]
+            pointer -= item
+            sum += item
+        }
+        
+        if (sum > value) {
+            let difference = Math.abs(sum - value)
+            let flag = true
+      
+            result = result.map(el => {
+                let value = el
+
+                if (value > difference && flag) {
+                    value -= difference
+                    flag = false
+                }
+
+                return value
+            })
+        }       
+
+        return result
+    }
+
+    yearsByMultiplicityRandomlyStep(from = 1e3, to = 2e3, num = 1) {
+        let pointer = from
+        let result = [pointer]
+     
+        while (pointer < to) {
+            let max = Math.floor(Math.abs(to - pointer) / num) 
+            let step = this.getIntervalValue([1, max]) * num
+
+            pointer += step
+
+            if (pointer < to) {
+                result = [...result, pointer]
+            }
+        }
+
+        return result
+    }
+
+    numMultiplicityList(min = 1, max = min, numbers = [], iterations = 1) {
+        let result = []
+
+        for (let i = 0; i < iterations; i++) {
+            for (let j = 0; j < numbers.length; j++) {
+                let item = numbers[j]
+                let from = Math.ceil(min / item) 
+                let to = Math.floor(max / item) 
+
+                let value = this.getIntervalValue([from, to]) * item
+
+                result = [...result, value]
+            }    
+        }        
+
+        return result
+    }
+
+    updateTimePartByMultiplicity(time = '', isMinutes = true, num = 1, isFloor = true) {
+        let parts = this.parts(time, ':', true)
+        let part = parts[Number(isMinutes)]
+        let result = 0
+    
+        part = Math[isFloor ? 'floor' : 'ceil'](part / num) * num
+        part = isMinutes ? part : part * 6e1 
+
+        result = part + parts[Number(!isMinutes)] * (isMinutes ? 6e1 : 1)
+        result = this.time(result)
+
+        return result
+    }
+
+    findNearestListNumByPercent(list = [], num = 1e1, round = 0) {
+        const max = Math.max(...list)
+        const min = Math.min(...list)
+
+        let difference = Math.abs(max - min)
+        let value = min + this.cleanValue(num, difference, round)
+        let result = 0
+
+        list.map(el => {
+            let size = Math.abs(el - value)
+
+            if (size < difference) {
+                difference = size
+                result = el 
+            }
+        })
+
+        return result
+    }
+
+    updateYearsResidueByMultiplicity(list = [], min = 5e1, max = min, num = 1, isFloor = true) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+
+            if (value >= min && value <= max) {
+                value = el - value + Math[isFloor ? 'floor' : 'ceil'](value / num) * num
+            } else {
+                value = el
+            }
+
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    timestampsByMultiplicity(time = '', num = 1, forward = 1e2, back = forward) {
+        const base = this.time(time, 'deconvert')
+
+        let min = Math.ceil((base - back) / num) * num
+        let max = Math.floor((base + forward) / num) * num
+        let result = []
+
+        while (min < max) {
+            result = [...result, this.time(min)]
+            min += num
+        }
+
+        return result
+    }
+
+    findAllNumPowerMultiplicityBases(power = 1, step = 1, max = 1e3, num = 1) {
+        let base = step
+        let value = base**power
+        let result = []
+        
+        while (value < max) {
+            value = base**power
+        
+            if (value % num === 0) {
+                result = [...result, base]
+            }
+            
+            base += step
+        }
+
+        return result
+    }
+    
+    findNearestValueToPoweredNumByMultiplicityList(num = 1, power = 2, list = [], isFloor = true) {
+        const powered = num**power
+        let difference = powered
+        let result = 0
+
+        list.map(el => {    
+            let value = Math[isFloor ? 'floor' : 'ceil'](powered / el) * el
+            let distinction = Math.abs(powered - value)
+            
+            if (distinction < difference) {
+                difference = distinction
+                result = value
+            }
+        })
+
+        return result
+    }
+
+    cleavageNum(num = 1, digit = 1) {
+        const base = 1e1**digit
+        let result = [Math.floor(num / base), num % base]
+    
+        return result
+    }
+
+    exchangeAdjacentNumDigits(num = 1, position = 1) {
+        let index = position + 1
+        let current = this.getYearDigit(num, position)
+        let next = this.getYearDigit(num, index)
+        let result = num
+
+        const toPower = (base, power) => base*1e1**power
+
+        if (current && next) {
+            position--
+            index--
+        
+            result -= toPower(current, position) + toPower(next, index)
+            result += toPower(current, index) + toPower(next, position)
+        } 
+
+        return result
+    }
+
+    timeByBaseMultiplicityResidue(base = 6e2, num = 1, residue = 0, isFloor = true) {
+        let result = Math[isFloor ? 'floor' : 'ceil'](base / num) * num + residue
+
+        result = this.time(result)
+
+        return result
+    }
+ 
+    yearsByRandomlyMultiplicityList(year = 1e3, size = 1, list = [], isIncrease = true) {
+        let pointer = year
+        let result = [pointer]
+    
+        for (let i = 0; i < list.length; i++) {
+            const base = Math.floor(year / list[i]) * list[i]
+            let max = Math.floor(size / list[i])
+
+            pointer = this.getIntervalValue([1, max]) * list[i]
+            pointer = isIncrease ? base + pointer : base - pointer
+
+            result = [...result, pointer]
+        }       
+
+        return result
+    }
+
+    getAllYearsWithWeekdayByMonthAndDay(weekday = 'Monday', day = 1e1, month = 1, min = 1e3, max = 2e3) {
+        let result = []
+        let toCompare = this.weekdayByDate(`${this.rounding(day)}.${this.rounding(month)}.${min}`)
+
+        while (weekday !== toCompare) {
+            min++
+
+            toCompare = this.weekdayByDate(`${this.rounding(day)}.${this.rounding(month)}.${min}`)
+        }
+
+        let step = min % 4 === 3 ? 5 : (min % 4 === 2 ? 11 : 6)
+
+        while (min < max) {
+            result = [...result, min]
+
+            min += step
+            step = min % 4 === 3 ? 5 : (min % 4 === 2 ? 11 : 6)
+        }
+
+        return result
+    }
+
+    timeByUSFormat(hours = 1e1, minutes = 1e1, isAfterMidday = true) {
+        let result = 0
+
+        hours = isAfterMidday ? hours + 12 : hours
+        result = this.time(hours * 6e1 + minutes)
+
+        return result
+    }
+
+    nearestYearMultiplicityByPercentInsideBorders(from = 0, to = 0, percent = 1, num = 1, isFloor = true) {
+        const method = isFloor ? 'floor' : 'ceil'
+        
+        let distance = Math.abs(to - from)
+        let result = Math[method](from / num) * num
+
+        result += Math[method](this.cleanValue(percent, distance, 0) / num) * num
+
+        return result
+    }
+
+    timestampsByMultiplicityPartsInsideBorders(min = 1e3, max = minutesMax, length = 1, list = [], isFloor = true) {
+        const border = this.cleanValue(Math.floor(1e2) / length, Math.abs(max - min), 0)
+        
+        let result = [] 
+        let pointer = min
+
+        for (let i = 0; i < length; i++) {
+            let index = i % list.length 
+            let multiplicity = list[index]
+            let value = Math[isFloor ? 'floor' : 'ceil']((pointer + border) / multiplicity) * multiplicity
+   
+            pointer = value
+            value = this.time(value)
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+    
+    findNearestNumDigitValueByPercent(num = 1, percent = 1e1, round = 0) {
+        const value = this.cleanValue(percent, num, round)
+    
+        let pointer = 1
+        let result = this.getYearDigit(num, pointer) * 1e1**(pointer - 1)
+  
+        while (result < value) {
+            pointer++
+            result = this.getYearDigit(num, pointer) * 1e1**(pointer - 1)
+        }        
+
+        return result
+    }
+
+    yearsByResidueRadiusMultiplicity(year = 1e3, length = 1, num = 1) {
+        const residue = year % 1e2
+        
+        let min = residue < 5e1 ? year - residue : year - (1e2 - residue)
+        let max = residue < 5e1 ? year + residue : Math.ceil(year / 1e2) * 1e2 - 1
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            let value = this.getIntervalValue([min, max])
+        
+            while (value % num !== 0) {
+                value = this.getIntervalValue([min, max])
+            }
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    findNumDigitPairWithDifference(num = 1, isLargest = true) {
+        const length = String(num).length
+        let percent = isLargest ? 2e1 : 9e3
+        let result = 0
+
+        for (let i = 1; i < length; i++) {
+            let next = this.getYearDigit(num, i + 1)
+
+            if (next) {
+                let current = this.getYearDigit(num, i)
+
+                current = current * 1e1**(i - 1)
+                next = next * 1e1**i
+
+                let isMore = next > current
+
+                let difference = this.percent(isMore ? next : current, isMore ? current : next, 0)
+               
+                let flag = isLargest ? difference > percent : difference < percent 
+
+                if (flag) {
+                    result = current + next
+                    percent = difference
+                }
+            }   
+        }
+
+        return result
+    }
+
+    timestampsByHoursWithMinutesBordersMultiplicity(time = '', hours = 1e1, num = 1, min = 1, max = 6e1) {
+        const base = Math.ceil(this.time(time, 'deconvert') / 6e1) * 6e1
+        
+        let minutes = []
+        let result = []
+
+        min = min < 0 || min > 6e1 ? 0 : min
+        max = max < 0 || max > 6e1 ? 0 : max
+
+        min = Math.ceil(min / num) * num
+
+        while (min < max) {
+            minutes = [...minutes, min]
+            
+            min += num
+        }
+       
+        for (let i = 0; i < hours; i++) {
+            minutes.map(minute => {
+                let value = base + i * 6e1 + minute
+
+                result = [...result, this.time(value)]
+            })
+        }
+        
+        return result
+    }
+
+    numMultiplicityBordersRandomly(value = 1, coefficient = 1, num = 1) {
+        let deviation = this.cleanValue(this.getIntervalValue([0, coefficient * 1e2]), value, 0)
+        let result = [value - deviation, value + deviation]
+
+        result = result.map((el, idx) => Math[Boolean(idx) ? 'floor' : 'ceil'](el / num) * num)
+
+        return result
+    }
+
+    findNumListAverageMultiplicityDeviation(list = [], num = 1, isAbsolute = true, round = 0) {
+        let result = 0 
+
+        list.map(el => {
+            let value = el % num
+
+            result += value
+        })
+
+        result /= list.length
+        
+        result = isAbsolute ? this.toRound(result, round) : this.percent(result, num, round)
+
+        return result
+    }
+
+    yearsPairsByActions(year = 1e3, toAdd = 1, toDelete = 1, num = 1) {
+        let result = []
+        let pointer = year
+
+        for (let i = 0; i < num; i++) {
+            let pair = new Array(2).fill(null)
+
+            pointer += toAdd
+
+            pair[0] = pointer
+        
+            pointer -= toDelete
+        
+            pair[1] = pointer
+
+            result = [...result, pair.reverse()]
+        }
+
+        return result
+    }
+
+    timestampsByRangeMultiplicity(time = '', range = 1e2, percent = 1e1, isForward = true, left = 1, right = 1) {
+        const middle = this.time(time, 'deconvert')
+        const parts = isForward ? [1e2 - percent, percent] : [percent, 1e2 - percent]
+       
+        let min = middle - this.cleanValue(parts[0], range, 0)
+        let max = middle + this.cleanValue(parts[1], range, 0)
+        let pointer = Math.ceil(min / left) * left
+        let step = left
+        let result = []
+
+        while (pointer < max) {
+            if (step !== right && pointer > middle) {
+                pointer = Math.ceil(pointer / right) * right
+                step = right
+            }
+
+            pointer += step
+            result = [...result, this.time(pointer)]
+        }
+
+        return result
+    }
+
+    findRandomYearsOnDistanceMultiplicity(year = 1e3, border = 1e2, num = 1, size = 1, isIncrease = true) {
+        let result = []
+
+        for (let i = 0; i < size; i++) {
+            let value = this.getIntervalValue([0, border])
+            
+            value = isIncrease ? value + year : year - value
+            value = Math[isIncrease ? 'floor' : 'ceil'](value / num) * num
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    getNumFactorialSkip(num = 1, skip = 1) {
+        let result = 1
+
+        for (let i = 1; i <= num; i += skip) {
+            result *= i
+        }
+    
+        return result
+    }
+
+    getNumListByProbabilityMultiplicity(from = 1, border = 1, probability = .5, num = 1, length = 1, isIncrease = true) {
+        let result = []
+
+        probability *= 1e3
+
+        for (let i = 0; i < length; i++) {
+            let value = this.getIntervalValue([1, 1e3])
+            let flag = value >= 0 && value <= probability
+
+            value = this.getIntervalValue([0, border])
+            value = isIncrease ? from + value : from - value
+            
+            if (flag) {
+                value = Math[isIncrease ? 'floor' : 'ceil'](value / num) * num
+            }
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    findLargestNumSubsequenceByDynamicDifference(list = [], percent = 1e1, round = 0) {
+        let pointer = list[0]
+        let result = [pointer]
+
+        for (let i = 1; i < list.length; i++) {
+            let value = list[i]
+            let difference = Math.abs(pointer - value)
+
+            difference = this.percent(difference, value > pointer ? pointer : value, round)
+
+            if (difference === percent) {
+                result = [...result, value]
+                pointer = value
+            }
+        }
+
+        return result
+    }
+
+    timestampsByDayPercentFragments(list = []) {
+        const length = list.length
+        let result = new Array(list.length * 2).fill('')
+
+        for (let i = 0; i < length; i++) {
+            let left = this.cleanValue(list[i], minutesMax, 0)
+            let right = this.cleanValue(1e2 - list[i], minutesMax, 0)
+           
+            result[i] = this.time(left)
+            result[length * 2 - i - 1] = this.time(right)
+        }
+
+        return result
+    }
+
+    buildYearBordersMultiplicity(century = 1e1, size = 1e2, percent = 5e1, num = 1) {
+        let value = this.cleanValue(percent, size, 0) 
+        let result = new Array(2).fill((century - 1) * 1e2).map((el, idx) => Boolean(idx) ? el + value : el - (size - value))
+
+        result = result.map((el, idx) => Math[Boolean(idx) ? 'floor' : 'ceil'](el / num) * num)
+
+        return result
+    }
+
+    findTimeDistancePercentRegardingSize(time = '', border = 1e3, size = 1e2, round = 0) {
+        let difference = Math.abs(this.time(time, 'deconvert') - border)
+        let result = this.percent(difference, size, round)
+
+        return result
+    }
+    
+    numListRunning(list = [], round = 0) {
+        let length = list.length
+        let pointer = list[0]
+        let result = 0
+        
+        while (pointer <= 0) {
+            result++
+            pointer = list[result]
+            
+        }
+       
+        length -= result
+
+        while (pointer > 0) {
+            pointer += list[result]
+            result++
+        }
+
+        result = this.percent(result, length, round)
+
+        return result
+    }
+
+    getNumDividendRandomly(num = 1, percent = 1e1, min = 1, max = 1) {
+        let result = this.cleanValue(percent, num, 0)
+
+        max -= result
+
+        let base = this.getIntervalValue([min, max])
+
+        base = Math.floor(base / num) * num
+
+        result += base
+
+        return result
+    }
+
+    filterYearsByChangingCentury(list = [], num = 1, isForward = true) {
+        let result = []
+
+        list.map(el => {
+            let value = isForward ? el + num : el - num
+            let residue = value % 1e2
+            let flag = isForward ? residue < num : residue > (1e2 - num)
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+   
+    getNumMultiplicityPieces(num = 1, pieces = [], min = 1) {
+        let result = []
+        let index = 0
+
+        while (num > 0) {
+            let pointer = pieces[index]
+            let value = this.getIntervalValue([Math.ceil(min / pointer), Math.floor(num / pointer)])
+           
+            value *= pointer
+          
+            result = [...result, value]
+            num -= value
+            index = index + 1 < pieces.length ? index + 1 : 0
+        } 
+
+        return result
+    }
+
+    yearsRandomlyMultiplicityBorders(year = 1e3, num = 1, isAdjacentCentury = false) {
+        const residue = year % 1e2
+        let result = []
+        let from = isAdjacentCentury ? [residue + 1, residue + 1e2] : [0, residue] 
+        let to = isAdjacentCentury ? [1e2 - residue, 2e2 - residue] : [0, 1e2 - residue]
+
+        result[0] = year - Math.floor(this.getIntervalValue(from) / num) * num 
+        result[1] = year + Math.floor(this.getIntervalValue(to) / num) * num
+
+        return result
+    }
+
+    numPercentFactorial(num = 1, percent = 1e1, min = 1) {  
+        const border = num
+
+        let pointer = this.cleanValue(percent, num, 0)
+        let result = []
+        let sum = 0
+
+        while (pointer > min && sum < border) {
+            
+            sum += pointer
+            num = pointer
+
+            result = [...result, sum > border ? Math.abs(pointer - Math.abs(sum - border)) : pointer]
+
+            pointer = this.cleanValue(percent, num, 0)
+        }
+        
+        if (sum < border) {
+            result = [...result, Math.abs(sum - border)]
+        }
+
+        return result
+    }
+
+    timeUpdateByDayPercent(time = '', percent = 1, isForward = true, multiple = 1) {
+        let result = this.time(time, 'deconvert')
+        let value = this.cleanValue(percent, isForward ? Math.abs(minutesMax - result) : result, 0)
+
+        value = isForward ? value + result : result - value
+        value = Math[isForward ? 'floor' : 'ceil'](value / multiple) * multiple
+
+        result = this.time(value)
+
+        return result
+    }
 }
 
 module.exports = Core
