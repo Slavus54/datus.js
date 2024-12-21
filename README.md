@@ -1,30 +1,32 @@
+![icon](favicon.ico)
+
 ## About       
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
-* Light, great and powerful analogue of **Moment.js**                           
-* Current Version: **2.0.2**
+* Light, great and powerful analogue of **Moment.js** :star:                       
+* Current Version: **2.0.3** 
 * Size ~ **210 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.3K** lines of code and **340 methods**           
+* **5.3K** lines of code and **340 methods** :gem:       
 
 ## Links
 
-To download - *https://www.npmjs.com/package/datus.js*     
+DOWNLOAD - *https://www.npmjs.com/package/datus.js*     
 
-To try library - *https://portal-datus.vercel.app*     
+TRY - *https://portal-datus.vercel.app*     
 
-## Getting Started            
+## Getting Started 
 
-import   
+```js
 
-***{Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures}***       
+import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minutesMax, periods, seasons, timeMeasures} from 'datus.js'  
 
-from 'datus.js'      
+```
 
 - - -
 
-**Datus** - main class in library to work with.         
+**Datus** - main class of library.         
 
 **weekdaysTitles** and **weekdaysTags** - list of weekdays by it's name and tag ("Monday" => "Mon").  
 
@@ -56,7 +58,7 @@ Just changing of date from nowadays
     <button onClick={() => setDays(days + 1)}>Another Day<button>        
 ~~~
 
-Filtering list of orders by time (more or less)    
+Filtering list of orders by time (more or less)  :clock2:  
 
 ~~~
     const border = 1140 // 19:00            
@@ -82,7 +84,7 @@ Validation times
     console.log(datus.isTime(time_end)) // false    
 ~~~
 
-Getting Rome numbers as tiers in World of Tanks 
+Getting Rome's digits used in World of Tanks :video_game:
 
 ~~~
     const WOT_TIERS_LIMIT = 1e1

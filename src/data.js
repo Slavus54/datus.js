@@ -128,7 +128,7 @@ let rome_nums = [
 let day_parts = [
     {
         title: 'Night',
-        border: 360
+        border: 300
     },
     {
         title: 'Morning',
@@ -136,11 +136,11 @@ let day_parts = [
     },
     {
         title: 'Noon',
-        border: 840
+        border: 960
     },
     {
         title: 'Afternoon',
-        border: 960
+        border: 1080
     },
     {
         title: 'Dusk',
