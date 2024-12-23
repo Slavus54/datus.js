@@ -1,20 +1,18 @@
-![icon](favicon.ico)
-
 ## About       
 
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.3** 
-* Size ~ **210 kB** 
+* Current Version: **2.0.4** 
+* Size ~ **250 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.3K** lines of code and **340 methods** :gem:       
+* **5.4K** lines of code and **345 methods** :gem:       
 
 ## Links
 
-DOWNLOAD - *https://www.npmjs.com/package/datus.js*     
+Download - *https://www.npmjs.com/package/datus.js*     
 
-TRY - *https://portal-datus.vercel.app*     
+Try - *https://portal-datus.vercel.app*     
 
 ## Getting Started 
 
@@ -41,7 +39,7 @@ import {Datus, weekdaysTitles, weekdaysTags, dayParts, months, minutesMin, minut
 
 ## Examples
 
-Just changing of date from nowadays
+Just date changing from nowadays by step :date:
 
 ~~~ 
     const [date, setDate] = useState<string>(datus.now('date'))  
@@ -72,7 +70,7 @@ Filtering list of orders by time (more or less)  :clock2:
     let nearestOrders = orders.filter(el => datus.dateDistance(el.date, deadline) <= distanceSize)    
 ~~~
 
-Validation times
+Validation times :watch:
 
 ~~~
     let time_start = '12:30'        
@@ -92,7 +90,7 @@ Getting Rome's digits used in World of Tanks :video_game:
     new Array(WOT_TIERS_LIMIT).fill(0).map((_, idx) => datus.convert(idx + 1)) // ['I', 'II', 'III', 'IV',  'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 ~~~
 
-Can get list of days from date
+Can get list of days from date :calendar:
 
 ~~~
     let dates = ['07.05.2021', '02.12.2017', '01.09.2023', '14.03.1906']    
@@ -330,7 +328,13 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**sortTimesByMinuteQuarters** (*list* = []) - quickly sorts times by minutes quarters and returns list with 4 quarters times.  
 
--**isCleanTime** (*time* = '') - returns true/false depending on max time's part divided on min without residue.     
+-**isCleanTime** (*time* = '') - returns true/false depending on max time's part divided on min without residue.    
+
+-**changeTimeByPercent** (*time* = '', *num* = 0, *isMinutes* = true, *isIncrease* = true, *round* = 0) - updates time's part in % by parameters.   
+
+-**filterTimesByPartsDifferenceMultiplicity** (*list* = [], *num* = 1) - filters times checking parts difference by multiplicity.   
+
+-**findNearestTimeByMultiplicity** (*time* = '', *num* = 1) - updates *time* by find nearest minutes value multiple to *num* and returns new time.    
 
 ### * Weekday *
 
@@ -456,8 +460,6 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**filterYearsByEqualAdjacentDigits** (*list* = [], *position* = 1) - returns validates list of years, each one has equal adjacent digit by *position*. 
 
--**filterYearsByEqualParityDigits** (*list* = [], *parity* = []) - validates years by list of *parity* flags (true if digit on this position is event). 
-
 -**findNearestYearByPercent** (*list* = [], *percent* = 1e1) - finds year among all list which is nearest to *percent* if max equals 100%.  
 
 -**percentByYearInsideBorders** (*min* = 1e3, *max* = 2e3, *year* = 1e3) - returns as % position of *year* inside given borders.    
@@ -549,6 +551,10 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 -**findYearsDeviationSubsequenceByResidueList** (*list* = [], *nums* = []) - finds largest subsequence with each year's residue more than nums each element.    
 
 -**allYearsBordersByParameters** (*length* = 1e1, *century* = 2e1, *num* = 1) - generates year borders in *century* with step *length*. 
+
+-**filterYearsByResidueOutsideBorders** (*list* = [], *min* = 1, *max* = 1e1, *num* = 1) - returns only those years, which residue (/ 100) outside borders. 
+
+-**getAllYearsBordersFromList** (*list* = [], *difference* = 1e1, *isMore* = true, *num* = 1) - finds pairs of years (borders) validated with *difference* by *isMore* and multiplicity *num*.      
 
 ### * Num *
 
@@ -670,7 +676,9 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**findOppositeNum** (*num* = 1) - returns number as deductible value from *num* * 10 powering. 
 
--**getNumFractions** (*num* = 1, *max* = num, *min* = 1, *multiplicity* = 1) - scatters numbers inside borders which sum will be equal to *num*.         
+-**getNumFractions** (*num* = 1, *max* = num, *min* = 1, *multiplicity* = 1) - scatters numbers inside borders which sum will be equal to *num*.    
+
+-**findNumListBorder** (*list* = [], *isMax* = true, *num* = 1) - finds max/min border with multiplicity number.       
 
 ### * Filters and Validation *
 

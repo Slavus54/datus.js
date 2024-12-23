@@ -5638,6 +5638,110 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    changeTimeByPercent(time = '', num = 0, isMinutes = true, isIncrease = true, round = 0) {
+        let result = ''
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+            let part = this.parts(time, ':', true)[isMinutes]
+
+            num = Math.abs(num) > 1e2 ? num % 1e2 : num
+
+            part = this.percent(num, part, round)
+            part = isMinutes ? part : part * 6e1
+
+            value = isIncrease ? value + part : value - part
+
+            if (value >= 0 && value <= minutesMax) {
+                result = this.time(value)
+            }
+        }
+
+        return result
+    }
+
+    findNumListBorder(list = [], isMax = true, num = 1) {
+        let result = isMax ? 0 : Math.max(...list)
+
+        list.map(el => {
+            let flag = isMax ? el > result : el < result
+        
+            if (flag && el % num === 0) {
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    filterYearsByResidueOutsideBorders(list = [], min = 1, max = 1e1, num = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+        
+            if ((value < min || value > max) && value % num === 0) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    filterTimesByPartsDifferenceMultiplicity(list = [], num = 1) {
+        let result = []
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let parts = this.parts(el, ':', true)
+                let difference = Math.abs(parts[0] - parts[1])
+
+                if (difference % num === 0) {
+                    result = [...result, el]
+                }
+            }
+        })
+
+        return result
+    }
+
+    getAllYearsBordersFromList(list = [], difference = 1e1, isMore = true, num = 1) {
+        let result = []
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                if (i !== j) {
+                    let size = Math.abs(current - next)
+                    let flag = isMore ? size >= difference : size <= difference
+                    let value = current <= next ? [current, next] : [next, current]
+
+                    if (flag && size % num === 0 && result.find(el => el[0] === value[0]) === undefined) { 
+                        result = [...result, value]
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    findNearestTimeByMultiplicity(time = '', num = 1) {
+        let result = 0
+
+        if (this.isTime(time)) {
+            let value = this.time(time, 'deconvert')
+
+            result = Math[value % num > Math.round(num / 2) ? 'ceil' : 'floor'](value / num) * num
+        }
+
+        result = this.time(result)
+
+        return result
+    }
 }
 
 module.exports = Core
