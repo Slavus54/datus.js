@@ -1,5 +1,5 @@
 const HelperContainer = require('./Helper')
-const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, timePartsLimits} = require('./data')
+const {basic_value, weekdays, months, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, sizes, monthSize, seasons, day_parts, date_sizes, time_sizes, initial_date_parts, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, datePartsBorders, timeMeasures, timePosition, msDividers, timePartsLimits, minutesMin} = require('./data')
 
 class Core extends HelperContainer {
     constructor() {
@@ -5739,6 +5739,75 @@ class Core extends HelperContainer {
         }
 
         result = this.time(result)
+
+        return result
+    }
+
+    transformYearsBordersByMultiplicity(borders = [], num = 1, isInside = true) {
+        let result = borders.map((el, idx) => Math[Boolean(idx) ? isInside ? 'floor' : 'ceil' : isInside ? 'ceil' : 'floor'](el / num) * num)
+
+        return result
+    }
+
+    findAllTimePairsBySumMultiplicity(list = [], num = 1) {
+        const length = list.length
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                if (i !== j) {
+                    let current = this.time(list[i], 'deconvert')
+                    let next = this.time(list[j], 'deconvert')
+                
+                    let flag = (current + next) % num === 0
+
+                    if (flag) {
+                        let value = current <= next ? [list[i], list[j]] : [list[j], list[i]]
+
+                        if (result.find(el => el[0] === value[0]) === undefined) {
+                            result = [...result, value]
+                        }                        
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
+    findTermsOfNumByMultiplicityList(num = 1, list = [], quantity = 1) {
+        let result = []
+        let pointer = 0
+
+        for (let i = 0; i < quantity; i++) {
+            let value = list[pointer]
+            let border = Math.floor(num / (value * (quantity - i))) 
+  
+            value *= this.getIntervalValue([1, border])
+        
+            pointer = pointer < list.length - 1 ? pointer + 1 : 0
+            result = [...result, value]
+            num -= value
+        }
+
+        return result
+    }
+
+    getNumResiduePercent(num = 1, divider = 1, round = 0) {    
+        let result = num % divider
+
+        result = this.percent(result, divider, round)
+
+        return result
+    }
+
+    yearByMultiplicityRandomly(num = 1, min = 1e3, max = 2e3) {
+        let result = 0
+
+        min = Math.ceil(min / num)
+        max = Math.floor(max / num)
+
+        result = this.getIntervalValue([min, max]) * num
 
         return result
     }

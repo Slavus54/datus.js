@@ -3,10 +3,10 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.4** 
+* Current Version: **2.0.5** 
 * Size ~ **250 kB** 
 * Most of algorithms have **O(n)** time complexity
-* **5.4K** lines of code and **345 methods** :gem:       
+* **5.5K** lines of code and **350 methods** :gem:       
 
 ## Links
 
@@ -334,7 +334,9 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**filterTimesByPartsDifferenceMultiplicity** (*list* = [], *num* = 1) - filters times checking parts difference by multiplicity.   
 
--**findNearestTimeByMultiplicity** (*time* = '', *num* = 1) - updates *time* by find nearest minutes value multiple to *num* and returns new time.    
+-**findNearestTimeByMultiplicity** (*time* = '', *num* = 1) - updates *time* by find nearest minutes value multiple to *num* and returns new time.  
+
+-**findAllTimePairsBySumMultiplicity** (*list* = [], *num* = 1) - returns only those times which pair's sum of minutes divided on *num* without residue.        
 
 ### * Weekday *
 
@@ -554,7 +556,11 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**filterYearsByResidueOutsideBorders** (*list* = [], *min* = 1, *max* = 1e1, *num* = 1) - returns only those years, which residue (/ 100) outside borders. 
 
--**getAllYearsBordersFromList** (*list* = [], *difference* = 1e1, *isMore* = true, *num* = 1) - finds pairs of years (borders) validated with *difference* by *isMore* and multiplicity *num*.      
+-**getAllYearsBordersFromList** (*list* = [], *difference* = 1e1, *isMore* = true, *num* = 1) - finds pairs of years (borders) validated with *difference* by *isMore* and multiplicity *num*.  
+
+-**transformYearsBordersByMultiplicity** (*borders* = [], *num* = 1, *isInside* = true) - transforms borders of years by *num* as multiple number.  
+
+-**yearByMultiplicityRandomly** (*num* = 1, *min* = 1e3, *max* = 2e3) - returns randomly generated year with *num* mutliple inside borders.  
 
 ### * Num *
 
@@ -678,7 +684,11 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**getNumFractions** (*num* = 1, *max* = num, *min* = 1, *multiplicity* = 1) - scatters numbers inside borders which sum will be equal to *num*.    
 
--**findNumListBorder** (*list* = [], *isMax* = true, *num* = 1) - finds max/min border with multiplicity number.       
+-**findNumListBorder** (*list* = [], *isMax* = true, *num* = 1) - finds max/min border with multiplicity number.    
+
+-**findTermsOfNumByMultiplicityList** (*num* = 1, *list* = [], *quantity* = 1) - returns terms of *num* by multiplicity *list*. 
+
+-**getNumResiduePercent** (*num* = 1, *divider* = 1, *round* = 0) - returns % of *divider* of *num* residue divided on *divider*.       
 
 ### * Filters and Validation *
 
