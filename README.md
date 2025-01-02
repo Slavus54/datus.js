@@ -3,10 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.5** 
-* Size ~ **250 kB** 
+* Current Version: **2.0.6** 
 * Most of algorithms have **O(n)** time complexity
-* **5.5K** lines of code and **350 methods** :gem:       
+* **4.8K** lines of code and **295 methods** :gem:       
 
 ## Links
 
@@ -336,7 +335,13 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**findNearestTimeByMultiplicity** (*time* = '', *num* = 1) - updates *time* by find nearest minutes value multiple to *num* and returns new time.  
 
--**findAllTimePairsBySumMultiplicity** (*list* = [], *num* = 1) - returns only those times which pair's sum of minutes divided on *num* without residue.        
+-**findAllTimePairsBySumMultiplicity** (*list* = [], *num* = 1) - returns only those times which pair's sum of minutes divided on *num* without residue.    
+
+-**smoothTimesByMultiplicity** (*list* = [], *num* = 1) - changes times by reducing minute difference between adjacent elements.    
+
+-**findAllTimestampsByMultiplicity** (*num* = 1, *min* = 1e2, *max* = 6e2) - builds list of times multiple *num* inside borders.    
+
+-**timestampsByHoursAndRatio** (*list* = [], *ratio* = 1) - returns times by *list* of hours and minute *ratio* as multiplier of each hour element. 
 
 ### * Weekday *
 
@@ -560,135 +565,9 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**transformYearsBordersByMultiplicity** (*borders* = [], *num* = 1, *isInside* = true) - transforms borders of years by *num* as multiple number.  
 
--**yearByMultiplicityRandomly** (*num* = 1, *min* = 1e3, *max* = 2e3) - returns randomly generated year with *num* mutliple inside borders.  
+-**yearByMultiplicityRandomly** (*num* = 1, *min* = 1e3, *max* = 2e3) - returns randomly generated year with *num* mutliple inside borders. 
 
-### * Num *
-
--**convert** (*value* = null, *key* = 'convert') - convert Indian number to Roman and reverse, return string by default or number. 
-
--**border** (*num* = null, *isRome* = false) - receives century (number Indian or string Roman) and returns array of first and last year of century.    
-
--**century** (*year* = 1000, *isRome* = false) - return century in Roman/Indian format by year (number).
-
--**numToDottedString** (*year* = 2e3) - converts *number* into string with every 3 digits dot and returns it.      
-
--**numDigitInResidueExist** (*num* = 1e1, *position* = 1) - checks if digit *num* by *position* exist in it residue.    
-
--**digitsOfNum** (*num* = 1e1) - returns list of num's digits, each one is multiplied by powered 10.        
-
--**numResidueSum** (*num* = 1e1) - counts sum of all digits of num's fractional part.   
-
--**numSimpleProgression** (*start* = 1e3, *step* = 1, *length* = 1e1, *isIncrease* = true) - builds a number progression by parameters. 
-
--**numPercentProgression** (*num* = 1, *percent* = 1e1, *iterations* = 1, *round* = 0) - multiplies *num* by *iterations* on *percent* = (1 + *percent* * 0.01).    
-
--**analysisProgressionIterations** (*list* = []) - analyzes list of numbers and returns array of math actions and values.   
-
--**numLevelsOfMultiplicity** (*value* = 2e3, *num* = 1) - counts times of division *value* on *num* without residue.    
-
--**numCompareWithBorders** (*num* = 1, *list* = [], *isMore* = true, *percent* = null) - filters years by comparing with num as border. 
-
--**numPositionInsideBorders** (*num* = 1, *min* = 1, *max* = 1e1, *round* = 0) - returns % as position of *num* inside borders. 
-
--**buildNumBorders** (*min* = 0, *numbers* = []) - builds list of borders as pairs in *numbers* chain starts from *min*.    
-
--**findMaximumNumDifferenceByIndexedDistance** (*list* = [], *percent* = 1e1) - looking for max difference between numbers on distance by *percent* of list length. 
-
--**findNumDistanceByDifference** (*list* = [], *percent* = 1e1) - returns positions of number which have difference by % (max - min).   
-
--**findNumLargestCompareSubsequence** (*list* = [], *num* = 1, *isMore* = true) - finds largest subsequence in *list*, each of its elements compared with *num* by *isMore* flag.   
-
--**findNumMultiplicityList** (*list* = [], *num* = 1) - filters *list* of numbers and returns only divided on *num* without residue.    
-
--**numPercentBorders** (*num*= 1, *percent* = 1e1, *round* = 0) - returns borders generated as -+ *num* and *percent* of *num*. 
-
--**findNumDigitPercentFromAll** (*num* = 1, *digit* = 1, *round* = 0) - counts % from *num* as *digit* of *num* (#2 1368 - 68 into %).  
-
--**numReverse** (*num* = 1) - just reverses given number.   
-
--**largestFractionaNumPartByDividerInterval** (*num* = 1, *interval* = []) - finds divider of *num* among list of *interval*, which divides *num* with largest fractional part. 
-
--**nearestBaseOfNumPower** (*num* = 1, *power* = 2) - returns base, which will be too close by powering to *num*.   
-
--**getNumTask** (*num* = 1, *symbol* = '+') - generates simple math task.   
-
--**findNumDigitPercentFromOtherDigit** (*num* = 1e1, *digit* = 2, *other* = 1, *round* = 0) - returns rounded % of *digit* from *other*.    
-
--**findNearestNumByMultiplicity** (*num* = 1, *times* = 1, *multiple* = 1) - returns nearest multiplication *num* on *times* divided on *multiple* without any residue. 
-
--**findSmallestNumByMultipleList** (*list* = []) - builds multiplication of each element of *list* while current value divided on element without residue.  
-
--**getNumDigitFactorial** (*num* = 1) - generates factorial value based on num's digits.    
-
--**getNumSequence** (*list* = [], *isIncrease* = true) - finds smallest/largest value and builds sequence by *isIncrese* flag with grow/decrease ordered numbers for one iteration. 
-
--**splitNum** (*num* = 1, *digit* = 1) - splits *num* on two values: first *digit* of number and *num* - first. 
-
--**joinNum** (*list* = [], *iterations* = 1, *power* = 2) - generates values as sum of random choosen number from *list* powered by random extent from 0 to *power*.    
-
--**getNumByDigit** (*num* = 1) - returns randomly generated number, which length is *num*.  
-
--**factorizeNum** (*num* = 1, *size* = 1, *min* = 1, *max* = 1) - builds an array of dividers of *num* with *size* length.  
-
--**findNumNearestPowerDifference** (*num* = 1, *power* = 2, *isPrev* = true, *round* = 0) - returns % of difference between nearest powered numbers of *num*.   
-
--**findNumDeviationPercent** (*list* = [], *num* = 1, *isMore* = true, *round* = 0) - counts deviation by *num* as % of max / min number (by *isMore*) of *list*.   
-
--**filterNumByDifferenceMultiplicity** (*list* = []) - filters and returns only those numbers, which difference is multiplicity for them both.  
-
--**findNumResiduePercent** (*num* = 1, *divider* = 1, *round* = 0) - returns % of *num* residue by *divider*.   
-
--**countNumDigit** (*num* = 1, *digit* = 1) - counts quantity of *digit* in *num*.  
-
--**findNumSymmentry** (*list* = [], *round* = 0) - returns % of *list* symmetry.    
-
--**findNumRowDispersion** (*list* = []) - counts num equals max / min ratio in row. 
-
--**mixNumList** (*list* = []) - just mixes list of numbers and returns result.  
-
--**findNumListAverageDeviation** (*list* = [], *num* = 1, *isMore* = null) - returns average *list* deviation from *num* by flag *isMore*.  
-
--**findNearestNumByPairsMultiplication** (*list* = [], *num* = 1) - finds nearest to *num* multiplication of numbers in *list*. 
-
--**numDivisionOnDigit** (*num* = 1, *digit* = 1) - returns *num* divided by *digit* number. 
-
--**inverseNum** (*num* = 1) - inverses each digit of num and returns result.    
-
--**getNumByRandomlyDigit** (*num* = 1, *digit* = 1) - updates *num* by changing *digit* randomly.   
-
--**getNumPairs** (*list* = [], *isIncrease* = null) - returns all pairs of numbers by *isIncrease* in *list*.   
-
--**discardNumDigits** (*num* = 1, *digit* = 1) - subtracts number by *digit* from *num*.    
-
--**nearestPowerOfNumAndBase** (*num* = 1, *base* = 1, *accuracy* = 1) - returns nearest power of *base* to build *num*. 
-
--**getNumMultiplicationPairs** (*num* = 1) - finds all pairs of numbers which multiplication is equal to *num*. 
-
--**getNumDividers** (*num* = 1) - returns all dividers on *num*.    
-
--**getNumListNearestPair** (*list* = [], *percent* = 1e1, *round* = 0) - finds the most close values in *list* by *percent* of difference.  
-
--**getNumLargestPairDifference** (*num* = 1) - returns pair with largest difference of numbers. 
-
--**findAllNumListPairsByMultiplicityDifference** (*list* = [], *num* = 1) - filters and returns only those numbers, which pair's difference divided on *num* without residue.   
-
--**jumpNumList** (*num* = 1) - jumping on numbers list and returns latest value, which can reach. (Jump Game)   
-
--**findAverageNumListByPartition** (*list* = [], *size* = 1, *isMax* = true) - finds average number of all list's subseqences parted by *size*. 
-
--**buildNumListByPeak** (*start* = 1, *end* = 1, *num* = 1, *size* = 1, *position* = 1) - builts list of numbers with *num* peak by parameters. 
-
--**findNumListAverageFault** (*list* = [], *num* = 1, *round* = 2) - counts fault of fractional part of each *list* number.  
-
--**findOppositeNum** (*num* = 1) - returns number as deductible value from *num* * 10 powering. 
-
--**getNumFractions** (*num* = 1, *max* = num, *min* = 1, *multiplicity* = 1) - scatters numbers inside borders which sum will be equal to *num*.    
-
--**findNumListBorder** (*list* = [], *isMax* = true, *num* = 1) - finds max/min border with multiplicity number.    
-
--**findTermsOfNumByMultiplicityList** (*num* = 1, *list* = [], *quantity* = 1) - returns terms of *num* by multiplicity *list*. 
-
--**getNumResiduePercent** (*num* = 1, *divider* = 1, *round* = 0) - returns % of *divider* of *num* residue divided on *divider*.       
+-**findYearsPairsByDifferenceMultiplicity** (*list* = [], *min* = 0, *max* = 1e1, *num* = 1) - finds only those year pairs, which has difference multimple *num* inside borders.    
 
 ### * Filters and Validation *
 

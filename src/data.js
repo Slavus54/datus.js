@@ -94,37 +94,6 @@ let timeMeasures = [
     }
 ]
 
-let rome_nums = [
-    {
-        title: 'I',
-        value: 1
-    },
-    {
-        title: 'V',
-        value: 5
-    },
-    {
-        title: 'X',
-        value: 10
-    },
-    {
-        title: 'L',
-        value: 50
-    },
-    {
-        title: 'C',
-        value: 100
-    },
-    {
-        title: 'D',
-        value: 500
-    },
-    {
-        title: 'M',
-        value: 1000
-    }
-]
-
 let day_parts = [
     {
         title: 'Night',
@@ -218,4 +187,4 @@ let time_sizes = [60, 1]
 let initial_date_parts = [1, 1, 1970]
 let timePosition = 2
 
-module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, rome_nums, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, timePartsLimits, datePartsBorders, timeMeasures, timePosition, msDividers, ageBorders}
+module.exports = {basic_value, weekdays, months, sizes, minutesMin, minutesMid, minutesMax, time_start, base, binary_check_items, monthSize, seasons, day_parts, date_sizes, initial_date_parts, time_sizes, zodiacSigns, solarSystemPlanets, abc, specs, operations, datePeriods, timePeriods, timePartsBorders, timePartsLimits, datePartsBorders, timeMeasures, timePosition, msDividers, ageBorders}

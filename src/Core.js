@@ -189,67 +189,6 @@ class Core extends HelperContainer {
 
         return Math.abs(max - min)
     }
-
-    convert(value = null, key = 'convert') {
-        let result 
-
-        if (key === 'convert') {
-            result = '' 
-
-            let volume = Math.abs(value) 
-            let isBorder = (volume + 1) % 5 === 0 
-
-            if (isBorder) {
-                volume++
-            }
-
-            let part = rome_nums.findLast(el => el.value <= volume)
-            
-            while (volume > 0 && part !== undefined) {
-
-                result += isBorder && volume - part.value === 0 ? 'I' + part.title : part.title
-                volume -= part.value
-
-                part = rome_nums.findLast(el => el.value <= volume)  
-            }
-
-        } else if (key === 'deconvert') {
-            result = 0
-
-            let arr = value.split('')
-            let isBorder = false
-
-            for (let i = 1; i < arr.length; i++) {
-                let current = arr[i]
-                let prev = arr[i - 1]
-
-                isBorder = prev === 'I' && current !== 'I'
-
-                let num = isBorder ? rome_nums.find(el => el.title === current) : rome_nums.find(el => el.title === prev)
-              
-                if (num !== undefined) {
-                    result += isBorder ? num.value - 1 : num.value
-                }
-            }    
-
-            result = isBorder ? result : result + 1
-        }
-
-        return result
-    }
-
-    border(num = null, isRome = false) {
-        let value = isRome ? this.convert(num, 'deconvert') : num  
-        let borders = [(value - 1)*1e1**2 + 1, value*1e1**2]
-
-        return borders
-    }
-
-    century(year = 1e3, isRome = false) {
-        let num = Math.ceil(year / 1e2)
-    
-        return isRome ? this.convert(num, 'convert') : num
-    }
     
     now(format = 'all', divider = '') {
         let minutes = this.date.getHours() * 6e1 + this.date.getMinutes()
@@ -2267,20 +2206,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    numToDottedString(year = 2e3) {
-        let text = String(year).split('')
-        let length = text.length - 1
-        let result = []
-
-        for (let i = length; i >= 0; i--) {
-            result = [...result, (length - i) % 3 === 0 && i !== length ? text[i] + '.' : text[i]]
-        }
-
-        result = result.reverse().join('')
-
-        return result
-    }
-
     yearsByProgression(start = 2e3, size = 1e2, steps = [], round = 0) {
         let result = []
 
@@ -2809,40 +2734,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    numDigitInResidueExist(num = 1e1, position = 1) {
-        let digit = this.getYearDigit(num, position)
-        let items = String(num).split('.')[1].split('')
-        let result = false
-
-        items.map(el => {
-            if (Number(el) === digit) {
-                result = true
-            }
-        })
-
-        return result
-    }
-
-    digitsOfNum(num = 1e1) {
-        const int = num
-
-        let result = []
-        let position = 1
-
-        while (num > 0) {
-            let value = this.getYearDigit(int, position) * 10**(position - 1)
-
-            result = [...result, value]
-            
-            num -= value
-            position++
-        }
-
-        result = result.reverse()
-
-        return result
-    }
-
     filterYearsByDeviation(list = [], year = 1e3, dispersion = 5, isEven = null) {
         let result = []
 
@@ -2862,16 +2753,6 @@ class Core extends HelperContainer {
                 result = [...result, el]
             }
         })
-
-        return result
-    }
-
-    numResidueSum(num = 1e1) {
-        let result = 0
-
-        if (String(num).includes('.')) {
-            result = String(num).split('.')[1].split('').map(el => Number(el)).reduce((acc, cur) => acc + cur)
-        }
 
         return result
     }
@@ -2897,19 +2778,6 @@ class Core extends HelperContainer {
 
         return result
     }   
-
-    numSimpleProgression(start = 1e3, step = 1, length = 1e1, isIncrease = true) {
-        let result = []
-        let value = start
-
-        for (let i = 0; i < length; i++) {
-            value = isIncrease ? value + step : value - step
-
-            result = [...result, value]
-        }
-
-        return result
-    }
 
     timestampsByRadius(base = 6e2, border = 1e2, forward = 1, back = forward) {
         const sum = forward + back
@@ -3043,51 +2911,6 @@ class Core extends HelperContainer {
             }
         })
 
-        return result
-    }
-
-    numPercentProgression(num = 1, percent = 1e1, iterations = 1, round = 0) {
-        const step = 1 + this.cleanValue(percent, 1, 2)
-        let result = num
-        
-        for (let i = 0; i < iterations; i++) {
-            result *= step
-        } 
-
-        result = this.cleanValue(1e2, result, round)
-
-        return result
-    }
-
-    analysisProgressionIterations(list = []) {
-        let result = []
-
-        list.map((el, idx) => {
-            let next = list[idx + 1]
-
-            if (next) {
-                let couple = [el, next]
-                let difference = Math.abs(el - next)
-                let max = Math.max(...couple)
-                let min = Math.min(...couple)
-                let symbol
-
-                if (max % min !== 0) {
-                    symbol = el <= next ? '+' : '-'
-                } else if (difference >= min && max % min === 0) {
-                    symbol = el < next ? '*' : '/'
-                    
-                    difference = Math.floor(max / min) 
-                }
-
-                let iteration = `${symbol} ${difference}`
-
-                if (result.find(item => item === iteration) === undefined) {
-                    result = [...result, iteration]
-                }                
-            }
-        })
-        
         return result
     }
 
@@ -3479,17 +3302,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    numLevelsOfMultiplicity(value = 2e3, num = 1) {
-        let result = 0
-
-        while (value % num === 0) {
-            value /= num
-            result++
-        }
-
-        return result
-    }
-
     timesInsideBorders(min = 1e2, max = 1e3, step = 1e1) {
         let result = []
 
@@ -3698,50 +3510,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    numCompareWithBorders(num = 1, list = [], isMore = true, percent = null) {
-        const border = this.cleanValue(percent, num, 0)
-        let result = []
-
-        list.map(el => {
-            let flag = isMore && num > el || !isMore && num < el
-
-            if (percent !== null) {
-                let difference = Math.abs(el - num)
-
-                if (difference > border) {
-                    flag = false
-                }
-            }
-
-            if (flag) {
-                result = [...result, el]
-            }
-        })
-
-        return result
-    }
-
-    numPositionInsideBorders(num = 1, min = 1, max = 1e1, round = 0) {
-        let difference = Math.abs(max - min)
-        let result = this.percent(Math.abs(num - min), difference, round)
-
-        return result
-    }
-
-    buildNumBorders(min = 0, numbers = []) {
-        let result = []
-
-        for (let i = 0; i < numbers.length; i++) {
-            let current = numbers[i]
-
-            result = [...result, [min, current]]
-        
-            min = current
-        }
-
-        return result
-    }
-
     yearsByCenturyBorders(borders = [], num = 1e1, step = 5) {
         let result = []
 
@@ -3772,51 +3540,6 @@ class Core extends HelperContainer {
                 }
             }
         })
-
-        return result
-    }
-
-    findMaximumNumDifferenceByIndexedDistance(list = [], percent = 1e1) {
-        let distance = this.cleanValue(percent, list.length, 0)
-        let result = 0
-        let index = 0
-
-        while (index < (list.length - distance)) {
-            let first = list[index]
-            let second = list[distance + index]
-        
-            let difference = Math.abs(first - second)
-
-            if (difference > result) {
-                result = difference
-            }
-
-            index++
-        }
-
-        return result
-    }
-
-    findNumDistanceByDifference(list = [], percent = 1e1) {
-        let max = Math.max(...list)
-        let min = Math.min(...list)
-        let difference = Math.abs(max - min)
-        let deviation = 1e5
-        let result = []
-
-        difference = this.cleanValue(percent, difference, 0)
-
-        for (let i = 0; i < list.length; i++) {
-            for (let j = 0; j < list.length; j++) {
-                let value = Math.abs(list[j] - list[i])
-                let odds = Math.abs(value - difference)
-       
-                if (odds < deviation) {
-                    result = [i, j]
-                    deviation = odds
-                }
-            }
-        }
 
         return result
     }
@@ -3881,29 +3604,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findNumLargestCompareSubsequence(list = [], num = 1, isMore = true) {
-        let result = []
-        let seq = []
-        let maxlength = 0
-
-        list.map(el => {
-            let check = isMore && num > el || !isMore && num < el
-
-            if (check) {
-                seq = [...seq, el]
-            } else {
-                seq = []
-            }
-
-            if (seq.length > maxlength) {
-                result = seq
-                maxlength = seq.length
-            }
-        })
-
-        return result
-    }
-
     filterYearsByResidueExclude(list = [], num = 1e1) {
         let result = []
 
@@ -3911,20 +3611,6 @@ class Core extends HelperContainer {
             let value = el % 1e2
 
             if (value !== num) {
-                result = [...result, el]
-            }
-        })
-
-        return result
-    }
-
-    findNumMultiplicityList(list = [], num = 1) {
-        let result = []
-
-        list.map(el => {
-            let value = el % num
-
-            if (!Boolean(value)) {
                 result = [...result, el]
             }
         })
@@ -4028,13 +3714,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    numPercentBorders(num = 1, percent = 1e1, round = 0) { 
-        let size = this.cleanValue(percent, num, round)
-        let result = [num - size, num + size]
-    
-        return result
-    }
-
     yearsByFractions(start = 1e3, end = 2e3, list = []) {   
         const difference = Math.abs(end - start)
         const isIncrease = start < end
@@ -4049,13 +3728,6 @@ class Core extends HelperContainer {
             
             result = [...result, value]
         })
-
-        return result
-    }
-
-    findNumDigitPercentFromAll(num = 1, digit = 1, round = 0) {
-        let value = this.getYearDigit(num, digit)
-        let result = this.percent(value * 1e1**(digit - 1), num, round)
 
         return result
     }
@@ -4075,21 +3747,6 @@ class Core extends HelperContainer {
                 }
             }
         })
-
-        return result
-    }
-
-    numReverse(num = 1) {
-        const length = String(num).length
-        let result = new Array(length).fill(0)
-
-        for (let i = 1; i <= length; i++) {
-            let digit = this.getYearDigit(num, i)
-
-            result[i] = digit
-        }
-
-        result = Number(result.join(''))
 
         return result
     }
@@ -4258,26 +3915,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    largestFractionaNumPartByDividerInterval(num = 1, interval = []) {
-        let length = 0
-        let result = 0
-
-        for (let i = interval[0]; i < interval[1]; i++) {
-            let value = String((num % i / i))
-
-            if (value.includes('.')) {
-                value = value.split('.')[1]
-            }
-
-            if (value.length > length) {
-                length = value.length
-                result = i
-            }
-        }
-
-        return result
-    }
-
     filterAdjecentTimesByPartActionMultiplicity(list = [], num = 1, isMinutes = true, isSum = true) {
         let result = []
 
@@ -4295,18 +3932,6 @@ class Core extends HelperContainer {
                 }
             }
         })
-
-        return result
-    }
-
-    nearestBaseOfNumPower(num = 1, power = 2) {
-        let result = 1
-
-        while (result**power < num) {
-            result++
-        }
-
-        result--
 
         return result
     }
@@ -4373,52 +3998,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    getNumTask(num = 1, symbol = '+') {
-        let result = ''
-        let first, second
-
-        if (symbol === '*') {
-            first = Math.floor(Math.random() * num)
-            second = num / first
-
-            while (num % second !== 0) {
-                first = Math.floor(Math.random() * num)
-                second = num / first
-            }
-
-        } else if (symbol === '/') {
-            first = Math.floor(Math.random() * num**2)
-            second = first / num
-
-            while (first % num !== 0) {
-                first = Math.floor(Math.random() * num**2)
-                second = first / num
-            }
-
-        } else {
-
-            first = Math.floor(Math.random() * num)
-            
-            if (symbol === '-') {
-                first += num
-            }
-
-            second = Math.abs(num - first)
-        }
-
-        result = `${first} ${symbol} ${second}`
-
-        return result
-    }
-
-    findNumDigitPercentFromOtherDigit(num = 1e1, digit = 2, other = 1, round = 0) {
-        let value = this.getYearDigit(num, digit) * 1e1**(digit - 1)
-        let toCompare = this.getYearDigit(num, other) * 1e1**(other - 1)
-        let result = this.percent(value, toCompare, round) 
-
-        return result
-    }
-
     filterTimesByPartsResidue(list = [], num = 1, residue = 1, isMinutes = true) {
         const index = Number(isMinutes)
         let result = []
@@ -4443,28 +4022,6 @@ class Core extends HelperContainer {
             let value = year + this.getIntervalValue([1, max]) * step
        
             result = [...result, value]
-        }
-
-        return result
-    }
-
-    findNearestNumByMultiplicity(num = 1, times = 1, multiple = 1) {
-        let result = Math.floor(num * times)
-
-        result = Math[result % multiple < Math.round(multiple / 2) ? 'floor' : 'ceil'](result / multiple) * multiple
-
-        return result
-    }
-
-    findSmallestNumByMultipleList(list = []) {
-        let result = 1
-
-        for (let i = 0; i < list.length; i++) {
-            let num = list[i]
-
-            if (result % num !== 0) {
-                result *= num
-            }
         }
 
         return result
@@ -4586,22 +4143,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    getNumDigitFactorial(num = 1) {        
-        let length = String(num).length
-        let index = 1
-        let result = 1
-    
-        while (index <= length) {
-            let digit = this.getYearDigit(num, index)
-            let flag = Boolean(digit)
-            
-            result = flag ? result * digit : digit
-            index = flag ? index + 1 : length   
-        }
-
-        return result
-    }
-
     yearsByRandomlySchemaDeviation(year = 1e3, schema = [], forward = 1e1, back = forward) {
         let result = []
 
@@ -4611,22 +4152,6 @@ class Core extends HelperContainer {
             value = el ? year + value : year - value
 
             result = [...result, value]
-        })
-
-        return result
-    }
-
-    getNumSequence(list = [], isIncrease = true) {
-        let result = []
-        let latest = Math[isIncrease ? 'min' : 'max'](...list)
-
-        list.map(el => {
-            let flag = isIncrease ? el >= latest : el <= latest
-
-            if (flag) {
-                result = [...result, el]
-                latest = el 
-            }
         })
 
         return result
@@ -4643,32 +4168,6 @@ class Core extends HelperContainer {
                 result = [...result, el]
             }
         })
-
-        return result
-    }
-    
-    splitNum(num = 1, digit = 1) {
-        let result = []           
-        let value = 0
-
-        for (let i = 1; i <= digit; i++) {
-            value += this.getYearDigit(num, i) * 1e1**(i - 1)
-        }
-
-        result = [value, num - value]
-
-        return result
-    }
-
-    joinNum(list = [], iterations = 1, power = 2) {
-        let result = 0
-
-        for (let i = 0; i < iterations; i++) {
-            let value = list[Math.floor(Math.random() * list.length)]
-            let extent = this.getIntervalValue([0, power])
-    
-            result += value * 1e1**extent
-        }
 
         return result
     }
@@ -4713,33 +4212,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    getNumByDigit(num = 1) {
-        let result = 0
-
-        for (let i = 0; i < num; i++) {
-            result += this.getIntervalValue([Number(i === 0), 9]) * 1e1**i
-        }
-
-        return result
-    }
-
-    factorizeNum(num = 1, size = 1, min = 1, max = 1) {
-        let result = []
-
-        for (let i = 0; i < size; i++) { 
-            let value = this.getIntervalValue([min, max])
-          
-            while (num % value !== 0) {
-                value = this.getIntervalValue([min, max])
-            }
-
-            result = [...result, value]
-            num /= value
-        }
-
-        return result
-    }
-
     sortYearsByResidue(list = [], isIncrease = true) {
         let result = []
         let residue = isIncrease ? 0 : 1e2
@@ -4753,17 +4225,6 @@ class Core extends HelperContainer {
                 residue = value
             }
         })
-
-        return result
-    }
-
-    findNumNearestPowerDifference(num = 1, power = 2, isPrev = true, round = 0) {
-        const square = num**power
-        let result = [num - 1, num + 1]
-
-        result = result.map(el => el**power).map(el => Math.abs(square - el))
-        
-        result = this.percent(result[Number(!isPrev)], result[Number(isPrev)], round)
 
         return result
     }
@@ -4782,32 +4243,6 @@ class Core extends HelperContainer {
         })
 
         result = Math.round(result / num)
-
-        return result
-    }
-
-    findNumDeviationPercent(list = [], num = 1, isMore = true, round = 0) {
-        let difference = Math.abs(Math.max(...list) - Math.min(...list))
-        let value = Math.abs(Math[isMore ? 'max' : 'min'](...list) - num)
-        let result = this.percent(value, difference, round)
-
-        return result
-    }
-
-    filterNumByDifferenceMultiplicity(list = []) {
-        let result = []
-
-        list.map((el, idx) => {
-            let next = list[idx + 1]
-
-            if (next) {
-                let difference = Math.abs(next - el)
-
-                if (!Boolean(next % difference) && !Boolean(el % difference)) {
-                    result = result[result.length - 1] === el ? [...result, next] : [...result, el, next]
-                }
-            }
-        })
 
         return result
     }
@@ -4882,33 +4317,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    countNumDigit(num = 1, digit = 1) { 
-        let flag = true
-        let latest = 1
-        let counter = 1
-        let result = 0
-                
-        while (flag) {
-            let value = this.getYearDigit(num, counter)
-
-            if (value === digit) {
-                result++
-            }
-
-            if (value !== 0) {
-                latest = value
-            } else {
-                latest--
-            
-                flag = Boolean(latest)
-            }
-           
-            counter++
-        }
-
-        return result
-    }
-
     filterYearsByQuarterSchema(list = [], schema = []) {
         let result = []
         let index = 0
@@ -4921,28 +4329,6 @@ class Core extends HelperContainer {
                 index++
             }
         })
-
-        return result
-    }
-
-    findNumSymmentry(list = [], round = 0) {
-        const length = list.length
-
-        let index = Math.floor(length / 2)
-        let result = 0
-
-        for (let i = 0; i < index; i++) {
-            let left = list[i]
-            let right = list[length - i - 1]
-            
-            let difference = Math.abs(left - right)
-         
-            difference = this.percent(difference, right < left ? right : left, round)
-   
-            result += difference 
-        }   
-
-        result = 1e2 - Math.round(result / index)
 
         return result
     }
@@ -4967,41 +4353,8 @@ class Core extends HelperContainer {
         return result
     }
 
-    findNumRowDispersion(list = []) {
-        let result = 1e6
-        let pointer = 0
-
-        list.map(el => {
-            if (el > pointer) {
-                pointer = el 
-            } else if (el < result) {
-                result = el
-            }
-        })
-
-        result = Math.round(pointer / result)
-
-        return result
-    }
-
     convertYearResidueIntoGap(year = 1e3) {
         let result = Math.floor(year / 1e2) * 1e2 + (1e2 - year % 1e2)
-
-        return result
-    }
-
-    mixNumList(list = []) {
-        let result = new Array(list.length).fill(null)
-
-        list.map((el, idx) => {
-            let index = Math.floor(Math.random() * list.length)
-
-            while (result[index] !== null || index === idx) {
-                index = Math.floor(Math.random() * list.length)
-            }
-
-            result[index] = el
-        })
 
         return result
     }
@@ -5013,25 +4366,6 @@ class Core extends HelperContainer {
             result = this.time(time, 'deconvert')
             result = this.percent(result, minutesMax, round)
         }
-
-        return result
-    }
-
-    findNumListAverageDeviation(list = [], num = 1, isMore = null) {
-        let result = 0
-        let counter = 0
-
-        list.map(el => {
-            let difference = Math.abs(el - num)
-            let flag = isMore && el >= num || !isMore && el <= num || isMore === null
-
-            if (flag) {
-                result += difference
-                counter++
-            }            
-        })
-
-        result = Math.round(result / counter)
 
         return result
     }
@@ -5060,31 +4394,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findNearestNumByPairsMultiplication(list = [], num = 1) {
-        let change = num
-        let result = 0
-
-        for (let i = 0; i < list.length; i++) {
-            for (let j = 0; j < list.length; j++) {
-                let current = list[i]
-                let next = list[j]
-
-                if (i !== j) {
-                    current *= next
-
-                    let difference = Math.abs(current - num)
-
-                    if (difference < change) {
-                        result = current
-                        change = difference
-                    }
-                }
-            }
-        }
-
-        return result
-    }
-
     checkTimePartsByOneDigitDifference(time = '') {
         let result = true
 
@@ -5096,13 +4405,6 @@ class Core extends HelperContainer {
                 result = false
             }
         }
-
-        return result
-    }
-
-    numDivisionOnDigit(num = 1, digit = 1) {
-        let value = this.getYearDigit(num, digit) * 1e1**(digit - 1)
-        let result = Math.round(num / value)
 
         return result
     }
@@ -5119,37 +4421,6 @@ class Core extends HelperContainer {
                 index++
             }
         })
-
-        return result
-    }
-
-    inverseNum(num = 1) {
-        const text = String(num)
-        const length = text.length
-
-        let result = 0
-
-        for (let i = 0; i < length; i++) {
-            let digit = Number(text[i])
-          
-            if (digit !== 0) {
-                result += (1e1 - digit) * 1e1**(length - i - 1)
-            }
-        }
-
-        return result
-    }
-
-    getNumByRandomlyDigit(num = 1, digit = 1) {
-        const length = String(num).length
-        let result = 0
-
-        for (let i = 0; i < length; i++) {
-            let index = length - i
-            let value = digit === index ? this.getIntervalValue([Boolean(digit) ? 0 : 1, 9]) : this.getYearDigit(num, index)
-
-            result += value * 1e1**(index - 1)
-        }
 
         return result
     }
@@ -5217,39 +4488,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    discardNumDigits(num = 1, digit = 1) {
-        let result = num
-        
-        for (let i = 1; i <= digit; i++) {
-            let value = this.getYearDigit(num, i)
-
-            result -= value * 1e1**(i - 1)
-        }
-
-        return result
-    }
-
-    nearestPowerOfNumAndBase(num = 1, base = 1, accuracy = 1) {
-        const value = 1e1**(- accuracy)
-        let result = 1
-    
-        while (base**result <= num) {
-            result++
-        }
-       
-        result--
-
-        while (base**result < num) {
-            result += value
-        }
-
-        result -= value
-
-        result = this.toRound(result, accuracy)
-
-        return result
-    }
-
     transformYearsResidue(list = [], ratio = 1) {
         let result = []
 
@@ -5280,81 +4518,6 @@ class Core extends HelperContainer {
 
             if (flag) {
                 result = [...result, el]
-            }
-        })
-
-        return result
-    }
-
-    getNumMultiplicationPairs(num = 1) {
-        const border = Math.floor(num / 2)
-
-        let result = []
-        let pointer = 1
-        
-        while (pointer < border) {
-            let residue = num % pointer === 0
-
-            if (residue) {
-                result = [...result, [pointer, num / pointer]]
-            }
-
-            pointer++
-        }
-
-        return result
-    }
-
-    getNumDividers(num = 1) {
-        const half = Math.floor(num / 2)
-        let result = [1]
-
-        for (let i = 2; i <= half; i++) {
-            if (num % i === 0) {
-                result = [...result, i]
-            }
-        }
-
-        result = [...result, num]
-
-        return result
-    }
-
-    getNumListNearestPair(list = [], percent = 1e1, round = 0) {
-        const length = list.length
-        let result = []
-
-        for (let i = 0; i < length; i++) {
-            for (let j = 0; j < length; j++) {
-                let current = list[i]
-                let next = list[j]
-
-                let difference = Math.abs(current - next)
-            
-                difference = this.percent(difference, current, round)
-
-                if (i !== j && difference <= percent) {
-                    result = [current, next]
-                    percent = difference
-                }
-            }
-        }
-
-        return result
-    }
-
-    getNumLargestPairDifference(list = []) {
-        let result = 0
-
-        list.map((el, idx) => {
-            let next = list[idx + 1]
-
-            if (next) {
-                let difference = Math.abs(el - next)
-
-                if (difference > result) {
-                    result = difference
-                }
             }
         })
 
@@ -5400,41 +4563,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findAllNumListPairsByMultiplicityDifference(list = [], num = 1) {
-        let result = []
-
-        list.map((el, idx) => {
-            let next = list[idx + 1]
-
-            if (next) {
-                let difference = Math.abs(el - next)
-
-                if (difference % num === 0) {
-                    result = [...result, [el, next]]
-                }
-            }
-        })
-
-        return result
-    }
-
-    jumpNumList(list = []) {
-        let index = 1
-        let result = list[index - 1]
-
-        while (result > 0 && index < list.length) {
-            let value = list[index]
-
-            index += value
-
-            if (value !== undefined) {
-                result = value
-            }
-        }
-
-        return result
-    }
-
     getYearDistanceByCenturyResidue(year = 1e3, residue = 5e1) {
         let value = year % 1e2
         let result = Math.abs(value - residue)
@@ -5472,52 +4600,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findAverageNumListByPartition(list = [], size = 1, isMax = true) {
-        let border = 0
-        let index = 0
-        let result = 0
-    
-        for (let i = 0; i < list.length; i++) {
-            let value = list[i]
-  
-            if (i % size === 0 && i !== 0) {
-                let average = Math.round(border / index)
-                let flag = isMax ? average > result : average < result
-                
-                if (flag) {
-                    result = average
-                    border = 0
-                    index = 0
-                }
-            } 
-            
-            border += value
-            index++
-        }
-
-        return result
-    }
-    
-    buildNumListByPeak(start = 1, end = 1, num = 1, size = 1, position = 1) {
-        let result = []
-        let step = Math.round(Math.abs(start - num) / (position - 1)) 
-        let isIncrease = num > start
-        let isHalf = false
-
-        for (let i = 0; i < size; i++) {
-            if (!isHalf && i === position - 1) {
-                step = Math.round(Math.abs(end - num) / (size - position)) 
-                isIncrease = num < end
-                isHalf = true  
-            }
-           
-            result = [...result, start]
-            start = isIncrease ? start + step : start - step
-        }
-
-        return result
-    }
-
     sortTimesByMinuteQuarters(list = []) {
         let result = new Array(4).fill([])
 
@@ -5538,24 +4620,6 @@ class Core extends HelperContainer {
         let result = Math.abs(year % 1e2 - border)
 
         result = Math.floor(result / num) * num + year
-
-        return result
-    }
-
-    findNumListAverageFault(list = [], num = 1, round = 2) {
-        let result = 0
-        let counter = 0
-
-        list.map(el => {
-            let value = el % 1
-
-            if (value !== 0) {
-                result += Math.abs(value - num)
-                counter++
-            }
-        })
-
-        result = this.toRound(result / counter, round)
 
         return result
     }
@@ -5591,20 +4655,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findOppositeNum(num = 1) {
-        let result = 0
-        let pointer = 0
-
-        while (result < num) {
-            result = 1e1**pointer
-            pointer++
-        }
-
-        result -= num
-
-        return result
-    }
-
     allYearsBordersByParameters(length = 1e1, century = 2e1, num = 1) {
         const max = century*1e2 - length
 
@@ -5617,23 +4667,6 @@ class Core extends HelperContainer {
             result = [...result, [pointer, pointer + length]]
 
             pointer += num
-        }
-
-        return result
-    }
-
-    getNumFractions(num = 1, max = num, min = 1, multiplicity = 1) {
-        let result = []
-
-        while (num > 0) {
-            let value = this.getIntervalValue([num < min ? num : min, num < max ? num : max])
-        
-            while (value % multiplicity !== 0 && value < num) {
-                value = this.getIntervalValue([num < min ? num : min, num < max ? num : max])
-            }
-
-            result = [...result, value]
-            num -= value
         }
 
         return result
@@ -5657,20 +4690,6 @@ class Core extends HelperContainer {
                 result = this.time(value)
             }
         }
-
-        return result
-    }
-
-    findNumListBorder(list = [], isMax = true, num = 1) {
-        let result = isMax ? 0 : Math.max(...list)
-
-        list.map(el => {
-            let flag = isMax ? el > result : el < result
-        
-            if (flag && el % num === 0) {
-                result = el
-            }
-        })
 
         return result
     }
@@ -5775,32 +4794,6 @@ class Core extends HelperContainer {
         return result
     }
 
-    findTermsOfNumByMultiplicityList(num = 1, list = [], quantity = 1) {
-        let result = []
-        let pointer = 0
-
-        for (let i = 0; i < quantity; i++) {
-            let value = list[pointer]
-            let border = Math.floor(num / (value * (quantity - i))) 
-  
-            value *= this.getIntervalValue([1, border])
-        
-            pointer = pointer < list.length - 1 ? pointer + 1 : 0
-            result = [...result, value]
-            num -= value
-        }
-
-        return result
-    }
-
-    getNumResiduePercent(num = 1, divider = 1, round = 0) {    
-        let result = num % divider
-
-        result = this.percent(result, divider, round)
-
-        return result
-    }
-
     yearByMultiplicityRandomly(num = 1, min = 1e3, max = 2e3) {
         let result = 0
 
@@ -5808,6 +4801,81 @@ class Core extends HelperContainer {
         max = Math.floor(max / num)
 
         result = this.getIntervalValue([min, max]) * num
+
+        return result
+    }
+
+    smoothTimesByMultiplicity(list = [], num = 1) {
+        let result = []
+        let amount = 0
+
+        list.map(el => {
+            if (this.isTime(el)) {
+                let value = this.time(el, 'deconvert')
+                let residue = value % num
+                let toCompare = num - residue
+
+                if (residue <= toCompare) {
+                    value = Math.floor(value / num) * num
+                    amount += residue 
+                } else if (amount >= toCompare && residue >= toCompare) {
+                    value = Math.ceil(value / num) * num
+                    amount -= toCompare 
+                }
+
+                result = [...result, this.time(value)]
+            }
+        })
+
+        return result
+    }
+
+    findYearsPairsByDifferenceMultiplicity(list = [], min = 0, max = 1e1, num = 1) {
+        const length = list.length
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                if (i !== j) {
+                    let current = list[i]
+                    let next = list[j]
+
+                    let difference = Math.abs(current - next)
+                    let flag = difference <= max && difference >= min && difference % num === 0
+                    let value = current < next ? [current, next] : [next, current]
+
+                    if (flag && result.find(pair => pair[0] === value[0]) === undefined) {
+                        result = [...result, value]
+                    }
+                }
+            } 
+        }
+
+        return result
+    }
+
+    findAllTimestampsByMultiplicity(num = 1, min = 1e2, max = 6e2) {
+        let result = []
+
+        min = Math.ceil(min / num) * num
+       
+        while (min < max) {
+            result = [...result, this.time(min)]
+
+            min += num
+        }
+
+        return result
+    }
+
+    timestampsByHoursAndRatio(list = [], ratio = 1) {
+        let result = []
+
+        list.map(el => {
+            let value = Math.round(el * (6e1 + ratio)) 
+        
+            result = [...result, this.time(value)]
+        })
 
         return result
     }
