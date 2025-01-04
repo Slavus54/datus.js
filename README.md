@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.6** 
+* Current Version: **2.0.7** 
 * Most of algorithms have **O(n)** time complexity
-* **4.8K** lines of code and **295 methods** :gem:       
+* **4.9K** lines of code and **300 methods** :gem:       
 
 ## Links
 
@@ -99,7 +99,7 @@ Can get list of days from date :calendar:
     
 ## Methods     
 
-There are a lot of methods to work with 5 main themes of library: *date, time, weekday, year and num*.   
+There are 300 methods to work with common themes of library: *date, time, weekday and year*.   
 
 ### * Date and Day *
 
@@ -148,6 +148,8 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 -**dateByNum** (*num* = 1e3, *round* = 0) - generates date from *num* of year with fractional part. 
 
 -**filterDatesByMonthGap** (*dates* = [], *min* = 1e1, *max* = 1e2, *round* = 0) - filter days of year's month inside borders and returns list of dates.    
+
+-**dateBySeason** (*year* = 1e3, *season* = 'Summer') - generates date with *year* in *season* randomly.    
 
 ### * Time *
 
@@ -342,6 +344,8 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 -**findAllTimestampsByMultiplicity** (*num* = 1, *min* = 1e2, *max* = 6e2) - builds list of times multiple *num* inside borders.    
 
 -**timestampsByHoursAndRatio** (*list* = [], *ratio* = 1) - returns times by *list* of hours and minute *ratio* as multiplier of each hour element. 
+
+-**findAverageTimesDeviationByCycle** (*time* = '', *list* = [], *cycle* = 3e1, *round* = 0) - returns % of average deviation of *list* elements from *time* by minutes *cycle*.     
 
 ### * Weekday *
 
@@ -569,6 +573,10 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 
 -**findYearsPairsByDifferenceMultiplicity** (*list* = [], *min* = 0, *max* = 1e1, *num* = 1) - finds only those year pairs, which has difference multimple *num* inside borders.    
 
+-**filterYearsByRatio** (*list* = [], *ratio* = 1, *isMore* = true) - validates years by *ratio* of residue (/ 100) to centenary.   
+
+-**getYearInsideBordersByPercentMultiplicity** (*min* = 1e3, *max* = min, *percent* = 1e1, *num* = 1, *isMore* = true) - returns year multiple to *num* by % inside borders.    
+
 ### * Filters and Validation *
 
 -**filterByValue** (*date* = '22.02.2024', *period* = 'day', *value* = 22) - filter date by period with int value and return true/false.            
@@ -700,6 +708,8 @@ There are a lot of methods to work with 5 main themes of library: *date, time, w
 -**lifePart** (*periods* = [], *century* = 21, *round* = 0) - returns % of lifetime in *century*.   
 
 -**stream** (*times* = [], *durations* = []) - sets in order list of *times* with *durations*.  
+
+-**getValueByProbability** (*initial* = null, *wrong* = null, *num* = 1e1, *isRight* = null) - returns value by *num* % chance.  
 
 ### * Find *
 

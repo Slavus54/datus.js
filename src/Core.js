@@ -4879,6 +4879,95 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    filterYearsByRatio(list = [], ratio = 1, isMore = true) {
+        let result = []
+
+        list.map(el => {
+            let century = Math.floor(el / 1e2)
+            let value = (el % 1e2) / century
+        
+            let flag = isMore && value >= ratio || !isMore && value < ratio
+        
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    getValueByProbability(initial = null, wrong = null, num = 1e1, isRight = null) {
+        let borders = []
+        let fromEndHalf = Math.round((1e2 - num) / 2) 
+        let result = 0
+
+        if (isRight === null) {
+            borders = [fromEndHalf, num + fromEndHalf]
+        } else {
+            if (isRight === true) {
+                borders = [1e2 - num, 1e2]
+            } else {    
+                borders = [0, num]
+            }
+        }
+
+        result = Math.floor(Math.random() * 1e2)
+      
+        result = borders[0] <= result && borders[1] >= result ? initial : wrong
+
+        return result
+    }
+
+    dateBySeason(year = 1e3, season = 'Summer') {
+        let months = []
+        let index = seasons.indexOf(season)
+        let result = ''
+
+        if (index !== -1) {
+            let length = Boolean(index) ? 3 : 2
+
+            months = new Array(length).fill(0).map((_, idx) => Boolean(index) ? index * length + idx : idx + 1) 
+        
+            if (!Boolean(index)) {
+                months = [12, ...months]
+            }
+
+            let month = months[Math.floor(Math.random() * months.length)]
+            let size = this.getMonthSize(month)
+
+            result = `${this.rounding(this.getIntervalValue([1, size]))}.${this.rounding(month)}.${year}`
+        }
+
+        return result
+    }
+
+    getYearInsideBordersByPercentMultiplicity(min = 1e3, max = min, percent = 1e1, num = 1, isMore = true) {
+        let result = min + this.cleanValue(percent, Math.abs(max - min), 0)
+
+        result = Math[isMore ? 'ceil' : 'floor'](result / num) * num
+
+        return result
+    }
+
+    findAverageTimesDeviationByCycle(time = '', list = [], cycle = 3e1, round = 0) {
+        const border = this.time(time, 'deconvert')
+        let result = 0
+
+        list.map(el => {
+            let value = this.time(el, 'deconvert')
+            let num = Math.floor(Math.abs(border - value) / cycle) * cycle
+
+            let toCompare = value > border ? value - num : value + num
+            let difference = this.percent(Math.abs(value - toCompare), value, round)
+            
+            result += difference
+        })
+
+        result = Math.round(result / list.length)
+
+        return result
+    }
 }
 
 module.exports = Core
