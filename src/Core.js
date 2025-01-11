@@ -4409,7 +4409,7 @@ class Core extends HelperContainer {
         return result
     }
 
-    findYearsSubseqenceByDeviationSchema(list = [], num = 1e3, schema = []) {
+    findYearsSubsequenceByDeviationSchema(list = [], num = 1e3, schema = []) {
         let result = []
         let index = 0
 
@@ -4965,6 +4965,106 @@ class Core extends HelperContainer {
         })
 
         result = Math.round(result / list.length)
+
+        return result
+    }
+
+    findAllYearsByCenturyAndResidueDifference(list = [], century = 0, min = 0, max = min) {
+        let result = []
+
+        const getDifference = (pair = [], isResidue = true) => {
+            pair = pair.map(el => isResidue ? el % 1e2 : Math.ceil(el / 1e2))
+            
+            let difference = Math.abs(pair[0] - pair[1])
+            
+            return difference
+        }
+
+        for (let i = 0; i < list.length; i++) {
+            for (let j = 0; j < list.length; j++) {
+                let current = list[i]
+                let next = list[j]
+
+                let pair = current > next ? [next, current] : [current, next]
+                let value = getDifference(pair)
+                let flag = min <= value && max >= value && getDifference(pair, false) === century
+
+                if (flag && result.find(el => el[0] === pair[0]) === undefined) {
+                    result = [...result, pair]
+                }
+            }
+        }
+
+        result = result.flat(1)
+
+        return result
+    }
+
+    findNearestYearByResidue(list = [], num = 5e1) {
+        let difference = num
+        let result = 0
+        
+        list.map(el => {
+            let size = Math.abs(el % 1e2 - num)
+
+            if (size < difference) {
+                difference = size
+                result = el
+            }
+        })
+
+        return result
+    }
+
+    yearsByMultiplicityList(from = 1e3, to = 2e3, list = []) {
+        let result = []
+        let index = 0
+        let pointer = Math.ceil(from / list[index]) * list[index]
+
+        while (pointer < to) {
+            result = [...result, pointer]
+            pointer += list[index]
+
+            index = index < list.length - 1 ? index + 1 : 0 
+            pointer = Math.ceil(pointer / list[index]) * list[index]
+        }   
+
+        return result
+    }
+
+    timestampsByDayPartition(start = 1e3, num = 0) {
+        let result = []
+        let pointer = start
+
+        while (pointer < minutesMax) {
+            result = [...result, this.time(pointer)]
+
+            pointer += num
+        }
+
+        return result
+    }
+
+    findNearestYearsPair(list = []) {
+        const length = list.length
+        let pointer = 1e2
+        let result = []
+        
+        for (let i = 0; i < length; i++) {
+            for (let j = 0; j < length; j++) {
+                let current = list[i]
+                let next = list[j]
+            
+                if (i !== j) {
+                    let difference = Math.abs(current - next)
+
+                    if (difference < pointer) {
+                        pointer = difference
+                        result = [current, next]
+                    }
+                }
+            }  
+        }
 
         return result
     }

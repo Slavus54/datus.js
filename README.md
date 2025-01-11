@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.7** 
+* Current Version: **2.0.8** 
 * Most of algorithms have **O(n)** time complexity
-* **4.9K** lines of code and **300 methods** :gem:       
+* **5K** lines of code and **305 methods** :gem:       
 
 ## Links
 
@@ -345,7 +345,9 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 
 -**timestampsByHoursAndRatio** (*list* = [], *ratio* = 1) - returns times by *list* of hours and minute *ratio* as multiplier of each hour element. 
 
--**findAverageTimesDeviationByCycle** (*time* = '', *list* = [], *cycle* = 3e1, *round* = 0) - returns % of average deviation of *list* elements from *time* by minutes *cycle*.     
+-**findAverageTimesDeviationByCycle** (*time* = '', *list* = [], *cycle* = 3e1, *round* = 0) - returns % of average deviation of *list* elements from *time* by minutes *cycle*.    
+
+-**timestampsByDayPartition** (*start* = 1e3, *num* = 0) - returns all day's times after *start* minutes value with *num* step.   
 
 ### * Weekday *
 
@@ -545,7 +547,7 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 
 -**findYearsSubsequenceByAverageResidue** (*list* = [], *num* = 1e1, *fault* = 0, *round* = 0) - finds list of year which average residue (/ 100) is inside % of *num* by *fault*.  
 
--**findYearsSubseqenceByDeviationSchema** (*list* = [], *num* = 1e3, *schema* = []) - builts list of year according on comparing each element with *num* if it will be more => true, less -false by *schema*.   
+-**findYearsSubsequenceByDeviationSchema** (*list* = [], *num* = 1e3, *schema* = []) - builts list of year according on comparing each element with *num* if it will be more => true, less -false by *schema*.   
 
 -**yearsResidueBorders** (*list* = []) - generates year's [min, max] borders by residue (/ 100).    
 
@@ -576,6 +578,14 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 -**filterYearsByRatio** (*list* = [], *ratio* = 1, *isMore* = true) - validates years by *ratio* of residue (/ 100) to centenary.   
 
 -**getYearInsideBordersByPercentMultiplicity** (*min* = 1e3, *max* = min, *percent* = 1e1, *num* = 1, *isMore* = true) - returns year multiple to *num* by % inside borders.    
+
+-**findAllYearsByCenturyAndResidueDifference** (*list* = [], *century* = 0, *min* = 0, *max* = min) - returns only those years, which have *century* and residue inside borders.    
+
+-**findNearestYearByResidue** (*list* = [], *num* = 5e1) - finds year with smallest residue (/ 100) difference from *num*.  
+
+-**yearsByMultiplicityList** (*from* = 1e3, *to* = 2e3, *list* = []) - generates years by *list* multiple numbers inside borders.   
+
+-**findNearestYearsPair** (*list* = []) - finds nearest year values.    
 
 ### * Filters and Validation *
 
@@ -649,7 +659,7 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 
 -**deviation** (*step* = 600, *round* = 0) - counts absolute difference in % between now and *step*.   
 
- -**interval** (*time* = 1, *code* = '', *callStack* = 1e3) - runs your code in interval by time limit.     
+-**interval** (*time* = 1, *code* = '', *callStack* = 1e3) - runs your code in interval by time limit.     
 
 -**timeout** (*delay* = 0, *code* = '') - runs your code after delay (in seconds).  
 
@@ -711,9 +721,6 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 
 -**getValueByProbability** (*initial* = null, *wrong* = null, *num* = 1e1, *isRight* = null) - returns value by *num* % chance.  
 
-### * Find *
-
--**nearest** (*time* = '', *arr* = [], *key* = '') - finds among timestamps the most close to given time (after it) and returns it. 
 
 ### * API and Information *
 
