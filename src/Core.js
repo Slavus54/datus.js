@@ -5068,6 +5068,78 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timestampsByRandomlyDeviationFlagList(time = '', forward = 1e1, back = forward, list = [], num = 1) {
+        let base = this.time(time, 'deconvert')
+        let result = []
+
+        list.map(isForward => {
+            let value = isForward ? forward : back
+
+            value = this.getIntervalValue([0, value])
+            value = Math.floor(value / num) * num
+            value = isForward ? base + value : base - value
+
+            result = [...result, this.time(value)]
+        })
+
+        return result
+    }
+
+    yearsByMultiplicityParts(year = 1e3, border = 1e2, parts = [], num = 1) {
+        let result = []
+
+        parts.map(el => {
+            let value = this.cleanValue(el, border, 0)
+
+            value = Math.floor(value / num) * num
+
+            result = [...result, year + value]
+        })
+
+        return result
+    }
+
+    timeByRandomlyMultiplicity(time = '', max = 1e1, num = 1, isForward = true) {
+        let result = this.time(time, 'deconvert')
+        let value = Math.floor(max / num)
+
+        value = this.getIntervalValue([0, value])
+        value *= num
+
+        result = isForward ? result + value : result - value
+        result = this.time(result)
+
+        return result
+    }
+
+    groupYearsByResidueParts(list = [], num = 1e1) {
+        const length = Math.ceil(1e2 / num)
+        let result = new Array(length).fill([])
+
+        list.map(el => {
+            let value = el % 1e2
+            let index = Math.floor(value / num)
+
+            result[index] = [...result[index], el]
+        })
+
+        return result
+    }
+
+    timestampsByMinutePartInsideBorders(min = 6e2, max = min, part = 1e1) {
+        let result = []
+
+        min = Math[min % 6e1 <= part ? 'floor' : 'ceil'](min / 6e1) * 6e1
+        min += part
+
+        while (min < max) {
+            result = [...result, this.time(min)]
+            min += 6e1
+        }
+
+        return result
+    }
 }
 
 module.exports = Core

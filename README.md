@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.8** 
+* Current Version: **2.0.9** 
 * Most of algorithms have **O(n)** time complexity
-* **5K** lines of code and **305 methods** :gem:       
+* **5.1K** lines of code and **310 methods** :gem:       
 
 ## Links
 
@@ -99,7 +99,7 @@ Can get list of days from date :calendar:
     
 ## Methods     
 
-There are 300 methods to work with common themes of library: *date, time, weekday and year*.   
+There are more than 300 methods to work with 4 themes of library: *date, time, weekday and year*.   
 
 ### * Date and Day *
 
@@ -347,7 +347,13 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 
 -**findAverageTimesDeviationByCycle** (*time* = '', *list* = [], *cycle* = 3e1, *round* = 0) - returns % of average deviation of *list* elements from *time* by minutes *cycle*.    
 
--**timestampsByDayPartition** (*start* = 1e3, *num* = 0) - returns all day's times after *start* minutes value with *num* step.   
+-**timestampsByDayPartition** (*start* = 1e3, *num* = 0) - returns all day's times after *start* minutes value with *num* step. 
+
+-**timestampsByRandomlyDeviationFlagList** (*time* = '', *forward* = 1e1, *back* = forward, *list* = [], *num* = 1) - generates times with randomly step by *list* of booleans and borders. 
+
+-**timeByRandomlyMultiplicity** (*time* = '', *max* = 1e1, *num* = 1, *isForward* = true) - returns updated time randomly with *max* minutes border mutliple to *num*.  
+
+-**timestampsByMinutePartInsideBorders** (*min* = 6e2, *max* = min, *part* = 1e1) - builds list of times with minutes *part* inside borders.    
 
 ### * Weekday *
 
@@ -586,6 +592,10 @@ There are 300 methods to work with common themes of library: *date, time, weekda
 -**yearsByMultiplicityList** (*from* = 1e3, *to* = 2e3, *list* = []) - generates years by *list* multiple numbers inside borders.   
 
 -**findNearestYearsPair** (*list* = []) - finds nearest year values.    
+
+-**yearsByMultiplicityParts** (*year* = 1e3, *border* = 1e2, *parts* = [], *num* = 1) - generates years by *parts* % and *border* multiple to *num*.    
+
+-**groupYearsByResidueParts** (*list* = [], *num* = 1) - groups years by residue (/100).    
 
 ### * Filters and Validation *
 
