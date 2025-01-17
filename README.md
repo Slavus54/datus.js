@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.0.9** 
+* Current Version: **2.1.0** 
 * Most of algorithms have **O(n)** time complexity
-* **5.1K** lines of code and **310 methods** :gem:       
+* **5.2K** lines of code and **320 methods** :gem:       
 
 ## Links
 
@@ -355,6 +355,14 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 
 -**timestampsByMinutePartInsideBorders** (*min* = 6e2, *max* = min, *part* = 1e1) - builds list of times with minutes *part* inside borders.    
 
+-**getTimeDigit** (*time* = '', *isMinutes* = true, *isJunior* = true) - returns any digit of time by parameters.   
+
+-**updateTimePartByMultiplicity** (*time* = '', *isMinutes* = true, *num* = 1, *isFloor* = true) - transforms time's part by number multiple to *num*.  
+
+-**timestampsByMultiplicity** (*time* = '', *num* = 1, *forward* = 1e2, *back* = forward) - builds list of times by minutes borders multiple to *num*.  
+
+-**timeByBaseMultiplicityResidue** (*base* = 6e2, *num* = 1, *residue* = 0, *isFloor* = true) - generates time by minutes *base* mutiple to *num* + residue.       
+
 ### * Weekday *
 
 -**gap** (*weekday* = null, *key* = 'tag') - return difference between weekday and today in days, key parameter is a variant of day calling (tag or title).
@@ -596,6 +604,18 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 -**yearsByMultiplicityParts** (*year* = 1e3, *border* = 1e2, *parts* = [], *num* = 1) - generates years by *parts* % and *border* multiple to *num*.    
 
 -**groupYearsByResidueParts** (*list* = [], *num* = 1) - groups years by residue (/100).    
+
+-**isYearResidueMultiplicity** (*year* = 1e3, *num* = 1) - returns true/false if *year* residue (/ 100) divides on *num*.   
+
+-**yearsByPositionRowDistance** (*current* = 1e3, *next* = 2e3, *distance* = 1e2, *percent* = 1e1) - builds list with step from *current* to *next* in *position* on *distance*.    
+
+-**yearsByMultiplicityRandomlyStep** (*from* = 1e3, *to* = 2e3, *num* = 1) - returns list with random steps.    
+
+-**updateYearsResidueByMultiplicity** (*list* = [], *min* = 5e1, *max* = min, *num* = 1, *isFloor* = true) - transforms year's residue inside borders by multiple to *num*. 
+
+-**yearsByRandomlyMultiplicityList** (*year* = 1e3, *size* = 1, *list* = [], *isIncrease* = true) - generates years based on *year* with *list* of multiple numbers and border *size*.  
+
+-**getAllYearsWithWeekdayByMonthAndDay** (*weekday* = 'Monday', *day* = 1e1, *month* = 1, *min* = 1e3, *max* = 2e3) - returns all years validated by parameters.       
 
 ### * Filters and Validation *
 

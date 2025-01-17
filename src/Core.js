@@ -5140,6 +5140,154 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    isYearResidueMultiplicity(year = 1e3, num = 1) {
+        let result = year % 1e2 % num === 0
+
+        return result
+    }
+
+    yearsByPositionRowDistance(current = 1e3, next = 2e3, distance = 1e2, percent = 1e1) {
+        const step = Math.abs(current - next) 
+        
+        let isIncrease = current < next
+        let pointer = this.cleanValue(percent, distance, 0)
+        let result = []
+
+        pointer = Math.floor(pointer / step) * step
+        pointer = current - pointer
+        
+        let border = pointer + distance
+
+        while (pointer < border) {
+            result = [...result, pointer]
+            
+            pointer = isIncrease ? pointer + step : pointer - step
+        }
+
+        return result
+    }
+
+    getTimeDigit(time = '', isMinutes = true, isJunior = true) {
+        const value = this.time(time, 'deconvert')
+        let result = isMinutes ? value % 6e1 : Math.floor(value / 6e1) 
+
+        result = isJunior ? result % 1e1 : Math.floor(result / 1e1)
+
+        return result
+    }
+
+    yearsByMultiplicityRandomlyStep(from = 1e3, to = 2e3, num = 1) {
+        let pointer = from
+        let result = [pointer]
+     
+        while (pointer < to) {
+            let max = Math.floor(Math.abs(to - pointer) / num) 
+            let step = this.getIntervalValue([1, max]) * num
+
+            pointer += step
+
+            if (pointer < to) {
+                result = [...result, pointer]
+            }
+        }
+
+        return result
+    }
+
+    updateTimePartByMultiplicity(time = '', isMinutes = true, num = 1, isFloor = true) {
+        let parts = this.parts(time, ':', true)
+        let part = parts[Number(isMinutes)]
+        let result = 0
+    
+        part = Math[isFloor ? 'floor' : 'ceil'](part / num) * num
+        part = isMinutes ? part : part * 6e1 
+
+        result = part + parts[Number(!isMinutes)] * (isMinutes ? 6e1 : 1)
+        result = this.time(result)
+
+        return result
+    }
+
+    updateYearsResidueByMultiplicity(list = [], min = 5e1, max = min, num = 1, isFloor = true) {
+        let result = []
+
+        list.map(el => {
+            let value = el % 1e2
+
+            if (value >= min && value <= max) {
+                value = el - value + Math[isFloor ? 'floor' : 'ceil'](value / num) * num
+            } else {
+                value = el
+            }
+
+            result = [...result, value]
+        })
+
+        return result
+    }
+
+    timestampsByMultiplicity(time = '', num = 1, forward = 1e2, back = forward) {
+        const base = this.time(time, 'deconvert')
+
+        let min = Math.ceil((base - back) / num) * num
+        let max = Math.floor((base + forward) / num) * num
+        let result = []
+
+        while (min < max) {
+            result = [...result, this.time(min)]
+            min += num
+        }
+
+        return result
+    }
+
+    timeByBaseMultiplicityResidue(base = 6e2, num = 1, residue = 0, isFloor = true) {
+        let result = Math[isFloor ? 'floor' : 'ceil'](base / num) * num + residue
+
+        result = this.time(result)
+
+        return result
+    }
+ 
+    yearsByRandomlyMultiplicityList(year = 1e3, size = 1, list = [], isIncrease = true) {
+        let pointer = year
+        let result = [pointer]
+    
+        for (let i = 0; i < list.length; i++) {
+            const base = Math.floor(year / list[i]) * list[i]
+            let max = Math.floor(size / list[i])
+
+            pointer = this.getIntervalValue([1, max]) * list[i]
+            pointer = isIncrease ? base + pointer : base - pointer
+
+            result = [...result, pointer]
+        }       
+
+        return result
+    }
+
+    getAllYearsWithWeekdayByMonthAndDay(weekday = 'Monday', day = 1e1, month = 1, min = 1e3, max = 2e3) {
+        let result = []
+        let toCompare = this.weekdayByDate(`${this.rounding(day)}.${this.rounding(month)}.${min}`)
+
+        while (weekday !== toCompare) {
+            min++
+
+            toCompare = this.weekdayByDate(`${this.rounding(day)}.${this.rounding(month)}.${min}`)
+        }
+
+        let step = min % 4 === 3 ? 5 : (min % 4 === 2 ? 11 : 6)
+
+        while (min < max) {
+            result = [...result, min]
+
+            min += step
+            step = min % 4 === 3 ? 5 : (min % 4 === 2 ? 11 : 6)
+        }
+
+        return result
+    }
 }
 
 module.exports = Core
