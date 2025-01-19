@@ -5288,6 +5288,179 @@ class Core extends HelperContainer {
 
         return result
     }
+
+    timeByUSFormat(hours = 1e1, minutes = 1e1, isAfterMidday = true) {
+        let result = 0
+
+        hours = isAfterMidday ? hours + 12 : hours
+        result = this.time(hours * 6e1 + minutes)
+
+        return result
+    }
+
+    nearestYearMultiplicityByPercentInsideBorders(from = 0, to = 0, percent = 1, num = 1, isFloor = true) {
+        const method = isFloor ? 'floor' : 'ceil'
+        
+        let distance = Math.abs(to - from)
+        let result = Math[method](from / num) * num
+
+        result += Math[method](this.cleanValue(percent, distance, 0) / num) * num
+
+        return result
+    }
+
+    timestampsByMultiplicityPartsInsideBorders(min = 1e3, max = minutesMax, length = 1, list = [], isFloor = true) {
+        const border = this.cleanValue(Math.floor(1e2) / length, Math.abs(max - min), 0)
+        
+        let result = [] 
+        let pointer = min
+
+        for (let i = 0; i < length; i++) {
+            let index = i % list.length 
+            let multiplicity = list[index]
+            let value = Math[isFloor ? 'floor' : 'ceil']((pointer + border) / multiplicity) * multiplicity
+   
+            pointer = value
+            value = this.time(value)
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    yearsByResidueRadiusMultiplicity(year = 1e3, length = 1, num = 1) {
+        const residue = year % 1e2
+        
+        let min = residue < 5e1 ? year - residue : year - (1e2 - residue)
+        let max = residue < 5e1 ? year + residue : Math.ceil(year / 1e2) * 1e2 - 1
+        let result = []
+
+        for (let i = 0; i < length; i++) {
+            let value = this.getIntervalValue([min, max])
+        
+            while (value % num !== 0) {
+                value = this.getIntervalValue([min, max])
+            }
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    timestampsByHoursWithMinutesBordersMultiplicity(time = '', hours = 1e1, num = 1, min = 1, max = 6e1) {
+        const base = Math.ceil(this.time(time, 'deconvert') / 6e1) * 6e1
+        
+        let minutes = []
+        let result = []
+
+        min = min < 0 || min > 6e1 ? 0 : min
+        max = max < 0 || max > 6e1 ? 0 : max
+
+        min = Math.ceil(min / num) * num
+
+        while (min < max) {
+            minutes = [...minutes, min]
+            
+            min += num
+        }
+       
+        for (let i = 0; i < hours; i++) {
+            minutes.map(minute => {
+                let value = base + i * 6e1 + minute
+
+                result = [...result, this.time(value)]
+            })
+        }
+        
+        return result
+    }
+
+    yearsPairsByActions(year = 1e3, toAdd = 1, toDelete = 1, num = 1) {
+        let result = []
+        let pointer = year
+
+        for (let i = 0; i < num; i++) {
+            let pair = new Array(2).fill(null)
+
+            pointer += toAdd
+
+            pair[0] = pointer
+        
+            pointer -= toDelete
+        
+            pair[1] = pointer
+
+            result = [...result, pair.reverse()]
+        }
+
+        return result
+    }
+
+    timestampsByRangeMultiplicity(time = '', range = 1e2, percent = 1e1, isForward = true, left = 1, right = 1) {
+        const middle = this.time(time, 'deconvert')
+        const parts = isForward ? [1e2 - percent, percent] : [percent, 1e2 - percent]
+       
+        let min = middle - this.cleanValue(parts[0], range, 0)
+        let max = middle + this.cleanValue(parts[1], range, 0)
+
+        let pointer = Math.ceil(min / left) * left
+        let step = left
+        let result = []
+
+        while (pointer < max) {
+            if (step !== right && pointer > middle) {
+                pointer = Math.ceil(pointer / right) * right
+                step = right
+            }
+
+            pointer += step
+            result = [...result, this.time(pointer)]
+        }
+
+        return result
+    }
+
+    findRandomYearsOnDistanceMultiplicity(year = 1e3, border = 1e2, num = 1, size = 1, isIncrease = true) {
+        let result = []
+
+        for (let i = 0; i < size; i++) {
+            let value = this.getIntervalValue([0, border])
+            
+            value = isIncrease ? value + year : year - value
+            value = Math[isIncrease ? 'floor' : 'ceil'](value / num) * num
+
+            result = [...result, value]
+        }
+
+        return result
+    }
+
+    timestampsByDayPercentFragments(list = []) {
+        const length = list.length
+
+        let result = new Array(length * 2).fill('')
+
+        for (let i = 0; i < length; i++) {
+            let left = this.cleanValue(list[i], minutesMax, 0)
+            let right = this.cleanValue(1e2 - list[i], minutesMax, 0)
+           
+            result[i] = this.time(left)
+            result[length * 2 - i - 1] = this.time(right)
+        }
+
+        return result
+    }
+
+    buildYearBordersMultiplicity(century = 1e1, size = 1e2, percent = 5e1, num = 1) {
+        let value = this.cleanValue(percent, size, 0) 
+        let result = new Array(2).fill((century - 1) * 1e2).map((el, idx) => Boolean(idx) ? el + value : el - (size - value))
+
+        result = result.map((el, idx) => Math[Boolean(idx) ? 'floor' : 'ceil'](el / num) * num)
+
+        return result
+    }
 }
 
 module.exports = Core

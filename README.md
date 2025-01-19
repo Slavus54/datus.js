@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.1.0** 
+* Current Version: **2.1.1** 
 * Most of algorithms have **O(n)** time complexity
-* **5.2K** lines of code and **320 methods** :gem:       
+* **5.3K** lines of code and **330 methods** :gem:       
 
 ## Links
 
@@ -361,7 +361,17 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 
 -**timestampsByMultiplicity** (*time* = '', *num* = 1, *forward* = 1e2, *back* = forward) - builds list of times by minutes borders multiple to *num*.  
 
--**timeByBaseMultiplicityResidue** (*base* = 6e2, *num* = 1, *residue* = 0, *isFloor* = true) - generates time by minutes *base* mutiple to *num* + residue.       
+-**timeByBaseMultiplicityResidue** (*base* = 6e2, *num* = 1, *residue* = 0, *isFloor* = true) - generates time by minutes *base* mutiple to *num* + residue.    
+
+-**timeByUSFormat** (*hours* = 1e1, *minutes* = 1e1, *isAfterMidday* = true) - converts american time format to european and returns time.  
+
+-**timestampsByMultiplicityPartsInsideBorders** (*min* = 1e3, *max* = minutesMax, *length* = 1, *list* = [], *isFloor* = true) - returns list of times inside borders with *list* of multiple numbers.  
+
+-**timestampsByHoursWithMinutesBordersMultiplicity** (*time* = '', *hours* = 1e1, *num* = 1, *min* = 1, *max* = 6e1) - returns times with minutes part mutliple to *num* inside borders.    
+
+-**timestampsByRangeMultiplicity** (*time* = '', *range* = 1e2, *percent* = 1e1, *isForward* = true, *left* = 1, *right* = 1) - returns times built by minutes *range* from *time*. 
+
+-**timestampsByDayPercentFragments** (*list* = []) - returns list of times by % of day duration.    
 
 ### * Weekday *
 
@@ -615,7 +625,17 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 
 -**yearsByRandomlyMultiplicityList** (*year* = 1e3, *size* = 1, *list* = [], *isIncrease* = true) - generates years based on *year* with *list* of multiple numbers and border *size*.  
 
--**getAllYearsWithWeekdayByMonthAndDay** (*weekday* = 'Monday', *day* = 1e1, *month* = 1, *min* = 1e3, *max* = 2e3) - returns all years validated by parameters.       
+-**getAllYearsWithWeekdayByMonthAndDay** (*weekday* = 'Monday', *day* = 1e1, *month* = 1, *min* = 1e3, *max* = 2e3) - returns all years validated by parameters.    
+
+-**nearestYearMultiplicityByPercentInsideBorders** (*from* = 0, *to* = 0, *percent* = 1, *num* = 1, *isFloor* = true) - generates year inside borders by % multiple to *num*.   
+
+-**yearsByResidueRadiusMultiplicity** (*year* = 1e3, *length* = 1, *num* = 1) - builds list of years mutliple to *num*, which elements inside *year* residue (/ 100) borders.   
+
+-**yearsPairsByActions** (*year* = 1e3, *toAdd* = 1, *toDelete* = 1, *num* = 1) - generates pairs of years with action by parameters.   
+
+-**findRandomYearsOnDistanceMultiplicity** (*year* = 1e3, *border* = 1e2, *num* = 1, *size* = 1, *isIncrease* = true) - returns list of years with size by *size* generated randomly.   
+
+-**buildYearBordersMultiplicity** (*century* = 1e1, *size* = 1e2, *percent* = 5e1, *num* = 1) - builds borders multiple to *num* based on *century* and *size*, forward border created by % of *size*.   
 
 ### * Filters and Validation *
 
