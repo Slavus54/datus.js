@@ -3,9 +3,9 @@
 JavaScript library to handling, parsing, validation and formatting date or time.      
 
 * Light, great and powerful analogue of **Moment.js** :star:                       
-* Current Version: **2.1.1** 
+* Current Version: **2.1.2** 
 * Most of algorithms have **O(n)** time complexity
-* **5.3K** lines of code and **330 methods** :gem:       
+* **5.5K** lines of code and **340 methods** :gem:       
 
 ## Links
 
@@ -150,6 +150,8 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 -**filterDatesByMonthGap** (*dates* = [], *min* = 1e1, *max* = 1e2, *round* = 0) - filter days of year's month inside borders and returns list of dates.    
 
 -**dateBySeason** (*year* = 1e3, *season* = 'Summer') - generates date with *year* in *season* randomly.    
+
+-**getBirthdateByAgeRandomly** (*num* = 1) - returns randomly generated date by *num* age.    
 
 ### * Time *
 
@@ -372,6 +374,14 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 -**timestampsByRangeMultiplicity** (*time* = '', *range* = 1e2, *percent* = 1e1, *isForward* = true, *left* = 1, *right* = 1) - returns times built by minutes *range* from *time*. 
 
 -**timestampsByDayPercentFragments** (*list* = []) - returns list of times by % of day duration.    
+
+-**findTimeDistancePercentRegardingSize** (*time* = '', *border* = 1e3, *size* = 1e2, *round* = 0) - counts % of size as difference between *time* and *border*.    
+
+-**timeUpdateByDayPercent** (*time* = '', *percent* = 1, *isForward* = true, *multiple* = 1) - updates *time* with % of minutes in day by parameters.      
+
+-**timestampsByDayPercentRatio** (*time* = '', *percent* = 1e1, *ratio* = 1, *iterations* = 1) - generates list of times by % of day's minutes and *ratio* of each iteration.   
+
+-**isSameTimeQuarter** (*time* = '') - validates *time* if hours and minutes parts have same quarter.      
 
 ### * Weekday *
 
@@ -635,7 +645,17 @@ There are more than 300 methods to work with 4 themes of library: *date, time, w
 
 -**findRandomYearsOnDistanceMultiplicity** (*year* = 1e3, *border* = 1e2, *num* = 1, *size* = 1, *isIncrease* = true) - returns list of years with size by *size* generated randomly.   
 
--**buildYearBordersMultiplicity** (*century* = 1e1, *size* = 1e2, *percent* = 5e1, *num* = 1) - builds borders multiple to *num* based on *century* and *size*, forward border created by % of *size*.   
+-**buildYearBordersMultiplicity** (*century* = 1e1, *size* = 1e2, *percent* = 5e1, *num* = 1) - builds borders multiple to *num* based on *century* and *size*, forward border created by % of *size*.  
+
+-**filterYearsByChangingCentury** (*list* = [], *num* = 1, *isForward* = true) - validates years by changing century after update with *num*.   
+
+-**yearsRandomlyMultiplicityBorders** (*year* = 1e3, *num* = 1, *isAdjacentCentury* = false) - builds borders of *year* multiple to *num*.  
+
+-**findAllYearsMultiplicityInsideAgeBorders** (*from* = 1e1, *to* = 5e1, *year* = 2024, *num* = 1) - generates list of years inside age's borders and *year* multiple to *num*. 
+
+-**getLifeYearsByPercent** (*year* = 1e3, *percent* = 1e1, *age* = 1e2, *isAfter* = true) - returns life's borders by % lived after/before *year*.  
+
+-**transformYearByMutliplicityRounding** (*year* = 1e3, *num* = 1, *percent* = 5e1) - updates year by *num* rounding if residue more/less than % of *num*.     
 
 ### * Filters and Validation *
 

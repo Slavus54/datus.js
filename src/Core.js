@@ -205,7 +205,7 @@ class Core extends HelperContainer {
     }
 
     async utc() {
-        let result = await fetch('https://towns-api.onrender.com/timezones') 
+        let result = await fetch('https://towns-api.vercel.app/timezones') 
 
         result = await result.json()
     
@@ -5458,6 +5458,135 @@ class Core extends HelperContainer {
         let result = new Array(2).fill((century - 1) * 1e2).map((el, idx) => Boolean(idx) ? el + value : el - (size - value))
 
         result = result.map((el, idx) => Math[Boolean(idx) ? 'floor' : 'ceil'](el / num) * num)
+
+        return result
+    }
+
+    findTimeDistancePercentRegardingSize(time = '', border = 1e3, size = 1e2, round = 0) {
+        let difference = Math.abs(this.time(time, 'deconvert') - border)
+        let result = this.percent(difference, size, round)
+
+        return result
+    }
+    
+    filterYearsByChangingCentury(list = [], num = 1, isForward = true) {
+        let result = []
+
+        list.map(el => {
+            let value = isForward ? el + num : el - num
+            let residue = value % 1e2
+            let flag = isForward ? residue < num : residue > (1e2 - num)
+
+            if (flag) {
+                result = [...result, el]
+            }
+        })
+
+        return result
+    }
+
+    yearsRandomlyMultiplicityBorders(year = 1e3, num = 1, isAdjacentCentury = false) {
+        const residue = year % 1e2
+
+        let result = []
+        let from = isAdjacentCentury ? [residue + 1, residue + 1e2] : [0, residue] 
+        let to = isAdjacentCentury ? [1e2 - residue, 2e2 - residue] : [0, 1e2 - residue]
+
+        result[0] = year - Math.floor(this.getIntervalValue(from) / num) * num 
+        result[1] = year + Math.floor(this.getIntervalValue(to) / num) * num
+
+        return result
+    }
+
+    timeUpdateByDayPercent(time = '', percent = 1, isForward = true, multiple = 1) {
+        let result = this.time(time, 'deconvert')
+        let value = this.cleanValue(percent, isForward ? Math.abs(minutesMax - result) : result, 0)
+
+        value = isForward ? value + result : result - value
+        value = Math[isForward ? 'floor' : 'ceil'](value / multiple) * multiple
+
+        result = this.time(value)
+
+        return result
+    }
+
+    findAllYearsMultiplicityInsideAgeBorders(from = 1e1, to = 5e1, year = 2024, num = 1) {
+        const border = year - from
+        
+        let pointer = Math.ceil((year - to) / num) * num
+        let result = []
+     
+        while (pointer < border) {
+            result = [...result, pointer]
+
+            pointer += num
+        }
+
+        return result
+    }
+
+    timestampsByDayPercentRatio(time = '', percent = 1e1, ratio = 1, iterations = 1) {
+        const check = (num) => ratio > 1 ? num <= minutesMax : num >= minutesMin
+        const base = this.time(time, 'deconvert')
+    
+        let pointer = this.cleanValue(percent, minutesMax, 0)
+        let result = []
+        let i = 0
+
+        pointer = ratio > 1 ? pointer + base : base - pointer
+
+        while (i < iterations && check(pointer)) {
+            result = [...result, this.time(pointer)]
+
+            pointer = Math.round(pointer * ratio)
+            i++
+        }
+
+        return result
+    }
+
+    getLifeYearsByPercent(year = 1e3, percent = 1e1, age = 1e2, isAfter = true) {
+        let value = this.cleanValue(percent, age, 0)
+        let difference = Math.abs(value - age)
+        let result = []
+
+        value = isAfter ? year + value : year - value
+        result = isAfter ? [year - difference, value] : [value, year + difference]
+
+        return result
+    }
+
+    isSameTimeQuarter(time = '') {
+        let parts = this.parts(time, ':', true)
+        let result = true
+
+        parts[0] = parts[0] > 12 ? parts[0] - 12 : parts[0]
+
+        result = Math.ceil(parts[0] / 3) === Math.ceil(parts[1] / 15)
+
+        return result
+    }
+
+    getBirthdateByAgeRandomly(num = 1) {
+        const date = this.now('date')
+
+        let parts = this.parts(date, '.', true)
+        let result = ''
+
+        let year = parts[2] - num
+        let month = this.getIntervalValue([1, parts[1]])
+        let day = this.getIntervalValue([1, month === parts[1] ? parts[0] : this.getMonthSize(month, year)])  
+
+        result = `${this.rounding(day)}.${this.rounding(month)}.${year}`
+
+        return result
+    }
+
+    transformYearByMutliplicityRounding(year = 1e3, num = 1, percent = 5e1) {
+        const border = this.cleanValue(percent, num, 0)
+
+        let residue = year % num
+        let result = Math[residue < border ? 'floor' : 'ceil'](year / num) * num 
 
         return result
     }
